@@ -35,11 +35,11 @@ p_b.ChangeDutyCycle(75)
 
 def turn_left_wheel(forward=True):
     if forward:
-        GPIO.output(IN3, GPIO.LOW)
-        GPIO.output(IN4, GPIO.HIGH)
-    else:
         GPIO.output(IN3, GPIO.HIGH)
         GPIO.output(IN4, GPIO.LOW)
+    else:
+        GPIO.output(IN3, GPIO.LOW)
+        GPIO.output(IN4, GPIO.HIGH)
 
 
 def turn_right_wheel(forward=True):
