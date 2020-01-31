@@ -1,6 +1,6 @@
 import RPi.GPIO as GPIO
 from time import sleep
-import motor_controls as mc
+import movement.motor_controls as mc
 
 print("\n")
 print("The default speed & direction of motor is STOP & Forward.....")
@@ -29,7 +29,7 @@ while(1):
 
     elif x == 'l':
         print('left')
-        mc.turn_left
+        mc.turn_left()
 
     elif x == 'e':
         GPIO.cleanup()

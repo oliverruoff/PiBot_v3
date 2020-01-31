@@ -64,6 +64,8 @@ def get_acc_z():
     return read_word_2c(0x3f)
 
 
+INIT_GYRO_Z = get_gyro_z()
+
 bus = smbus.SMBus(1)  # bus = smbus.SMBus(0) fuer Revision 1
 address = 0x68       # via i2cdetect
 
