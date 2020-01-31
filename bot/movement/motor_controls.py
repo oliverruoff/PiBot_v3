@@ -29,8 +29,8 @@ p_a.start(0)
 p_b = GPIO.PWM(ENB, 1000)
 p_b.start(0)
 
-p_a.ChangeDutyCycle(75)
-p_b.ChangeDutyCycle(75)
+p_a.ChangeDutyCycle(10)
+p_b.ChangeDutyCycle(10)
 
 
 def turn_left_wheel(forward=True):
