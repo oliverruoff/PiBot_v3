@@ -40,9 +40,9 @@ if __name__ == "__main__":
             print('Detecting that I should stop, only continuing for ', remaining_seconds_to_turn, 'seconds!')
             time.sleep(remaining_seconds_to_turn)
             break
-    motor_speed = 100
+    motor_speed = 50
     mc.change_speed_left(motor_speed)
     mc.change_speed_right(motor_speed)
     mc.turn_right()
-    time.sleep(0.01)
+    time.sleep(0.1)
     mc.stop_motors()
