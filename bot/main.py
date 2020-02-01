@@ -8,7 +8,7 @@ from sensing import mpu6050
 if __name__ == "__main__":
     SENSOR_DRIFT = -1.8378
     SLEEP_TIME = 0.1
-    TURN_DEGREE = 90
+    TURN_DEGREE = 360
 
     motor_speed = 30
     mc.change_speed_left(motor_speed)
@@ -18,6 +18,7 @@ if __name__ == "__main__":
     degree_turned = 0
     while degree_turned < TURN_DEGREE:
         if degree_turned > (TURN_DEGREE - (TURN_DEGREE / 10)):
+            print('Slowing down motors')
             motor_speed = 20
             mc.change_speed_left(motor_speed)
             mc.change_speed_right(motor_speed)
