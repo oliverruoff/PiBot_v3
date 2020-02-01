@@ -1,7 +1,7 @@
 import time
 
-from movement import motor_controls as mc
-from sensing import mpu6050
+from bot.movement import motor_controls as mc
+from bot.sensing import mpu6050
 
 
 def gyro_turn(turn_degree, right=True, sensor_drift=-1.8378):
@@ -24,6 +24,7 @@ def gyro_turn(turn_degree, right=True, sensor_drift=-1.8378):
             mc.turn_left()
         time.sleep(SLEEP_TIME)
         gyro_z_scaled =  mpu.get_gyro_data()['z'] * SLEEP_TIME - sensor_drift
+        print('Gyro scaled:', gyro_z_scaled)
         last_z_turn = gyro_z_scaled
         degree_turned += gyro_z_scaled
         remaining_degree = turn_degree - degree_turned
