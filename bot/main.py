@@ -36,7 +36,7 @@ if __name__ == "__main__":
         print('Predicted remaining seconds to turn:', remaining_seconds_to_turn)
         print('Turned: ', degree_turned)
         print('---------------------')
-        if remaining_seconds_to_turn < last_z_turn:
+        if remaining_degree < last_z_turn:
             print('Detecting that I should stop, only continuing for ', remaining_seconds_to_turn, 'seconds!')
             time.sleep(remaining_seconds_to_turn)
             break
