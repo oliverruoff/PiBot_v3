@@ -10,7 +10,7 @@ if __name__ == "__main__":
     SLEEP_TIME = 0.1
     TURN_DEGREE = 360
 
-    motor_speed = 75
+    motor_speed = 50
     mc.change_speed_left(motor_speed)
     mc.change_speed_right(motor_speed)
     mpu = mpu6050.mpu6050(0x68)
