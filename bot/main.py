@@ -8,7 +8,7 @@ from sensing import mpu6050
 if __name__ == "__main__":
     SENSOR_DRIFT = -1.8378
     SLEEP_TIME = 0.1
-    TURN_DEGREE = 360
+    TURN_DEGREE = 180
 
     motor_speed = 50
     mc.change_speed_left(motor_speed)
