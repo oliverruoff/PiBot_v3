@@ -27,4 +27,6 @@ if __name__ == "__main__":
         degree_turned += gyro_z_scaled
         print('Turned: ', degree_turned)
 
+    mc.turn_right()
+    time.sleep(0.1)
     mc.stop_motors()
