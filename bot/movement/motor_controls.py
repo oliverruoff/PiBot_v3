@@ -99,8 +99,8 @@ def turn_degree(degree):
 
 
 def say_no():
-    for i in range(2):
+    for _ in range(2):
         turn_right()   
-        time.sleep(0.4
+        sleep(0.4)
         turn_left()
-        time.sleep(0.4
+        sleep(0.4)
