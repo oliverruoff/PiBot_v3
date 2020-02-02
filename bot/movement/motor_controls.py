@@ -102,5 +102,5 @@ def say_no():
     for i in range(2):
         turn_right()   
         time.sleep(0.4
-        turn_left(0.4)
+        turn_left()
         time.sleep(0.4
