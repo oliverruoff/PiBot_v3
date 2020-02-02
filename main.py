@@ -18,6 +18,11 @@ if __name__ == "__main__":
             if dist < 20:
                 mc.say_no()
                 gm.gyro_turn(50, False, gyro_z_sensor_drift)
+            elif not gm.is_moving(gyro_z_sensor_drift):
+                print('Looks like I\'m stuck, setting back.')
+                mc.move_back()
+                time.sleep(0.5)
+                gm.gyro_turn(50, False, gyro_z_sensor_drift)
             else:
                 mc.move_front()
             time.sleep(0.1)

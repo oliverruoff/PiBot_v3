@@ -15,7 +15,18 @@ def get_gyro_z_sensor_drift(samples=10):
     print('Gyro z sensor drift:', gyro_z_sensor_drift)
     return gyro_z_sensor_drift
 
-def gyro_turn(turn_degree, right=True, sensor_drift=-1.8378):
+
+def is_moving(gyro_z_sensor_drift=-1.8):
+    Z_MOVEMENT_THRESHOLD = 5
+    mpu = mpu6050.mpu6050(0x68)
+    gyro_z = abs(mpu.get_gyro_data()['z'] - gyro_z_sensor_drift)
+    print('Gyro z:', gyro_z)
+    if gyro_z > Z_MOVEMENT_THRESHOLD:
+        return True
+    else:
+        return False
+
+def gyro_turn(turn_degree, right=True, sensor_drift=-1.8):
     SLEEP_TIME = 0.1
     motor_speed = 50
     mc.change_speed_left(motor_speed)
