@@ -17,7 +17,7 @@ def get_gyro_z_sensor_drift(samples=10):
 
 
 def is_moving(gyro_z_sensor_drift=-1.8):
-    Z_MOVEMENT_THRESHOLD = 0.09
+    Z_MOVEMENT_THRESHOLD = 2
     mpu = mpu6050.mpu6050(0x68)
     gyro_z = abs(mpu.get_gyro_data()['z'] - gyro_z_sensor_drift)
     print('Gyro z:', gyro_z)
