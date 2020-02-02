@@ -20,11 +20,13 @@ def is_moving(gyro_z_sensor_drift=-1.8):
     Z_MOVEMENT_THRESHOLD = 0.09
     mpu = mpu6050.mpu6050(0x68)
     gyro_z = abs(mpu.get_gyro_data()['z'] - gyro_z_sensor_drift)
+    print('Gyro z:', gyro_z)
     if gyro_z > Z_MOVEMENT_THRESHOLD:
         return True
     else:
         for _ in range(3):
             gyro_z = abs(mpu.get_gyro_data()['z'] - gyro_z_sensor_drift)
+            print('Retrying gyro z:', gyro_z)
             if gyro_z > Z_MOVEMENT_THRESHOLD:
                 return True
         return False
