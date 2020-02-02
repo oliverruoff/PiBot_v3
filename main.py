@@ -26,6 +26,7 @@ if __name__ == "__main__":
                         degree = i
                 turn_right = True
                 log_str = 'right' # only needed for print
+                turn_degree = degree
                 if degree > 180:
                     turn_right = False
                     turn_degree = 360 - degree
