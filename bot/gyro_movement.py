@@ -16,7 +16,7 @@ def get_gyro_z_sensor_drift(samples=10):
     return gyro_z_sensor_drift
 
 
-def is_moving(gyro_z_sensor_drift=-1.8):
+def is_moving(gyro_z_sensor_drift=-1.8, retries=5):
     '''
     Checks if the robot is currently moving (or might need
     to hand over to unstuck strategy)
@@ -28,7 +28,7 @@ def is_moving(gyro_z_sensor_drift=-1.8):
     if gyro_z > Z_MOVEMENT_THRESHOLD:
         return True
     else:
-        for _ in range(3):
+        for _ in range(retries):
             gyro_z = abs(mpu.get_gyro_data()['z'] - gyro_z_sensor_drift)
             # print('Retrying gyro z:', gyro_z)
             if gyro_z > Z_MOVEMENT_THRESHOLD:
