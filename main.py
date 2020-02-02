@@ -31,7 +31,7 @@ if __name__ == "__main__":
                     turn_degree = 360 - degree
                     log_str = 'left'
                 print('At degree:', degree, 'there is the most space, about:', max_dist, 'cm.')
-                print('So, I\m turning', turn_degree, 'to the', log_str)
+                print('So, I\'m turning', turn_degree, 'to the', log_str)
                 gm.gyro_turn(turn_degree, turn_right, gyro_z_sensor_drift)
             elif not gm.is_moving(gyro_z_sensor_drift):
                 print('Looks like I\'m stuck, setting back.')
