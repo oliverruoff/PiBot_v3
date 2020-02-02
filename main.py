@@ -12,10 +12,11 @@ if __name__ == "__main__":
             dist = us.get_distance()
             med_dist = us.get_median_distance()
             print('Dist:', dist, '| med_dist:', med_dist)
-            if dist < 20:
-                mc.stop_motors()
-                gm.gyro_turn(50, False)
-            else:
-                mc.move_front()
+            time.sleep(1)
+            #if dist < 20:
+            #    mc.stop_motors()
+            #    gm.gyro_turn(50, False)
+            #else:
+            #    mc.move_front()
         except KeyboardInterrupt:
             break

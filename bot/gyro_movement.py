@@ -29,7 +29,8 @@ def gyro_turn(turn_degree, right=True, sensor_drift=-1.8378):
         remaining_degree = turn_degree - degree_turned
         remaining_seconds_to_turn = SLEEP_TIME / last_z_turn * remaining_degree
         if remaining_degree < last_z_turn:
-            time.sleep(remaining_seconds_to_turn)
+            if remaining_seconds_to_turn > 0:
+                time.sleep(remaining_seconds_to_turn)
             break
     motor_speed = 50
     mc.change_speed_left(motor_speed)
