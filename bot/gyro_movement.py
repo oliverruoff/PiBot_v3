@@ -9,7 +9,7 @@ def get_gyro_z_sensor_drift(samples=10):
     mpu = mpu6050.mpu6050(0x68)
     val_sum = 0
     for _ in range(samples):
-        val_sum += mpu.get_gyro_data['z']
+        val_sum += mpu.get_gyro_data()['z']
         time.sleep(0.1)
     gyro_z_sensor_drift = val_sum/samples
     print('Gyro z sensor drift:', gyro_z_sensor_drift)
