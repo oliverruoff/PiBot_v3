@@ -198,6 +198,7 @@ class mpu6050:
 
         return [accel, gyro, temp]
 
+
 # mpu = mpu6050(0x68)
 
 #if __name__ == "__main__":

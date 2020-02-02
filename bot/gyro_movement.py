@@ -4,6 +4,17 @@ from bot.movement import motor_controls as mc
 from bot.sensing import mpu6050
 
 
+def get_gyro_z_sensor_drift(samples=10):
+    print('Getting current gyro z sensor drift...')
+    mpu = mpu6050.mpu6050(0x68)
+    val_sum = 0
+    for _ in range(samples):
+        val_sum += mpu.get_gyro_data['z']
+        time.sleep(0.1)
+    gyro_z_sensor_drift = val_sum/samples
+    print('Gyro z sensor drift:', gyro_z_sensor_drift)
+    return gyro_z_sensor_drift
+
 def gyro_turn(turn_degree, right=True, sensor_drift=-1.8378):
     SLEEP_TIME = 0.1
     motor_speed = 50
