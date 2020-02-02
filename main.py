@@ -16,14 +16,25 @@ if __name__ == "__main__":
         try:
             dist = us.get_distance()
             if dist < 20:
-                mc.stop_motors()
-                time.sleep(1)
-                mc.say_no()
-                gm.gyro_turn(50, False, gyro_z_sensor_drift)
+                max_dist = 0
+                degree = 0
+                for i in range(45, 405, 45):
+                    gm.gyro_turn(45, True, gyro_z_sensor_drift)
+                    dist = us.get_median_distance()
+                    if dist > max_dist:
+                        max_dist = dist
+                        degree = i
+                turn_right = True
+                log_str = 'right' # only needed for print
+                if degree > 180:
+                    turn_right = False
+                    turn_degree = 360 - degree
+                    log_str = 'left'
+                print('At degree:', degree, 'there is the most space, about:', max_dist, 'cm.')
+                print('So, I\m turning', turn_degree, 'to the', log_str)
+                gm.gyro_turn(turn_degree, turn_right, gyro_z_sensor_drift)
             elif not gm.is_moving(gyro_z_sensor_drift):
                 print('Looks like I\'m stuck, setting back.')
-                mc.stop_motors()
-                time.sleep(1)
                 mc.move_back()
                 time.sleep(0.5)
                 gm.gyro_turn(50, False, gyro_z_sensor_drift)
