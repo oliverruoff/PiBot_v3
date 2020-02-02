@@ -16,10 +16,14 @@ if __name__ == "__main__":
         try:
             dist = us.get_distance()
             if dist < 20:
+                mc.stop_motors()
+                time.sleep(1)
                 mc.say_no()
                 gm.gyro_turn(50, False, gyro_z_sensor_drift)
             elif not gm.is_moving(gyro_z_sensor_drift):
                 print('Looks like I\'m stuck, setting back.')
+                mc.stop_motors()
+                time.sleep(1)
                 mc.move_back()
                 time.sleep(0.5)
                 gm.gyro_turn(50, False, gyro_z_sensor_drift)
