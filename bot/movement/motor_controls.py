@@ -96,3 +96,11 @@ def turn_degree(degree):
         turn_left()
     sleep(degree/360*2.5)  # times to, since bot takes around 2.5s for 360°
     stop_motors()
+
+
+def say_no():
+    for i in range(2):
+        turn_right()   
+        time.sleep(0.4
+        turn_left(0.4)
+        time.sleep(0.4
