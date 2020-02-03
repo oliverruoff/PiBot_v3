@@ -116,7 +116,7 @@ class Robot():
                     print('At degree:', degree, 'there is the most space, about:', max_dist, 'cm.')
                     print('So, I\'m turning', turn_degree, 'to the', log_str)
                     self.gyro_turn(turn_degree, turn_right)
-                elif not self.is_moving(self.gyro_z_sensor_drift):
+                elif not self.is_moving():
                     print('Looks like I\'m stuck, setting back.')
                     self.powertrain.move_back()
                     time.sleep(0.5)
