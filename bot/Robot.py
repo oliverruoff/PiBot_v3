@@ -94,7 +94,6 @@ class Robot():
 
     def start(self):
         self.get_gyro_z_sensor_drift()
-
         while True:
             try:
                 dist = us.get_distance()
@@ -102,8 +101,8 @@ class Robot():
                     max_dist = 0
                     degree = 0
                     for i in range(45, 405, 45):
-                        self.gyro_accel.gyro_turn(45, True, self.gyro_z_sensor_drift)
-                        dist = self.ultrasonic.get_median_distance()
+                        self.gyro_turn(45, True)
+                        dist = self.ultrasonic.get_distance()
                         if dist > max_dist:
                             max_dist = dist
                             degree = i
@@ -116,12 +115,12 @@ class Robot():
                         log_str = 'left'
                     print('At degree:', degree, 'there is the most space, about:', max_dist, 'cm.')
                     print('So, I\'m turning', turn_degree, 'to the', log_str)
-                    self.gyro_accel.gyro_turn(turn_degree, turn_right, self.gyro_z_sensor_drift)
-                elif not self.gyro_accel.is_moving(self.gyro_z_sensor_drift):
+                    self.gyro_turn(turn_degree, turn_right)
+                elif not self.is_moving(self.gyro_z_sensor_drift):
                     print('Looks like I\'m stuck, setting back.')
                     self.powertrain.move_back()
                     time.sleep(0.5)
-                    self.gyro_accel.gyro_turn(50, False, self.gyro_z_sensor_drift)
+                    self.gyro_turn(50, False)
                 else:
                     self.powertrain.move_front()
                 time.sleep(0.1)
