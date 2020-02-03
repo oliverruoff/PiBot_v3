@@ -1,8 +1,7 @@
 import time
 
-from bot.movement import powertrain
-from bot.sensing import mpu6050
-from bot.sensing import hcsr04
+from movement import powertrain
+from sensing import mpu6050,hcsr04
 
 class Robot():
 
@@ -104,7 +103,7 @@ class Robot():
                     degree = 0
                     for i in range(45, 405, 45):
                         self.gyro_accel.gyro_turn(45, True, gyro_z_sensor_drift)
-                        dist = us.get_median_distance()
+                        dist = self.ultrasonic.get_median_distance()
                         if dist > max_dist:
                             max_dist = dist
                             degree = i
