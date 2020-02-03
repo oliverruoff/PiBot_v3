@@ -37,7 +37,7 @@ class Robot():
         Checks if the robot is currently moving (or might need
         to hand over to unstuck strategy)
         '''
-        Z_MOVEMENT_THRESHOLD = 1.2
+        Z_MOVEMENT_THRESHOLD = 1.1
         mpu = mpu6050.mpu6050(0x68)
         gyro_z = abs(mpu.get_gyro_data()['z'] - self.gyro_z_sensor_drift)
         # print('Gyro z:', gyro_z)
@@ -92,30 +92,33 @@ class Robot():
         self.powertrain.change_speed_left(self.motor_speed_left)
         self.powertrain.change_speed_right(self.motor_speed_right)
 
+    def get_most_space_direction(self):
+        max_dist = 0
+        degree = 0
+        for i in range(45, 405, 45):
+            self.gyro_turn(45, True)
+            dist = self.ultrasonic.get_distance()
+            if dist > max_dist:
+                max_dist = dist
+                degree = i
+        turn_right = True
+        log_str = 'right' # only needed for print
+        turn_degree = degree
+        if degree > 180:
+            turn_right = False
+            turn_degree = 360 - degree
+        log_str = 'left'
+        print('At degree:', degree, 'there is the most space, about:', max_dist, 'cm.')
+        print('So, I should', turn_degree, 'to the', log_str)
+        return (turn_degree, turn_right)
+
     def start(self):
         self.get_gyro_z_sensor_drift()
         while True:
             try:
                 dist = us.get_distance()
                 if dist < 20:
-                    max_dist = 0
-                    degree = 0
-                    for i in range(45, 405, 45):
-                        self.gyro_turn(45, True)
-                        dist = self.ultrasonic.get_distance()
-                        if dist > max_dist:
-                            max_dist = dist
-                            degree = i
-                    turn_right = True
-                    log_str = 'right' # only needed for print
-                    turn_degree = degree
-                    if degree > 180:
-                        turn_right = False
-                        turn_degree = 360 - degree
-                        log_str = 'left'
-                    print('At degree:', degree, 'there is the most space, about:', max_dist, 'cm.')
-                    print('So, I\'m turning', turn_degree, 'to the', log_str)
-                    self.gyro_turn(turn_degree, turn_right)
+                    self.gyro_turn(50, True)
                 elif not self.is_moving():
                     print('Looks like I\'m stuck, setting back.')
                     self.powertrain.move_back()
