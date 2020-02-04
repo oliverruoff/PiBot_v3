@@ -56,7 +56,6 @@ class Robot():
         motor_speed = 50
         self.powertrain.change_speed_left(motor_speed)
         self.powertrain.change_speed_right(motor_speed)
-        mpu = mpu6050.mpu6050(0x68)
 
         last_z_turn = 0
         degree_turned = 0
@@ -70,7 +69,7 @@ class Robot():
             else:
                 self.powertrain.turn_left()
             time.sleep(SLEEP_TIME)
-            gyro_z_scaled =  abs(mpu.get_gyro_data()['z'] * SLEEP_TIME - self.gyro_z_sensor_drift)
+            gyro_z_scaled =  abs(self.gyro_accel.get_gyro_data()['z'] * SLEEP_TIME - self.gyro_z_sensor_drift)
             last_z_turn = gyro_z_scaled
             degree_turned += gyro_z_scaled
             remaining_degree = turn_degree - degree_turned
