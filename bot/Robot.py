@@ -71,7 +71,6 @@ class Robot():
                 self.powertrain.turn_left()
             time.sleep(SLEEP_TIME)
             passed_time = SLEEP_TIME if last_time == 0 else time.time() - last_time
-            print('Passed seconds:', passed_time)
             gyro_z_scaled =  abs(self.gyro_accel.get_gyro_data()['z'] * passed_time - self.gyro_z_sensor_drift)
             last_time = time.time()
             last_z_turn = gyro_z_scaled
