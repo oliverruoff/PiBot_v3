@@ -131,6 +131,10 @@ class Robot():
                 break
 
 
+    def test(self):
+        self.gyro_turn(360, True)
+
+
 # ultrasonic
 US_TRIGGER_PIN = 17
 US_ECHO_PIN = 4
@@ -161,4 +165,4 @@ pt = powertrain.powertrain(
 mpu = mpu6050.mpu6050(0x68)
 
 robot = Robot(us, pt, mpu)
-robot.start()
+robot.test()
