@@ -141,20 +141,28 @@ class Robot():
     def start(self):
         while True:
             spoken_words = self.microphone.recognize_speech()
-            if 'turn left' in spoken_words:
+            if any(ext in spoken_words for ext in ['left']):
+                print('Turning left.')
                 self.gyro_turn(90, False)
-            elif 'turn right' in spoken_words:
+            elif any(ext in spoken_words for ext in ['right']):
+                print('Turning right.')
                 self.gyro_turn(90, True)
-            elif 'forward' in spoken_words:
+            elif any(ext in spoken_words for ext in ['forward', 'front', 'go', 'drive']):
+                print('Moving forward.')
                 self.powertrain.move_front()
                 time.sleep(3)
                 self.powertrain.stop_motors()
-            elif 'backward' in spoken_words:
+            elif any(ext in spoken_words for ext in ['backward', 'back']):
+                print('Moving backward.')
                 self.powertrain.move_back()
                 time.sleep(3)
                 self.powertrain.stop_motors()
-            elif 'drive around' in spoken_words or 'move around' in spoken_words:
+            elif any(ext in spoken_words for ext in ['auto', 'autonomous']):
+                print('Started autonomous driving mode.')
                 self.drive_around()
+            elif any(ext in spoken_words for ext in ['around']):
+                print('Turning around.')
+                self.gyro_turn(180, True)
             else:
                 print('No recognized command! ->', spoken_words)
 
