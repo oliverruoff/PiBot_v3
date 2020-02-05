@@ -1,5 +1,5 @@
 import time
-import threading
+from multiprocessing.pool import ThreadPool
 
 from movement import powertrain
 from sensing import mpu6050,hcsr04
@@ -28,8 +28,8 @@ class Robot():
 
 
     def listen(self):
-        mic_thread = threading.Thread(target=self.microphone.recognize_speech)
-        mic_thread.start()
+        t_pool = ThreadPool(1)
+        self.async_result = t_pool.map_async(self.microphone.recognize_speech, ())
 
 
     def get_gyro_z_sensor_drift(self, samples=10):
@@ -142,8 +142,9 @@ class Robot():
 
 
     def test(self):
-        self.gyro_turn(360, True)
-        time.sleep(9999)
+        self.powertrain.turn_left_wheel(True)
+        while(True):
+            print(self.async_result.get())
 
 
 # ultrasonic
