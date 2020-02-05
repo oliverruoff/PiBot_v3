@@ -3,6 +3,7 @@ import threading
 
 from movement import powertrain
 from sensing import mpu6050,hcsr04
+from sensing import microphone
 
 class Robot():
 
@@ -171,5 +172,7 @@ pt = powertrain.powertrain(
 
 mpu = mpu6050.mpu6050(0x68)
 
-robot = Robot(us, pt, mpu)
+mic = microphone.microphone()
+
+robot = Robot(us, pt, mpu, mic)
 robot.test()
