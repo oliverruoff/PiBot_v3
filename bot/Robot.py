@@ -143,8 +143,10 @@ class Robot():
 
     def test(self):
         self.powertrain.turn_left_wheel(True)
-        while(True):
+        while True:
+            time.sleep(5)
             print(self.async_result.get())
+            self.listen()
 
 
 # ultrasonic
