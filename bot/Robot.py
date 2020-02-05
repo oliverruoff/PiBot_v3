@@ -28,6 +28,7 @@ class Robot():
 
 
     def listen(self):
+        pass
         #t_pool = ThreadPool(1)
         #self.async_result = t_pool.map_async(self.microphone.recognize_speech, ())
 
