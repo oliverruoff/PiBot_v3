@@ -1,5 +1,4 @@
 import time
-import threading
 
 from movement import powertrain
 from sensing import mpu6050,hcsr04
@@ -25,9 +24,7 @@ class Robot():
 
 
     def listen(self):
-        micro_thread = threading.Thread(target=self.microphone.listen)
-        micro_thread.start()
-        micro_thread.join()
+        self.microphone.listen()
 
 
     def get_gyro_z_sensor_drift(self, samples=10):
