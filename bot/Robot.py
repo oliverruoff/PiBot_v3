@@ -1,4 +1,5 @@
 import time
+import thread
 
 from movement import powertrain
 from sensing import mpu6050,hcsr04
@@ -12,12 +13,18 @@ class Robot():
     ultrasonic = None
     powertrain = None
     gyro_accel = None
+    microphone = None
 
 
-    def __init__(self, ultrasonic, powertrain, gyro_accel):
+    def __init__(self, ultrasonic, powertrain, gyro_accel, microphone):
         self.ultrasonic = ultrasonic
         self.powertrain = powertrain
         self.gyro_accel = gyro_accel
+        self.microphone = microphone
+
+
+    def listen(self):
+        thread.start_new_thread(self.microphone.listen, ())
 
 
     def get_gyro_z_sensor_drift(self, samples=10):
