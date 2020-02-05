@@ -30,7 +30,6 @@ class Robot():
     def listen(self):
         mic_thread = threading.Thread(target=self.microphone.recognize_speech)
         mic_thread.start()
-        mic_thread.join()
 
 
     def get_gyro_z_sensor_drift(self, samples=10):

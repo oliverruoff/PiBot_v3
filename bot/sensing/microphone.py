@@ -9,15 +9,13 @@ class microphone:
     recognizer = None
 
     def __init__(self):
-        print('ctor mic.')
         # obtain audio from the microphone
         self.recognizer = sr.Recognizer()
         
 
     def recognize_speech(self):
-        print('Will start listening.')
         with sr.Microphone() as source:
-            print("Say something!")
+            print("Currently listening!")
             audio = self.recognizer.listen(source)
 
         # recognize speech using Google Speech Recognition
