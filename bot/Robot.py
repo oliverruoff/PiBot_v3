@@ -1,4 +1,5 @@
 import time
+import threading
 
 from movement import powertrain
 from sensing import mpu6050,hcsr04
@@ -22,9 +23,14 @@ class Robot():
         self.gyro_accel = gyro_accel
         self.microphone = microphone
 
+        # start speech recognition
+        self.listen()
+
 
     def listen(self):
-        self.microphone.listen()
+        micro_thread = threading.Thread(target=self.microphone.listen)
+        micro_thread.start()
+        micro_thread.join()
 
 
     def get_gyro_z_sensor_drift(self, samples=10):
@@ -171,5 +177,5 @@ mpu = mpu6050.mpu6050(0x68)
 
 mic = microphone.microphone()
 
-robot = Robot(us, pt, mpu, mic)
+robot = Robot(us, pt, mpu, microphone)
 robot.test()
