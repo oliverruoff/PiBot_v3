@@ -144,6 +144,7 @@ class Robot():
 
     def test(self):
         self.gyro_turn(360, True)
+        time.sleep(9999)
 
 
 # ultrasonic
