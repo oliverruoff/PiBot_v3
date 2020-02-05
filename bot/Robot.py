@@ -28,8 +28,8 @@ class Robot():
 
 
     def listen(self):
-        t_pool = ThreadPool(1)
-        self.async_result = t_pool.map_async(self.microphone.recognize_speech, ())
+        #t_pool = ThreadPool(1)
+        #self.async_result = t_pool.map_async(self.microphone.recognize_speech, ())
 
 
     def get_gyro_z_sensor_drift(self, samples=10):
@@ -122,23 +122,40 @@ class Robot():
         print('So, I should', turn_degree, 'to the', log_str)
         return (turn_degree, turn_right)
 
-    def start(self):
+    def drive_around(self):
         self.get_gyro_z_sensor_drift()
         while True:
             try:
                 dist = us.get_distance()
                 if dist < 20:
-                    self.gyro_turn(50, True)
-                elif not self.is_moving():
-                    print('Looks like I\'m stuck, setting back.')
-                    self.powertrain.move_back()
-                    time.sleep(0.5)
-                    self.gyro_turn(50, False)
+                    turn_degree, turn_right = self.get_most_space_direction()
+                    self.gyro_turn(turn_degree, turn_right)
                 else:
                     self.powertrain.move_front()
                 time.sleep(0.1)
             except KeyboardInterrupt:
                 break
+
+
+    def start(self):
+        while True:
+            spoken_words = self.microphone.recognize_speech()
+            if 'turn left' in spoken_words:
+                self.gyro_turn(90, False)
+            elif 'turn right' in spoken_words:
+                self.gyro_turn(90, True)
+            elif 'forward' in spoken_words:
+                self.powertrain.move_front()
+                time.sleep(3)
+                self.powertrain.stop_motors()
+            elif 'backward' in spoken_words:
+                self.powertrain.move_back()
+                time.sleep(3)
+                self.powertrain.stop_motors()
+            elif 'drive around' in spoken_words or 'move around' in spoken_words:
+                self.drive_around()
+            else:
+                print('No recognized command! ->', spoken_words)
 
 
     def test(self):
@@ -181,4 +198,4 @@ mpu = mpu6050.mpu6050(0x68)
 mic = microphone.microphone()
 
 robot = Robot(us, pt, mpu, mic)
-robot.test()
+robot.start()
