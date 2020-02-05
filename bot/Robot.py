@@ -53,7 +53,7 @@ class Robot():
 
     def gyro_turn(self, turn_degree, right=True):
         SLEEP_TIME = 0.1
-        GYRO_MULTIPLIER = 1.125
+        GYRO_MULTIPLIER = 1.072 # needs to be applicated
         motor_speed = 50
         self.powertrain.change_speed_left(motor_speed)
         self.powertrain.change_speed_right(motor_speed)
