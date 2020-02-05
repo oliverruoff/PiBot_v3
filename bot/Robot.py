@@ -53,13 +53,14 @@ class Robot():
 
     def gyro_turn(self, turn_degree, right=True):
         SLEEP_TIME = 0.1
+        GYRO_MULTIPLIER = 1.125
         motor_speed = 50
         self.powertrain.change_speed_left(motor_speed)
         self.powertrain.change_speed_right(motor_speed)
 
         last_z_turn = 0
         degree_turned = 0
-        last_time = 0
+        old_time = 0
         while degree_turned < turn_degree:
             if degree_turned > (turn_degree - (turn_degree / 5)):
                 motor_speed = 20
@@ -70,11 +71,11 @@ class Robot():
             else:
                 self.powertrain.turn_left()
             time.sleep(SLEEP_TIME)
-            passed_time = SLEEP_TIME if last_time == 0 else time.time() - last_time
-            gyro_z_scaled =  abs(self.gyro_accel.get_gyro_data()['z'] * passed_time - self.gyro_z_sensor_drift)
-            last_time = time.time()
+            passed_time = SLEEP_TIME if old_time == 0 else time.time() - old_time
+            gyro_z_scaled =  abs((self.gyro_accel.get_gyro_data()['z'] - self.gyro_z_sensor_drift) * passed_time)
+            old_time = time.time()
             last_z_turn = gyro_z_scaled
-            degree_turned += gyro_z_scaled
+            degree_turned += gyro_z_scaled * GYRO_MULTIPLIER
             remaining_degree = turn_degree - degree_turned
             remaining_seconds_to_turn = SLEEP_TIME / last_z_turn * remaining_degree
             if remaining_degree < last_z_turn:

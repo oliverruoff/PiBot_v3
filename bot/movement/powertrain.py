@@ -73,6 +73,13 @@ class powertrain:
             GPIO.output(self.in4, GPIO.HIGH)
 
 
+    def break_motors(self):
+        GPIO.output(self.in1, GPIO.HIGH)
+        GPIO.output(self.in2, GPIO.HIGH)
+        GPIO.output(self.in3, GPIO.HIGH)
+        GPIO.output(self.in4, GPIO.HIGH)
+
+
     def turn_right_wheel(self, forward=True):
         if forward:
             GPIO.output(self.in1, GPIO.HIGH)
