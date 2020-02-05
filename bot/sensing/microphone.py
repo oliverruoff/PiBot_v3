@@ -12,7 +12,7 @@ class microphone:
         self.recognizer = sr.Recognizer()
         
 
-    def listen(self):
+    def recognize_speech(self):
         print('Will start listening.')
         with sr.Microphone() as source:
             print("Say something!")

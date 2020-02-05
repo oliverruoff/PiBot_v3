@@ -28,9 +28,9 @@ class Robot():
 
 
     def listen(self):
-        micro_thread = threading.Thread(target=self.microphone.listen)
-        micro_thread.start()
-        micro_thread.join()
+        mic_thread = threading.Thread(target=self.microphone.recognize_speech)
+        mic_thread.start()
+        mic_thread.join()
 
 
     def get_gyro_z_sensor_drift(self, samples=10):
@@ -177,5 +177,5 @@ mpu = mpu6050.mpu6050(0x68)
 
 mic = microphone.microphone()
 
-robot = Robot(us, pt, mpu, microphone)
+robot = Robot(us, pt, mpu, mic)
 robot.test()
