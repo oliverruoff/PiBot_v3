@@ -7,11 +7,13 @@ import speech_recognition as sr
 class microphone:
 
     def __init(self):
+        print('ctor mic.')
         # obtain audio from the microphone
         self.recognizer = sr.Recognizer()
         
 
     def listen(self):
+        print('Will start listening.')
         with sr.Microphone() as source:
             print("Say something!")
             audio = self.recognizer.listen(source)
