@@ -86,12 +86,7 @@ class Robot():
         self.powertrain.change_speed_left(motor_speed)
         self.powertrain.change_speed_right(motor_speed)
         # hard stop
-        if right:
-            self.powertrain.turn_left()
-        else:
-            self.powertrain.turn_left()
-        time.sleep(SLEEP_TIME)
-        self.powertrain.stop_motors()
+        self.powertrain.break_motors()
         self.powertrain.change_speed_left(self.motor_speed_left)
         self.powertrain.change_speed_right(self.motor_speed_right)
 

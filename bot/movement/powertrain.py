@@ -78,6 +78,8 @@ class powertrain:
         GPIO.output(self.in2, GPIO.HIGH)
         GPIO.output(self.in3, GPIO.HIGH)
         GPIO.output(self.in4, GPIO.HIGH)
+        sleep(0.5)
+        self.stop_motors()
 
 
     def turn_right_wheel(self, forward=True):
