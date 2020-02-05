@@ -8,7 +8,7 @@ class microphone:
 
     recognizer = None
 
-    def __init(self):
+    def __init__(self):
         print('ctor mic.')
         # obtain audio from the microphone
         self.recognizer = sr.Recognizer()
