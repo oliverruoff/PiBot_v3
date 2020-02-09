@@ -1,11 +1,13 @@
 import RPi.GPIO as GPIO
 from time import sleep
-import movement.motor_controls as mc
+import bot.movement.powertrain as powertrain
 
 print("\n")
 print("The default speed & direction of motor is STOP & Forward.....")
 print("s-stop f-forward b-backward r-right l-left e-exit")
 print("\n")
+
+pt = powertrain.powertrain(0x68)
 
 while(1):
 
@@ -13,23 +15,23 @@ while(1):
 
     if x == 's':
         print("stop")
-        mc.stop_motors()
+        pt.stop_motors()
 
     elif x == 'f':
         print("forward")
-        mc.move_front()
+        pt.move_front()
 
     elif x == 'b':
         print("backward")
-        mc.move_back()
+        pt.move_back()
 
     elif x == 'r':
         print('right')
-        mc.turn_right()
+        pt.turn_right()
 
     elif x == 'l':
         print('left')
-        mc.turn_left()
+        pt.turn_left()
 
     elif x == 'e':
         GPIO.cleanup()
