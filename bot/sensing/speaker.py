@@ -8,3 +8,6 @@ class speaker:
 
     def say_hi(self):
         self.play_sound("assets/WALLE\\ 1.mp3")
+
+    def say_whoa(self):
+        self.play_sound("assets/Whoa.mp3")

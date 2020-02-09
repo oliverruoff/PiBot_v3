@@ -132,6 +132,7 @@ class Robot():
             try:
                 dist = us.get_distance()
                 if dist < 20:
+                    self.speaker.say_whoa()
                     turn_degree, turn_right = self.get_most_space_direction()
                     self.gyro_turn(turn_degree, turn_right)
                 else:
@@ -141,6 +142,7 @@ class Robot():
                 break
 
     def start(self):
+        self.speaker.say_hi()
         while True:
             spoken_words = self.microphone.recognize_speech().lower()
             if any(ext in spoken_words for ext in ['left']):
@@ -171,6 +173,7 @@ class Robot():
     def test(self):
         self.powertrain.turn_left_wheel(True)
         time.sleep(2)
+        self.powertrain.stop_motors()
         self.speaker.say_hi()
         print('Distance:', self.ultrasonic.get_distance())
         print('Gyro:', self.gyro_accel.get_gyro_data())
@@ -210,4 +213,4 @@ mic = microphone.microphone()
 speaker = speaker.speaker()
 
 robot = Robot(us, pt, mpu, mic, speaker)
-robot.test()
+robot.start()
