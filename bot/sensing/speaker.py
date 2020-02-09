@@ -11,4 +11,4 @@ class speaker:
             continue
 
     def say_hi(self):
-        self.play_sound("./assets/WALLE 1.mp3")
+        self.play_sound("/home/pi/develop/PiBot_v3/bot/assets/WALLE 1.mp3")
