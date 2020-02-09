@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 from time import sleep
 
+
 class powertrain:
 
     in1 = None
@@ -55,14 +56,11 @@ class powertrain:
         self.p_a.ChangeDutyCycle(75)
         self.p_b.ChangeDutyCycle(75)
 
-
     def change_speed_left(self, speed):
         self.p_b.ChangeDutyCycle(speed)
 
-
     def change_speed_right(self, speed):
         self.p_a.ChangeDutyCycle(speed)
-
 
     def turn_left_wheel(self, forward=True):
         if forward:
@@ -72,7 +70,6 @@ class powertrain:
             GPIO.output(self.in3, GPIO.LOW)
             GPIO.output(self.in4, GPIO.HIGH)
 
-
     def break_motors(self):
         GPIO.output(self.in1, GPIO.HIGH)
         GPIO.output(self.in2, GPIO.HIGH)
@@ -80,7 +77,6 @@ class powertrain:
         GPIO.output(self.in4, GPIO.HIGH)
         sleep(0.5)
         self.stop_motors()
-
 
     def turn_right_wheel(self, forward=True):
         if forward:
@@ -90,26 +86,21 @@ class powertrain:
             GPIO.output(self.in1, GPIO.LOW)
             GPIO.output(self.in2, GPIO.HIGH)
 
-
     def turn_left(self):
         self.turn_right_wheel()
         self.turn_left_wheel(False)
-
 
     def turn_right(self):
         self.turn_right_wheel(False)
         self.turn_left_wheel()
 
-
     def move_front(self):
         self.turn_right_wheel()
         self.turn_left_wheel()
 
-
     def move_back(self):
         self.turn_right_wheel(False)
         self.turn_left_wheel(False)
-
 
     def stop_motors(self):
         GPIO.output(self.in1, GPIO.LOW)
@@ -117,10 +108,9 @@ class powertrain:
         GPIO.output(self.in3, GPIO.LOW)
         GPIO.output(self.in4, GPIO.LOW)
 
-
     def say_no(self):
         for _ in range(2):
-            self.turn_right()   
+            self.turn_right()
             sleep(0.4)
             self.turn_left()
             sleep(0.4)
