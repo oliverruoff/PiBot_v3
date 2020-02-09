@@ -133,8 +133,7 @@ class Robot():
                 dist = us.get_distance()
                 if dist < 20:
                     self.speaker.say_whoa()
-                    turn_degree, turn_right = self.get_most_space_direction()
-                    self.gyro_turn(turn_degree, turn_right)
+                    self.gyro_turn(50, False)
                 else:
                     self.powertrain.move_front()
                 time.sleep(0.1)
