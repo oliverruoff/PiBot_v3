@@ -132,8 +132,8 @@ class Robot():
             try:
                 dist = us.get_distance()
                 if dist < 20:
-                    self.powertrain.break_motors()
                     self.speaker.say_whoa()
+                    self.powertrain.break_motors()
                     self.powertrain.say_no()
                     self.gyro_turn(50, False)
                 else:
