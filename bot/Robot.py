@@ -2,8 +2,9 @@ import time
 from multiprocessing.pool import ThreadPool
 
 from movement import powertrain
-from sensing import mpu6050,hcsr04
+from sensing import mpu6050, hcsr04
 from sensing import microphone
+
 
 class Robot():
 
@@ -16,7 +17,6 @@ class Robot():
     gyro_accel = None
     microphone = None
 
-
     def __init__(self, ultrasonic, powertrain, gyro_accel, microphone):
         self.ultrasonic = ultrasonic
         self.powertrain = powertrain
@@ -26,12 +26,10 @@ class Robot():
         # start speech recognition
         self.listen()
 
-
     def listen(self):
         pass
         #t_pool = ThreadPool(1)
         #self.async_result = t_pool.map_async(self.microphone.recognize_speech, ())
-
 
     def get_gyro_z_sensor_drift(self, samples=10):
         print('Getting current gyro z sensor drift...')
@@ -43,7 +41,6 @@ class Robot():
         gyro_z_sensor_drift = val_sum/samples
         print('Gyro z sensor drift:', gyro_z_sensor_drift)
         self.gyro_z_sensor_drift = gyro_z_sensor_drift
-
 
     def is_moving(self, retries=5):
         '''
@@ -58,7 +55,8 @@ class Robot():
             return True
         else:
             for _ in range(retries):
-                gyro_z = abs(mpu.get_gyro_data()['z'] - self.gyro_z_sensor_drift)
+                gyro_z = abs(mpu.get_gyro_data()[
+                             'z'] - self.gyro_z_sensor_drift)
                 # print('Retrying gyro z:', gyro_z)
                 if gyro_z > Z_MOVEMENT_THRESHOLD:
                     return True
@@ -66,7 +64,7 @@ class Robot():
 
     def gyro_turn(self, turn_degree, right=True):
         SLEEP_TIME = 0.1
-        GYRO_MULTIPLIER = 1.072 # needs to be applicated
+        GYRO_MULTIPLIER = 1.072  # needs to be applicated
         motor_speed = 50
         self.powertrain.change_speed_left(motor_speed)
         self.powertrain.change_speed_right(motor_speed)
@@ -85,7 +83,8 @@ class Robot():
                 self.powertrain.turn_left()
             time.sleep(SLEEP_TIME)
             passed_time = SLEEP_TIME if old_time == 0 else time.time() - old_time
-            gyro_z_scaled =  abs((self.gyro_accel.get_gyro_data()['z'] - self.gyro_z_sensor_drift) * passed_time)
+            gyro_z_scaled = abs((self.gyro_accel.get_gyro_data()[
+                                'z'] - self.gyro_z_sensor_drift) * passed_time)
             old_time = time.time()
             last_z_turn = gyro_z_scaled
             degree_turned += gyro_z_scaled * GYRO_MULTIPLIER
@@ -113,13 +112,14 @@ class Robot():
                 max_dist = dist
                 degree = i
         turn_right = True
-        log_str = 'right' # only needed for print
+        log_str = 'right'  # only needed for print
         turn_degree = degree
         if degree > 180:
             turn_right = False
             turn_degree = 360 - degree
         log_str = 'left'
-        print('At degree:', degree, 'there is the most space, about:', max_dist, 'cm.')
+        print('At degree:', degree,
+              'there is the most space, about:', max_dist, 'cm.')
         print('So, I should', turn_degree, 'to the', log_str)
         return (turn_degree, turn_right)
 
@@ -136,7 +136,6 @@ class Robot():
                 time.sleep(0.1)
             except KeyboardInterrupt:
                 break
-
 
     def start(self):
         while True:
@@ -166,13 +165,8 @@ class Robot():
             else:
                 print('No recognized command! ->', spoken_words)
 
-
     def test(self):
         self.powertrain.turn_left_wheel(True)
-        while True:
-            time.sleep(5)
-            print(self.async_result.get())
-            self.listen()
 
 
 # ultrasonic
@@ -207,4 +201,4 @@ mpu = mpu6050.mpu6050(0x68)
 mic = microphone.microphone()
 
 robot = Robot(us, pt, mpu, mic)
-robot.start()
+robot.test()
