@@ -171,12 +171,7 @@ class Robot():
                 print('No recognized command! ->', spoken_words)
 
     def test(self):
-        self.powertrain.turn_left_wheel(True)
-        time.sleep(2)
-        self.powertrain.stop_motors()
-        self.speaker.say_hi()
-        print('Distance:', self.ultrasonic.get_distance())
-        print('Gyro:', self.gyro_accel.get_gyro_data())
+        self.drive_around()
 
 
 # ultrasonic
