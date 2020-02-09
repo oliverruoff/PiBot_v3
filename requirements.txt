@@ -1,0 +1,4 @@
+flac
+PyAudio
+SpeechRecognition
+pygame

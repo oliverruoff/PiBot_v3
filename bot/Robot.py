@@ -5,6 +5,7 @@ import RPi.GPIO as GPIO
 from movement import powertrain
 from sensing import mpu6050, hcsr04
 from sensing import microphone
+from sensing import speaker
 
 GPIO.setmode(GPIO.BCM)
 
@@ -20,11 +21,12 @@ class Robot():
     gyro_accel = None
     microphone = None
 
-    def __init__(self, ultrasonic, powertrain, gyro_accel, microphone):
+    def __init__(self, ultrasonic, powertrain, gyro_accel, microphone, speaker):
         self.ultrasonic = ultrasonic
         self.powertrain = powertrain
         self.gyro_accel = gyro_accel
         self.microphone = microphone
+        self.speaker = speaker
 
         # start speech recognition
         self.listen()
@@ -170,6 +172,8 @@ class Robot():
 
     def test(self):
         self.powertrain.turn_left_wheel(True)
+        time.sleep(2)
+        self.speaker.say_hi()
 
 
 # ultrasonic
@@ -203,5 +207,7 @@ mpu = mpu6050.mpu6050(0x68)
 
 mic = microphone.microphone()
 
-robot = Robot(us, pt, mpu, mic)
+speaker = speaker.speaker()
+
+robot = Robot(us, pt, mpu, mic, speaker)
 robot.test()
