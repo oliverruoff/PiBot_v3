@@ -172,6 +172,8 @@ class Robot():
                 print('No recognized command! ->', spoken_words)
 
     def test(self):
+        self.speaker.say_hi()
+        self.gyro_turn(360, True)
         self.drive_around()
 
 
