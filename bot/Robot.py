@@ -172,6 +172,8 @@ class Robot():
         self.powertrain.turn_left_wheel(True)
         time.sleep(2)
         self.speaker.say_hi()
+        print('Distance:', self.ultrasonic.get_distance())
+        print('Gyro:', self.gyro_accel.get_gyro_data())
 
 
 # ultrasonic
