@@ -1,11 +1,16 @@
 import os
 from threading import Thread
+import pygame
 
 
 class speaker:
 
     def play_sound(self, path_to_audio):
-        os.system('mpg321 ' + path_to_audio + ' > /dev/null')
+        pygame.mixer.init()
+        pygame.mixer.music.load(path_to_audio)
+        pygame.mixer.music.play()
+        while pygame.mixer.music.get_busy() is True:
+            continue
 
     def say_hi(self):
         thread = Thread(target=self.play_sound, args=(
