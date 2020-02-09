@@ -7,7 +7,25 @@ print("The default speed & direction of motor is STOP & Forward.....")
 print("s-stop f-forward b-backward r-right l-left e-exit")
 print("\n")
 
-pt = powertrain.powertrain(0x68)
+# powertrain
+POWERTRAIN_IN1_PIN = 19
+POWERTRAIN_IN2_PIN = 13
+POWERTRAIN_IN3_PIN = 6
+POWERTRAIN_IN4_PIN = 5
+POWERTRAIN_ENA_PIN = 26
+POWERTRAIN_ENB_PIN = 11
+MOTORSPEED_LEFT = 75
+MOTORSPEED_RIGHT = 75
+
+pt = powertrain.powertrain(
+    POWERTRAIN_IN1_PIN,
+    POWERTRAIN_IN2_PIN,
+    POWERTRAIN_IN3_PIN,
+    POWERTRAIN_IN4_PIN,
+    POWERTRAIN_ENA_PIN,
+    POWERTRAIN_ENB_PIN,
+    MOTORSPEED_LEFT,
+    MOTORSPEED_RIGHT)
 
 while(1):
 
