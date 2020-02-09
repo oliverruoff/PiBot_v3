@@ -13,13 +13,16 @@ class speaker:
             continue
 
     def say_hi(self):
+        relative_path = "assets/WALLE\\ 1.mp3"
+
         thread = Thread(target=self.play_sound, args=(
-            "assets/WALLE\\ 1.mp3", )).start()
+            os.path.abspath(relative_path), )).start()
         thread.start()
         # self.play_sound("assets/WALLE\\ 1.mp3")
 
     def say_whoa(self):
+        relative_path = "assets/Whoa.mp3"
         thread = Thread(target=self.play_sound, args=(
-            "assets/Whoa.mp3", )).start()
+            os.path.abspath(relative_path), )).start()
         thread.start()
         # self.play_sound("assets/Whoa.mp3")
