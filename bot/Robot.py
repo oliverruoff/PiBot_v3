@@ -133,6 +133,7 @@ class Robot():
                 dist = us.get_distance()
                 if dist < 20:
                     self.speaker.say_whoa()
+                    self.powertrain.say_no()
                     self.gyro_turn(50, False)
                 else:
                     self.powertrain.move_front()
