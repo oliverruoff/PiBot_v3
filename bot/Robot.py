@@ -3,9 +3,7 @@ from multiprocessing.pool import ThreadPool
 import RPi.GPIO as GPIO
 
 from movement import powertrain
-from sensing import mpu6050, hcsr04
-from sensing import microphone
-from sensing import speaker
+from sensing import mpu6050, hcsr04, microphone, speaker
 
 GPIO.setmode(GPIO.BCM)
 
