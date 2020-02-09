@@ -94,11 +94,11 @@ class powertrain:
         self.turn_right_wheel(False)
         self.turn_left_wheel()
 
-    def move_front(self):
+    def move_back(self):
         self.turn_right_wheel()
         self.turn_left_wheel()
 
-    def move_back(self):
+    def move_front(self):
         self.turn_right_wheel(False)
         self.turn_left_wheel(False)
 
