@@ -2,6 +2,9 @@ import sys
 sys.path.append('/home/pi/.local/lib/python3.7/site-packages')
 import socket
 import pyttsx3
+import time
+
+time.sleep(30)  # wait 30s for internet connection
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.connect(("8.8.8.8", 80))
@@ -33,10 +36,9 @@ engine.setProperty('voice', voices[8].id)
 #       print(idx, voice.id)
 
 
-ip = ip.replace('', ' ').replace('.', 'Punkt')
-print(ip)
-
 engine.say('Guten Tag.')
+print(ip)
+ip = ip.replace('', ' ').replace('.', 'Punkt')
 engine.say('Meine IP Adresse ist ' + ip)
 engine.runAndWait()
 engine.stop()
