@@ -173,11 +173,11 @@ class Robot():
 
     def test(self):
         self.speaker.say_hi()
-        self.powertrain.say_no()
+        self.gyro_turn(360, True)
         self.powertrain.break_motors()
         time.sleep(1)
         self.speaker.say_eva()
-        self.powertrain.say_yes()
+        self.powertrain.say_no()
         self.powertrain.break_motors()
         time.sleep(2)
 
