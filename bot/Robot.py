@@ -216,4 +216,4 @@ mic = microphone.microphone()
 speaker = speaker.speaker()
 
 robot = Robot(us, pt, mpu, mic, speaker)
-robot.test()
+robot.drive_around()
