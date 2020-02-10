@@ -4,13 +4,6 @@ import socket
 import pyttsx3
 import time
 
-time.sleep(30)  # wait 30s for internet connection
-
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-s.connect(("8.8.8.8", 80))
-ip = s.getsockname()[0]
-s.close()
-
 engine = pyttsx3.init()  # object creation
 
 """ RATE"""
@@ -37,6 +30,14 @@ engine.setProperty('voice', voices[8].id)
 
 
 engine.say('Guten Tag.')
+
+time.sleep(30)  # wait 30s for internet connection
+
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+s.connect(("8.8.8.8", 80))
+ip = s.getsockname()[0]
+s.close()
+
 print(ip)
 ip = ip.replace('', ' ').replace('.', 'Punkt')
 engine.say('Meine IP Adresse ist ' + ip)
