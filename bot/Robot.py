@@ -174,6 +174,8 @@ class Robot():
     def test(self):
         self.speaker.say_hi()
         self.gyro_turn(720, True)
+        self.speaker.say_eva()
+        time.sleep(3)
 
 
 # ultrasonic

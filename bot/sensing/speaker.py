@@ -13,7 +13,7 @@ class speaker:
             continue
 
     def say_hi(self):
-        relative_path = "assets/WALLE 1.mp3"
+        relative_path = "assets/Walle1.mp3"
 
         Thread(target=self.play_sound, args=(
             os.path.abspath(relative_path), )).start()
@@ -24,3 +24,8 @@ class speaker:
         Thread(target=self.play_sound, args=(
             os.path.abspath(relative_path), )).start()
         # self.play_sound("assets/Whoa.mp3")
+
+    def say_eva(self):
+        relative_path = "assets/Eva1.mp3"
+        Thread(target=self.play_sound, args=(
+            os.path.abspath(relative_path), )).start()
