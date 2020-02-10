@@ -174,8 +174,10 @@ class Robot():
     def test(self):
         self.speaker.say_hi()
         self.powertrain.say_no()
+        time.sleep(3)
         self.speaker.say_eva()
-        time.sleep(5)
+        self.powertrain.say_yes()
+        time.sleep(3)
 
 
 # ultrasonic

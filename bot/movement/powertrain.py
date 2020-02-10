@@ -114,3 +114,10 @@ class powertrain:
             sleep(0.2)
             self.turn_left()
             sleep(0.2)
+
+    def say_yes(self):
+        for _ in range(2):
+            self.move_front()
+            sleep(0.2)
+            self.move_back()
+            sleep(0.2)
