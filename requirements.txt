@@ -1,3 +1,4 @@
 flac
 PyAudio
 SpeechRecognition
+pyttsx3

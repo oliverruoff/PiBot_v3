@@ -111,6 +111,6 @@ class powertrain:
     def say_no(self):
         for _ in range(2):
             self.turn_right()
-            sleep(0.4)
+            sleep(0.2)
             self.turn_left()
-            sleep(0.4)
+            sleep(0.2)

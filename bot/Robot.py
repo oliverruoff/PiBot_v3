@@ -65,21 +65,21 @@ class Robot():
                     return True
             return False
 
-    def gyro_turn(self, turn_degree, right=True):
+    def gyro_turn(self, turn_degree, right=True, motor_speed=75):
         SLEEP_TIME = 0.1
         GYRO_MULTIPLIER = 1.072  # needs to be applicated
-        motor_speed = 50
-        self.powertrain.change_speed_left(motor_speed)
-        self.powertrain.change_speed_right(motor_speed)
+        _motor_speed = motor_speed
+        self.powertrain.change_speed_left(_motor_speed)
+        self.powertrain.change_speed_right(_motor_speed)
 
         last_z_turn = 0
         degree_turned = 0
         old_time = 0
         while degree_turned < turn_degree:
             if degree_turned > (turn_degree - (turn_degree / 5)):
-                motor_speed = 20
-                self.powertrain.change_speed_left(motor_speed)
-                self.powertrain.change_speed_right(motor_speed)
+                _motor_speed = 20
+                self.powertrain.change_speed_left(_motor_speed)
+                self.powertrain.change_speed_right(_motor_speed)
             if right:
                 self.powertrain.turn_right()
             else:
@@ -97,9 +97,9 @@ class Robot():
                 if remaining_seconds_to_turn > 0:
                     time.sleep(remaining_seconds_to_turn)
                 break
-        motor_speed = 50
-        self.powertrain.change_speed_left(motor_speed)
-        self.powertrain.change_speed_right(motor_speed)
+        _motor_speed = motor_speed
+        self.powertrain.change_speed_left(_motor_speed)
+        self.powertrain.change_speed_right(_motor_speed)
         # hard stop
         self.powertrain.break_motors()
         self.powertrain.change_speed_left(self.motor_speed_left)
@@ -173,8 +173,7 @@ class Robot():
 
     def test(self):
         self.speaker.say_hi()
-        self.gyro_turn(360, True)
-        self.drive_around()
+        self.gyro_turn(720, True)
 
 
 # ultrasonic
