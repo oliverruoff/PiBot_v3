@@ -174,9 +174,11 @@ class Robot():
     def test(self):
         self.speaker.say_hi()
         self.powertrain.say_no()
+        self.powertrain.break_motors()
         time.sleep(3)
         self.speaker.say_eva()
         self.powertrain.say_yes()
+        self.powertrain.break_motors()
         time.sleep(3)
 
 
