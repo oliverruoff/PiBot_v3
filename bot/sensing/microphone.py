@@ -25,6 +25,7 @@ class microphone:
             # instead of `r.recognize_google(audio)`
             return self.recognizer.recognize_google(audio)
         except sr.UnknownValueError:
-            return "Google Speech Recognition could not understand audio"
+            print("Google Speech Recognition could not understand audio")
         except sr.RequestError as e:
-            return "Could not request results from Google Speech Recognition service; {0}".format(e)
+            print(
+                "Could not request results from Google Speech Recognition service; {0}".format(e))
