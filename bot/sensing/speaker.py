@@ -5,8 +5,10 @@ import pygame
 
 class speaker:
 
-    def play_sound(self, path_to_audio):
+    def __init__(self):
         pygame.mixer.init()
+
+    def play_sound(self, path_to_audio):
         pygame.mixer.music.load(path_to_audio)
         pygame.mixer.music.play()
         while pygame.mixer.music.get_busy() is True:
