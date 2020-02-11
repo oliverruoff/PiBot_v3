@@ -134,7 +134,7 @@ class Robot():
                 if dist < 20:
                     self.speaker.say_whoa()
                     self.powertrain.break_motors()
-                    self.powertrain.say_no()
+                    self.powertrain.act_no()
                     self.gyro_turn(50, False)
                 else:
                     self.powertrain.move_front()
@@ -177,7 +177,7 @@ class Robot():
         self.powertrain.break_motors()
         time.sleep(1)
         self.speaker.say_eva()
-        self.powertrain.say_no()
+        self.powertrain.act_no()
         self.powertrain.break_motors()
         time.sleep(2)
 
@@ -216,4 +216,4 @@ mic = microphone.microphone()
 speaker = speaker.speaker()
 
 robot = Robot(us, pt, mpu, mic, speaker)
-robot.drive_around()
+robot.start()
