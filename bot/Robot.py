@@ -146,6 +146,7 @@ class Robot():
         self.speaker.say_hi()
         while True:
             spoken_words = self.microphone.recognize_speech().lower()
+            print('I understood:', spoken_words)
             if any(ext in spoken_words for ext in ['left']):
                 print('Turning left.')
                 self.gyro_turn(90, False)

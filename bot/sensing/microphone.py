@@ -4,6 +4,7 @@
 
 import speech_recognition as sr
 
+
 class microphone:
 
     recognizer = None
@@ -11,7 +12,6 @@ class microphone:
     def __init__(self):
         # obtain audio from the microphone
         self.recognizer = sr.Recognizer()
-        
 
     def recognize_speech(self):
         with sr.Microphone() as source:
