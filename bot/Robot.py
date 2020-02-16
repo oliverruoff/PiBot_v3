@@ -131,11 +131,11 @@ class Robot():
         while True:
             try:
                 dist = us.get_distance()
-                if dist < 20:
+                if dist < 50:
                     self.speaker.say_whoa()
                     self.powertrain.break_motors()
                     self.powertrain.act_no()
-                    self.gyro_turn(50, False)
+                    self.gyro_turn(70, False)
                 else:
                     self.powertrain.move_front()
                 time.sleep(0.1)
@@ -173,14 +173,7 @@ class Robot():
                 print('No recognized command! ->', spoken_words)
 
     def test(self):
-        self.speaker.say_hi()
-        self.gyro_turn(360, True)
-        self.powertrain.break_motors()
-        time.sleep(1)
-        self.speaker.say_eva()
-        self.powertrain.act_no()
-        self.powertrain.break_motors()
-        time.sleep(2)
+        self.drive_around()
 
 
 # ultrasonic
@@ -217,4 +210,4 @@ mic = microphone.microphone()
 speaker = speaker.speaker()
 
 robot = Robot(us, pt, mpu, mic, speaker)
-robot.start()
+robot.test()
