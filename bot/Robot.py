@@ -207,10 +207,9 @@ pt = powertrain.powertrain(
     MOTORSPEED_RIGHT)
 
 mpu = mpu6050.mpu6050(0x68)
-
 mic = microphone.microphone()
-
 speaker = speaker.speaker()
+camera = camera.camera()
 
-robot = Robot(us, pt, mpu, mic, speaker)
+robot = Robot(us, pt, mpu, mic, speaker, camera)
 robot.test()
