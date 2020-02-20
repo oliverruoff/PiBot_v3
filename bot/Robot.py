@@ -3,7 +3,7 @@ from multiprocessing.pool import ThreadPool
 import RPi.GPIO as GPIO
 
 from movement import powertrain
-from sensing import mpu6050, hcsr04, microphone, speaker
+from sensing import mpu6050, hcsr04, microphone, speaker, camera
 
 GPIO.setmode(GPIO.BCM)
 
@@ -19,12 +19,13 @@ class Robot():
     gyro_accel = None
     microphone = None
 
-    def __init__(self, ultrasonic, powertrain, gyro_accel, microphone, speaker):
+    def __init__(self, ultrasonic, powertrain, gyro_accel, microphone, speaker, camera):
         self.ultrasonic = ultrasonic
         self.powertrain = powertrain
         self.gyro_accel = gyro_accel
         self.microphone = microphone
         self.speaker = speaker
+        self.camera = camera
 
         # start speech recognition
         self.listen()
@@ -173,7 +174,9 @@ class Robot():
                 print('No recognized command! ->', spoken_words)
 
     def test(self):
-        self.drive_around()
+        for i in range(5):
+            self.camera.detect_objects()
+            self.gyro_turn(72)
 
 
 # ultrasonic
