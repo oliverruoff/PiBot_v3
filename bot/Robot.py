@@ -126,6 +126,7 @@ class Robot():
                 self.motor_speed_left += int(gyro_z/2)
 
             print('_________________________')
+            print('GyroZ:', gyro_z)
             print('Left motor speed:', self.motor_speed_left)
             print('Right motor speed:', self.motor_speed_right)
             print('_________________________')
