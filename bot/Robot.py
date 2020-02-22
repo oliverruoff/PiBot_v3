@@ -110,7 +110,7 @@ class Robot():
         self.powertrain.change_speed_left(self.motor_speed_left)
         self.powertrain.change_speed_right(self.motor_speed_right)
 
-    def _gyro_drive(self, forward):
+    def gyro_supported_movement(self, forward=True):
         print('_________________________')
         print('Left motor speed:', self.motor_speed_left)
         print('Right motor speed:', self.motor_speed_right)
@@ -133,10 +133,6 @@ class Robot():
         self.motor_speed_left = old_motor_speed_left
         self.motor_speed_right = old_motor_speed_right
         self.powertrain.break_motors()
-
-    def gyro_drive_start(self, forward=True):
-        self.powertrain.move_front()
-        Thread(target=self._gyro_drive, args=(forward, )).start()
 
     def get_most_space_direction(self):
         max_dist = 0
@@ -210,10 +206,12 @@ class Robot():
         time.sleep(3)
         self.powertrain.break_motors()
         time.sleep(3)
-        self.gyro_drive_start()
+        self.powertrain.move_front()
+        movement_thread = Thread(
+            target=self.gyro_supported_movement, args=(True, )).start()
         time.sleep(3)
         self.is_driving = False
-
+        movement_thread.join()
 
 
 # ultrasonic
