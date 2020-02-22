@@ -118,6 +118,7 @@ class Robot():
         old_motor_speed_left = self.motor_speed_left
         old_motor_speed_right = self.motor_speed_right
         sleep_time_s = 0.1
+        print('is driving?', self.is_driving)
         while self.is_driving:
             gyro_z = self.gyro_accel.get_gyro_data(
             )['z'] - self.gyro_z_sensor_drift
@@ -208,8 +209,10 @@ class Robot():
         time.sleep(3)
         self.powertrain.move_front()
         movement_thread = Thread(
-            target=self.gyro_supported_movement, args=(True, )).start()
+            target=self.gyro_supported_movement, args=(True, ))
+        movement_thread.start()
         time.sleep(3)
+        print('stopping async movement tracking')
         self.is_driving = False
         movement_thread.join()
 
