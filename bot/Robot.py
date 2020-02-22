@@ -67,6 +67,9 @@ class Robot():
         self.powertrain.change_speed_left(_motor_speed)
         self.powertrain.change_speed_right(_motor_speed)
 
+        old_speed_left = self.motor_speed_left
+        old_speed_right = self.motor_speed_right
+
         last_z_turn = 0
         degree_turned = 0
         old_time = 0
@@ -97,8 +100,8 @@ class Robot():
         self.powertrain.change_speed_right(_motor_speed)
         # hard stop
         self.powertrain.break_motors()
-        self.powertrain.change_speed_left(self.motor_speed_left)
-        self.powertrain.change_speed_right(self.motor_speed_right)
+        self.powertrain.change_speed_left(old_speed_left)
+        self.powertrain.change_speed_right(old_speed_right)
 
     def gyro_move_start(self, forward):
         '''
