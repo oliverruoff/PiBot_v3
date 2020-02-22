@@ -197,7 +197,7 @@ class Robot():
 
     def test(self):
         while(True):
-            gyro_z = self.gyro_accel.get_gyro_data['z'] - \
+            gyro_z = self.gyro_accel.get_gyro_data()['z'] - \
                 self.gyro_z_sensor_drift
             print('gyro_z:', gyro_z)
             time.sleep(100)
