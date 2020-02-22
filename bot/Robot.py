@@ -208,6 +208,7 @@ class Robot():
         self.powertrain.break_motors()
         time.sleep(3)
         self.powertrain.move_front()
+        self.is_driving = True
         movement_thread = Thread(
             target=self.gyro_supported_movement, args=(True, ))
         movement_thread.start()
