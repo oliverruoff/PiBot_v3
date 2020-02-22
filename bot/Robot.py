@@ -1,6 +1,8 @@
 import time
 from multiprocessing.pool import ThreadPool
 import RPi.GPIO as GPIO
+from threading import Thread
+import os
 
 from movement import powertrain
 from sensing import mpu6050, hcsr04, microphone, speaker, camera
@@ -13,6 +15,7 @@ class Robot():
     motor_speed_left = 75
     motor_speed_right = 75
     gyro_z_sensor_drift = -1.8
+    is_driving = False
 
     ultrasonic = None
     powertrain = None
@@ -27,13 +30,14 @@ class Robot():
         self.speaker = speaker
         self.camera = camera
 
-        # start speech recognition
-        self.listen()
+        self.is_driving = False
+
+        self.get_gyro_z_sensor_drift()
 
     def listen(self):
         pass
-        #t_pool = ThreadPool(1)
-        #self.async_result = t_pool.map_async(self.microphone.recognize_speech, ())
+        # t_pool = ThreadPool(1)
+        # self.async_result = t_pool.map_async(self.microphone.recognize_speech, ())
 
     def get_gyro_z_sensor_drift(self, samples=10):
         print('Getting current gyro z sensor drift...')
@@ -106,6 +110,24 @@ class Robot():
         self.powertrain.change_speed_left(self.motor_speed_left)
         self.powertrain.change_speed_right(self.motor_speed_right)
 
+    def _gyro_drive(self, forward):
+        print('_________________________')
+        print('Left motor speed:', self.motor_speed_left)
+        print('Right motor speed:', self.motor_speed_right)
+        print('_________________________')
+        sleep_time_ms = 100
+        while self.is_driving:
+            gyro_z = self.gyro_accel.get_gyro_data(
+            )['z'] - self.gyro_z_sensor_drift
+            print('Gyro_z:', gyro_z)
+
+            time.sleep(sleep_time_ms)
+        self.powertrain.break_motors()
+
+    def gyro_drive_starter(self, forward=true):
+        self.powertrain.move_front()
+        Thread(target=self._gyro_drive, args=(forward, )).start()
+
     def get_most_space_direction(self):
         max_dist = 0
         degree = 0
@@ -174,9 +196,11 @@ class Robot():
                 print('No recognized command! ->', spoken_words)
 
     def test(self):
-        for i in range(5):
-            self.camera.detect_objects()
-            self.gyro_turn(72)
+        while(True):
+            gyro_z = self.gyro_accel.get_gyro_data['z'] - \
+                self.gyro_z_sensor_drift
+            print('gyro_z:', gyro_z)
+            time.sleep(100)
 
 
 # ultrasonic
