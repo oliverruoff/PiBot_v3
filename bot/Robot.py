@@ -206,12 +206,13 @@ class Robot():
                 print('No recognized command! ->', spoken_words)
 
     def test(self):
+        self.powertrain.move_front()
+        time.sleep(3)
+        self.powertrain.break_motors()
+        time.sleep(3)
         self.gyro_drive_start()
         time.sleep(3)
         self.is_driving = False
-        time.sleep(3)
-        self.powertrain.move_front()
-        time.sleep(3)
 
 
 
