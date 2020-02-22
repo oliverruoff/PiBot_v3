@@ -34,12 +34,11 @@ class Robot():
 
         self.get_gyro_z_sensor_drift()
 
-    def listen(self):
-        pass
-        # t_pool = ThreadPool(1)
-        # self.async_result = t_pool.map_async(self.microphone.recognize_speech, ())
-
     def get_gyro_z_sensor_drift(self, samples=10):
+        '''
+        Fills field variable "self.gyro_z_sensor_drift", which is used in
+        gyro sensor functions. (Call this function at startup of robot.)
+        '''
         print('Getting current gyro z sensor drift...')
         mpu = mpu6050.mpu6050(0x68)
         val_sum = 0
@@ -50,27 +49,18 @@ class Robot():
         print('Gyro z sensor drift:', gyro_z_sensor_drift)
         self.gyro_z_sensor_drift = gyro_z_sensor_drift
 
-    def is_moving(self, retries=5):
-        '''
-        Checks if the robot is currently moving (or might need
-        to hand over to unstuck strategy)
-        '''
-        Z_MOVEMENT_THRESHOLD = 1.1
-        mpu = mpu6050.mpu6050(0x68)
-        gyro_z = abs(mpu.get_gyro_data()['z'] - self.gyro_z_sensor_drift)
-        # print('Gyro z:', gyro_z)
-        if gyro_z > Z_MOVEMENT_THRESHOLD:
-            return True
-        else:
-            for _ in range(retries):
-                gyro_z = abs(mpu.get_gyro_data()[
-                             'z'] - self.gyro_z_sensor_drift)
-                # print('Retrying gyro z:', gyro_z)
-                if gyro_z > Z_MOVEMENT_THRESHOLD:
-                    return True
-            return False
-
     def gyro_turn(self, turn_degree, right=True, motor_speed=75):
+        """Turns robot by specified degree, always use this function to turn
+        robot precisely. Uses gyro sensor.
+
+        Arguments:
+            turn_degree {int} -- Degree to turn, has to be positive, 
+            direction is controlled via "right" argument.
+
+        Keyword Arguments:
+            right {bool} -- Turns right if true, else left. (default: {True})
+            motor_speed {int} -- Defines how fast robot turns around (0-100) (default: {75})
+        """
         SLEEP_TIME = 0.1
         GYRO_MULTIPLIER = 1.176  # needs to be applicated
         _motor_speed = motor_speed
@@ -110,21 +100,13 @@ class Robot():
         self.powertrain.change_speed_left(self.motor_speed_left)
         self.powertrain.change_speed_right(self.motor_speed_right)
 
-    def gyro_move_timed(self, move_time_s, forward, async_movement=False):
-        if forward:
-            self.powertrain.move_front()
-        else:
-            self.powertrain.move_back()
-        self.is_driving = True
-        movement_thread = Thread(
-            target=self._gyro_supported_movement, args=(forward, ))
-        movement_thread.start()
-        time.sleep(move_time_s)
-        self.is_driving = False
-        if async_movement is False:
-            movement_thread.join()
-
     def gyro_move_start(self, forward):
+        '''
+        Moves robot forward or backward, stabilized with gyro sensor.
+        Always use this function to move robot! 
+        To stop movement, call "gyro_move_stop()".
+        Uses self.is_driving field variable.
+        '''
         if forward:
             self.powertrain.move_front()
         else:
@@ -135,9 +117,19 @@ class Robot():
         movement_thread.start()
 
     def gyro_move_stop(self):
+        """Use this function some time after calling 'gyro_move_start()',
+        to stop the robot. The robot will automatically break (not only stop
+        spinning motors). Sets field variable 'self.is_driving'
+        """
         self.is_driving = False
 
     def _gyro_supported_movement(self, forward):
+        """Do not use this function! To move the robot, call the functions 'gyro_move_start()'
+        and 'gyro_move_stop()'.
+
+        Arguments:
+            forward {bool} -- Moves forward if True, else backward.
+        """
         old_motor_speed_left = self.motor_speed_left
         old_motor_speed_right = self.motor_speed_right
         sleep_time_s = 0.1
@@ -158,11 +150,11 @@ class Robot():
                 else:
                     self.motor_speed_right += int(abs(gyro_z)/2)
                     self.motor_speed_left -= int(abs(gyro_z)/2)
-            print('_________________________')
-            print('GyroZ:', gyro_z)
-            print('Adjusting Left motor speed:', self.motor_speed_left)
-            print('Adjusting Right motor speed:', self.motor_speed_right)
-            print('_________________________')
+            # print('_________________________')
+            # print('GyroZ:', gyro_z)
+            # print('Adjusting Left motor speed:', self.motor_speed_left)
+            # print('Adjusting Right motor speed:', self.motor_speed_right)
+            # print('_________________________')
             self.powertrain.change_speed_left(self.motor_speed_left)
             self.powertrain.change_speed_right(self.motor_speed_right)
             time.sleep(sleep_time_s)
@@ -239,12 +231,24 @@ class Robot():
 
     def test(self):
         self.gyro_move_start(True)
+        time.sleep(2)
+        self.gyro_move_stop()
+        self.gyro_turn(90)
+        self.gyro_move_start(True)
+        time.sleep(2)
+        self.gyro_move_stop()
+        self.gyro_turn(90, False)
+        self.gyro_move_start(True)
+        time.sleep(2)
+        self.gyro_move_stop()
+        self.gyro_turn(90, False)
+        self.gyro_move_start(True)
+        time.sleep(2)
+        self.gyro_move_stop()
+        self.gyro_turn(90, False)
+        self.gyro_move_start(True)
         time.sleep(4)
         self.gyro_move_stop()
-        self.gyro_move_start(False)
-        time.sleep(4)
-        self.gyro_move_stop()
-        self.speaker.say_hi()
 
     def _test(self):
         self.powertrain.change_speed_left(30)
