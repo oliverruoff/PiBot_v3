@@ -118,7 +118,7 @@ class Robot():
         while self.is_driving:
             gyro_z = self.gyro_accel.get_gyro_data(
             )['z'] - self.gyro_z_sensor_drift
-            if gyro_z > 0:
+            if gyro_z < 0:
                 self.motor_speed_right += int(gyro_z/2)
                 self.motor_speed_left -= int(gyro_z/2)
             else:
