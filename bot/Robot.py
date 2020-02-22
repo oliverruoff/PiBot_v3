@@ -115,7 +115,7 @@ class Robot():
         print('Left motor speed:', self.motor_speed_left)
         print('Right motor speed:', self.motor_speed_right)
         print('_________________________')
-        sleep_time_ms = 100
+        sleep_time_s = 0.1
         while self.is_driving:
             gyro_z = self.gyro_accel.get_gyro_data(
             )['z'] - self.gyro_z_sensor_drift
@@ -200,7 +200,7 @@ class Robot():
             gyro_z = self.gyro_accel.get_gyro_data()['z'] - \
                 self.gyro_z_sensor_drift
             print('gyro_z:', gyro_z)
-            time.sleep(100)
+            time.sleep(0.1)
 
 
 # ultrasonic
