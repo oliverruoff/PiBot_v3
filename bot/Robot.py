@@ -111,10 +111,6 @@ class Robot():
         self.powertrain.change_speed_right(self.motor_speed_right)
 
     def gyro_supported_movement(self, forward=True):
-        print('_________________________')
-        print('Left motor speed:', self.motor_speed_left)
-        print('Right motor speed:', self.motor_speed_right)
-        print('_________________________')
         old_motor_speed_left = self.motor_speed_left
         old_motor_speed_right = self.motor_speed_right
         sleep_time_s = 0.1
@@ -128,6 +124,12 @@ class Robot():
             else:
                 self.motor_speed_right -= int(gyro_z/2)
                 self.motor_speed_left += int(gyro_z/2)
+
+            print('_________________________')
+            print('Left motor speed:', self.motor_speed_left)
+            print('Right motor speed:', self.motor_speed_right)
+            print('_________________________')
+
             self.powertrain.change_speed_left(self.motor_speed_left)
             self.powertrain.change_speed_right(self.motor_speed_right)
             time.sleep(sleep_time_s)
