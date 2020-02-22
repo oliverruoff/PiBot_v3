@@ -46,10 +46,10 @@ class powertrain:
         GPIO.output(in3, GPIO.LOW)
         GPIO.output(in4, GPIO.LOW)
 
-        # right motor
+        # left motor
         self.p_a = GPIO.PWM(ena, 1000)
         self.p_a.start(0)
-        # left motor
+        # right motor
         self.p_b = GPIO.PWM(enb, 1000)
         self.p_b.start(0)
 
@@ -57,10 +57,10 @@ class powertrain:
         self.p_b.ChangeDutyCycle(75)
 
     def change_speed_left(self, speed):
-        self.p_b.ChangeDutyCycle(speed)
+        self.p_a.ChangeDutyCycle(speed)
 
     def change_speed_right(self, speed):
-        self.p_a.ChangeDutyCycle(speed)
+        self.p_b.ChangeDutyCycle(speed)
 
     def turn_left_wheel(self, forward=True):
         if forward:

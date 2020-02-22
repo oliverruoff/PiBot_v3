@@ -205,7 +205,7 @@ class Robot():
             else:
                 print('No recognized command! ->', spoken_words)
 
-    def _test(self):
+    def test(self):
         self.powertrain.move_front()
         time.sleep(3)
         self.powertrain.break_motors()
@@ -220,7 +220,7 @@ class Robot():
         self.is_driving = False
         movement_thread.join()
 
-    def test(self):
+    def _test(self):
         self.powertrain.change_speed_left(30)
         self.powertrain.move_front()
         time.sleep(3)
