@@ -119,11 +119,11 @@ class Robot():
             gyro_z = self.gyro_accel.get_gyro_data(
             )['z'] - self.gyro_z_sensor_drift
             if gyro_z > 0:
-                self.motor_speed_right += int(gyro_z/2)
-                self.motor_speed_left -= int(gyro_z/2)
+                self.motor_speed_right += int(abs(gyro_z)/2)
+                self.motor_speed_left -= int(abs(gyro_z)/2)
             else:
-                self.motor_speed_right -= int(gyro_z/2)
-                self.motor_speed_left += int(gyro_z/2)
+                self.motor_speed_right -= int(abs(gyro_z)/2)
+                self.motor_speed_left += int(abs(gyro_z)/2)
 
             print('_________________________')
             print('GyroZ:', gyro_z)
@@ -205,7 +205,7 @@ class Robot():
             else:
                 print('No recognized command! ->', spoken_words)
 
-    def _test(self):
+    def test(self):
         self.powertrain.move_front()
         time.sleep(3)
         self.powertrain.break_motors()
@@ -220,7 +220,7 @@ class Robot():
         self.is_driving = False
         movement_thread.join()
 
-    def test(self):
+    def _test(self):
         while(True):
             print('gyroZ:', self.gyro_accel.get_gyro_data()
                   ['z'] - self.gyro_z_sensor_drift)
