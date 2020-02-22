@@ -110,7 +110,7 @@ class Robot():
         self.powertrain.change_speed_left(self.motor_speed_left)
         self.powertrain.change_speed_right(self.motor_speed_right)
 
-    def gyro_move(self, move_time_s, forward, async_movement=False):
+    def gyro_move_timed(self, move_time_s, forward, async_movement=False):
         if forward:
             self.powertrain.move_front()
         else:
@@ -123,6 +123,19 @@ class Robot():
         self.is_driving = False
         if async_movement is False:
             movement_thread.join()
+
+    def gyro_move_start(self, forward):
+        if forward:
+            self.powertrain.move_front()
+        else:
+            self.powertrain.move_back()
+        self.is_driving = True
+        movement_thread = Thread(
+            target=self._gyro_supported_movement, args=(forward, ))
+        movement_thread.start()
+
+    def gyro_move_stop(self):
+        self.is_driving = False
 
     def _gyro_supported_movement(self, forward):
         old_motor_speed_left = self.motor_speed_left
@@ -225,8 +238,13 @@ class Robot():
                 print('No recognized command! ->', spoken_words)
 
     def test(self):
-        self.gyro_move(3, True)
-        self.gyro_move(3, False)
+        self.gyro_move_start(True)
+        time.sleep(4)
+        self.gyro_move_stop()
+        self.gyro_move_start(False)
+        time.sleep(4)
+        self.gyro_move_stop()
+        self.speaker.say_hi()
 
     def _test(self):
         self.powertrain.change_speed_left(30)
