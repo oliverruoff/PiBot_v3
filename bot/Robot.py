@@ -124,7 +124,7 @@ class Robot():
             time.sleep(sleep_time_ms)
         self.powertrain.break_motors()
 
-    def gyro_drive_starter(self, forward=true):
+    def gyro_drive_starter(self, forward=True):
         self.powertrain.move_front()
         Thread(target=self._gyro_drive, args=(forward, )).start()
 
