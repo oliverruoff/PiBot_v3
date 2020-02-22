@@ -110,27 +110,46 @@ class Robot():
         self.powertrain.change_speed_left(self.motor_speed_left)
         self.powertrain.change_speed_right(self.motor_speed_right)
 
-    def gyro_supported_movement(self, forward=True):
+    def gyro_move(self, move_time_s, forward, async_movement=False):
+        if forward:
+            self.powertrain.move_front()
+        else:
+            self.powertrain.move_back()
+        self.is_driving = True
+        movement_thread = Thread(
+            target=self._gyro_supported_movement, args=(forward, ))
+        movement_thread.start()
+        time.sleep(move_time_s)
+        self.is_driving = False
+        if async_movement is False:
+            movement_thread.join()
+
+    def _gyro_supported_movement(self, forward):
         old_motor_speed_left = self.motor_speed_left
         old_motor_speed_right = self.motor_speed_right
         sleep_time_s = 0.1
-        print('is driving?', self.is_driving)
         while self.is_driving:
             gyro_z = self.gyro_accel.get_gyro_data(
             )['z'] - self.gyro_z_sensor_drift
-            if gyro_z > 0:
-                self.motor_speed_right += int(abs(gyro_z)/2)
-                self.motor_speed_left -= int(abs(gyro_z)/2)
+            if forward:
+                if gyro_z > 0:
+                    self.motor_speed_right += int(abs(gyro_z)/2)
+                    self.motor_speed_left -= int(abs(gyro_z)/2)
+                else:
+                    self.motor_speed_right -= int(abs(gyro_z)/2)
+                    self.motor_speed_left += int(abs(gyro_z)/2)
             else:
-                self.motor_speed_right -= int(abs(gyro_z)/2)
-                self.motor_speed_left += int(abs(gyro_z)/2)
-
+                if gyro_z > 0:
+                    self.motor_speed_right -= int(abs(gyro_z)/2)
+                    self.motor_speed_left += int(abs(gyro_z)/2)
+                else:
+                    self.motor_speed_right += int(abs(gyro_z)/2)
+                    self.motor_speed_left -= int(abs(gyro_z)/2)
             print('_________________________')
             print('GyroZ:', gyro_z)
-            print('Left motor speed:', self.motor_speed_left)
-            print('Right motor speed:', self.motor_speed_right)
+            print('Adjusting Left motor speed:', self.motor_speed_left)
+            print('Adjusting Right motor speed:', self.motor_speed_right)
             print('_________________________')
-
             self.powertrain.change_speed_left(self.motor_speed_left)
             self.powertrain.change_speed_right(self.motor_speed_right)
             time.sleep(sleep_time_s)
@@ -206,19 +225,8 @@ class Robot():
                 print('No recognized command! ->', spoken_words)
 
     def test(self):
-        self.powertrain.move_front()
-        time.sleep(3)
-        self.powertrain.break_motors()
-        time.sleep(3)
-        self.powertrain.move_front()
-        self.is_driving = True
-        movement_thread = Thread(
-            target=self.gyro_supported_movement, args=(True, ))
-        movement_thread.start()
-        time.sleep(3)
-        print('stopping async movement tracking')
-        self.is_driving = False
-        movement_thread.join()
+        self.gyro_move(3, True)
+        self.gyro_move(3, False)
 
     def _test(self):
         self.powertrain.change_speed_left(30)
