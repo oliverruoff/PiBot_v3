@@ -205,7 +205,7 @@ class Robot():
             else:
                 print('No recognized command! ->', spoken_words)
 
-    def test(self):
+    def _test(self):
         self.powertrain.move_front()
         time.sleep(3)
         self.powertrain.break_motors()
@@ -220,11 +220,10 @@ class Robot():
         self.is_driving = False
         movement_thread.join()
 
-    def _test(self):
-        while(True):
-            print('gyroZ:', self.gyro_accel.get_gyro_data()
-                  ['z'] - self.gyro_z_sensor_drift)
-            time.sleep(0.1)
+    def test(self):
+        self.powertrain.change_speed_left(30)
+        self.powertrain.move_front()
+        time.sleep(3)
 
 
 # ultrasonic
