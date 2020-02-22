@@ -115,16 +115,26 @@ class Robot():
         print('Left motor speed:', self.motor_speed_left)
         print('Right motor speed:', self.motor_speed_right)
         print('_________________________')
+        old_motor_speed_left = self.motor_speed_left
+        old_motor_speed_right = self.motor_speed_right
         sleep_time_s = 0.1
         while self.is_driving:
             gyro_z = self.gyro_accel.get_gyro_data(
             )['z'] - self.gyro_z_sensor_drift
-            print('Gyro_z:', gyro_z)
-
-            time.sleep(sleep_time_ms)
+            if gyro_z > 0:
+                self.motor_speed_right += int(gyro_z/2)
+                self.motor_speed_left -= int(gyro_z/2)
+            else:
+                self.motor_speed_right -= int(gyro_z/2)
+                self.motor_speed_left += int(gyro_z/2)
+            self.powertrain.change_speed_left(self.motor_speed_left)
+            self.powertrain.change_speed_right(self.motor_speed_right)
+            time.sleep(sleep_time_s)
+        self.motor_speed_left = old_motor_speed_left
+        self.motor_speed_right = old_motor_speed_right
         self.powertrain.break_motors()
 
-    def gyro_drive_starter(self, forward=True):
+    def gyro_drive_start(self, forward=True):
         self.powertrain.move_front()
         Thread(target=self._gyro_drive, args=(forward, )).start()
 
@@ -196,11 +206,13 @@ class Robot():
                 print('No recognized command! ->', spoken_words)
 
     def test(self):
-        while(True):
-            gyro_z = self.gyro_accel.get_gyro_data()['z'] - \
-                self.gyro_z_sensor_drift
-            print('gyro_z:', gyro_z)
-            time.sleep(0.1)
+        self.gyro_drive_start()
+        time.sleep(3)
+        self.is_driving = False
+        time.sleep(3)
+        self.powertrain.move_front()
+        time.sleep(3)
+
 
 
 # ultrasonic
