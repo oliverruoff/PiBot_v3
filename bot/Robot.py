@@ -118,7 +118,7 @@ class Robot():
         while self.is_driving:
             gyro_z = self.gyro_accel.get_gyro_data(
             )['z'] - self.gyro_z_sensor_drift
-            if gyro_z < 0:
+            if gyro_z > 0:
                 self.motor_speed_right += int(gyro_z/2)
                 self.motor_speed_left -= int(gyro_z/2)
             else:
@@ -205,7 +205,7 @@ class Robot():
             else:
                 print('No recognized command! ->', spoken_words)
 
-    def test(self):
+    def _test(self):
         self.powertrain.move_front()
         time.sleep(3)
         self.powertrain.break_motors()
@@ -219,6 +219,12 @@ class Robot():
         print('stopping async movement tracking')
         self.is_driving = False
         movement_thread.join()
+
+    def test(self):
+        while(True):
+            print('gyroZ:', self.gyro_accel.get_gyro_data()
+                  ['z'] - self.gyro_z_sensor_drift)
+            time.sleep(0.1)
 
 
 # ultrasonic
