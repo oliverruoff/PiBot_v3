@@ -233,9 +233,7 @@ class Robot():
                 print('No recognized command! ->', spoken_words)
 
     def test(self):
-        self.powertrain.move_front()
-        time.sleep(4)
-        self.powertrain.break_motors()
+        self.gyro_turn(720)
 
     def _test(self):
         self.gyro_move_start(forward=True)
@@ -273,7 +271,7 @@ pt = powertrain.powertrain(
 mpu = mpu6050.mpu6050(0x68)
 mic = microphone.microphone()
 speaker = speaker.speaker()
-camera = camera.camera()
+camera = None # camera.camera() # TODO: Remove for computer vision!
 
 robot = Robot(us, pt, mpu, mic, speaker, camera)
 robot.test()
