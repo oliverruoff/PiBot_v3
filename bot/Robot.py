@@ -233,30 +233,14 @@ class Robot():
                 print('No recognized command! ->', spoken_words)
 
     def test(self):
-        self.gyro_move_start(True)
-        time.sleep(2)
-        self.gyro_move_stop()
-        self.gyro_turn(90)
-        self.gyro_move_start(True)
-        time.sleep(2)
-        self.gyro_move_stop()
-        self.gyro_turn(90, False)
-        self.gyro_move_start(True)
-        time.sleep(2)
-        self.gyro_move_stop()
-        self.gyro_turn(90, False)
-        self.gyro_move_start(True)
-        time.sleep(2)
-        self.gyro_move_stop()
-        self.gyro_turn(90, False)
-        self.gyro_move_start(True)
+        self.powertrain.move_front()
         time.sleep(4)
-        self.gyro_move_stop()
+        self.powertrain.break_motors()
 
     def _test(self):
-        self.powertrain.change_speed_left(30)
-        self.powertrain.move_front()
-        time.sleep(3)
+        self.gyro_move_start(forward=True)
+        time.sleep(4)
+        self.gyro_move_stop()
 
 
 # ultrasonic
