@@ -1,14 +1,15 @@
-import cv2
-import matplotlib.pyplot as plt
-import cvlib as cv
-from cvlib.object_detection import draw_bbox
-import os
-import pygame
-import sys
-import subprocess
-
 
 class camera:
+
+    def __init__(self):
+        import cv2
+        import matplotlib.pyplot as plt
+        import cvlib as cv
+        from cvlib.object_detection import draw_bbox
+        import os
+        import pygame
+        import sys
+        import subprocess
 
     def detect_objects(self):
         tmp_img_name = 'tmp_img.jpg'
