@@ -273,7 +273,7 @@ pt = powertrain.powertrain(
 mpu = mpu6050.mpu6050(0x68)
 mic = microphone.microphone()
 speaker = speaker.speaker()
-camera = None  # camera.camera() # TODO: Remove for computer vision!
+camera = camera.camera()
 
 robot = Robot(us, pt, mpu, mic, speaker, camera)
 robot.test()
