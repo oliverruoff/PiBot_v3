@@ -57,7 +57,7 @@ class camera:
             if class_id == key:
                 return value
 
-    def detect_objects_v2(self):
+    def detect_objects_v2(self, save_image=True):
         tmp_img_name = 'tmp_img.jpg'
         subprocess.Popen("sudo fswebcam "+tmp_img_name,
                          shell=True).communicate()
@@ -77,3 +77,13 @@ class camera:
                 class_id = detection[1]
                 class_name=self.id_class_name(class_id,self.classNames)
                 print(str(str(class_id) + " " + str(detection[2])  + " " + class_name))
+                if save_image:
+                    box_x = detection[3] * image_width
+                    box_y = detection[4] * image_height
+                    box_width = detection[5] * image_width
+                    box_height = detection[6] * image_height
+                    cv2.rectangle(image, (int(box_x), int(box_y)), (int(box_width), int(box_height)), (23, 230, 210), thickness=1)
+                    cv2.putText(image,class_name ,(int(box_x), int(box_y+.05*image_height)),cv2.FONT_HERSHEY_SIMPLEX,(.005*image_width),(0, 0, 255))
+                    file_name = class_name + ".jpg"
+                    cv2.imwrite(file_name,image)
+                    print('Saved detected picture to', file_name)
