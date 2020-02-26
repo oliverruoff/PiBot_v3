@@ -62,7 +62,7 @@ class Robot():
             motor_speed {int} -- Defines how fast robot turns around (0-100) (default: {75})
         """
         SLEEP_TIME = 0.1
-        GYRO_MULTIPLIER = 1.262530381944444 # needs to be applicated
+        GYRO_MULTIPLIER = 1.262530381944444  # needs to be applicated
         _motor_speed = motor_speed
         self.powertrain.change_speed_left(_motor_speed)
         self.powertrain.change_speed_right(_motor_speed)
@@ -233,7 +233,9 @@ class Robot():
                 print('No recognized command! ->', spoken_words)
 
     def test(self):
-        self.gyro_turn(720)
+        self.speaker.say_hi()
+        self.powertrain.act_yes()
+        time.sleep(5)
 
     def _test(self):
         self.gyro_move_start(forward=True)
@@ -271,7 +273,7 @@ pt = powertrain.powertrain(
 mpu = mpu6050.mpu6050(0x68)
 mic = microphone.microphone()
 speaker = speaker.speaker()
-camera = None # camera.camera() # TODO: Remove for computer vision!
+camera = None  # camera.camera() # TODO: Remove for computer vision!
 
 robot = Robot(us, pt, mpu, mic, speaker, camera)
 robot.test()
