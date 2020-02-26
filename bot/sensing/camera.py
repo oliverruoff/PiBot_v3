@@ -70,10 +70,10 @@ class camera:
 
         model.setInput(cv2.dnn.blobFromImage(image, size=(300, 300), swapRB=True))
         output = model.forward()
-        
+
         for detection in output[0, 0, :, :]:
             confidence = detection[2]
             if confidence > .5:
                 class_id = detection[1]
-                class_name=id_class_name(class_id,classNames)
+                class_name=self.id_class_name(class_id,self.classNames)
                 print(str(str(class_id) + " " + str(detection[2])  + " " + class_name))
