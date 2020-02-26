@@ -233,9 +233,7 @@ class Robot():
                 print('No recognized command! ->', spoken_words)
 
     def test(self):
-        self.speaker.say_hi()
-        self.powertrain.act_yes()
-        time.sleep(5)
+        self.camera.detect_objects_v2()
 
     def _test(self):
         self.gyro_move_start(forward=True)
