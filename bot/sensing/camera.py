@@ -70,4 +70,4 @@ class camera:
 
         model.setInput(cv2.dnn.blobFromImage(image, size=(300, 300), swapRB=True))
         output = model.forward()
-        print(output[0,0,:,:].shape)
+        print(output)
