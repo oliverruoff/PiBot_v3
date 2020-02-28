@@ -77,7 +77,7 @@ class camera:
 
         for detection in output[0, 0, :, :]:
             confidence = detection[2]
-            if confidence > .3:
+            if confidence > .2:
                 class_id = detection[1]
                 class_name = self.id_class_name(class_id, self.classNames)
                 print(datetime.now(), 'Detected:',
