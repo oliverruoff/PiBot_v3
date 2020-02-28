@@ -187,7 +187,6 @@ class Robot():
         return (turn_degree, turn_right)
 
     def drive_around(self):
-        self.get_gyro_z_sensor_drift()
         while True:
             try:
                 dist = us.get_distance()
@@ -233,10 +232,7 @@ class Robot():
                 print('No recognized command! ->', spoken_words)
 
     def test(self):
-        self.speaker.say_hi()
-        for _ in range(5):
-            self.camera.detect_objects_v2()
-            self.gyro_turn(72)
+        self.gyro_turn(720)
 
     def _test(self):
         self.gyro_move_start(forward=True)
