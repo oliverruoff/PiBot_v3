@@ -234,7 +234,7 @@ class Robot():
     def test(self):
         for _ in range(5):
             self.camera.detect_objects_v2()
-            self.gyro_turn(72)
+            self.gyro_turn(72, motor_speed=50)
 
     def _test(self):
         self.gyro_move_start(forward=True)
