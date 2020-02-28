@@ -73,7 +73,7 @@ class camera:
 
         self.model.setInput(cv2.dnn.blobFromImage(
             image, size=(300, 300), swapRB=True))
-        output = model.forward()
+        output = self.model.forward()
 
         for detection in output[0, 0, :, :]:
             confidence = detection[2]
