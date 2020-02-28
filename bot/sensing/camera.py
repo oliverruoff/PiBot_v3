@@ -12,8 +12,6 @@ from datetime import datetime
 class camera:
 
     def __init__(self):
-        # 0 -> index of camera
-        self.cam = cv2.VideoCapture(0)
         # Loading model
         self.model = cv2.dnn.readNetFromTensorflow(
             'models/frozen_inference_graph.pb',
@@ -66,7 +64,9 @@ class camera:
 
     def detect_objects_v2(self, save_image=True):
         print(datetime.now(), 'Taking picture')
-        s, image = self.cam.read()
+        # 0 -> index of camera
+        cam = cv2.VideoCapture(0)
+        s, image = cam.read()
         print(datetime.now(), 'Took picture')
 
         image_height, image_width, _ = image.shape
