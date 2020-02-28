@@ -94,7 +94,7 @@ class camera:
                         box_width), int(box_height)), (23, 230, 210),
                         thickness=1)
                     cv2.putText(
-                        image, class_name + " | conf.: " + confidence*100,
+                        image, class_name + " | conf.: " + str(confidence*100),
                         (int(box_x), int(
                             box_y+.05*image_height)), cv2.FONT_HERSHEY_SIMPLEX,
                         (.001*image_width), (0, 0, 255))
