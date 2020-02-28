@@ -95,7 +95,9 @@ class camera:
                         (int(box_x), int(
                             box_y+.05*image_height)), cv2.FONT_HERSHEY_SIMPLEX,
                         (.001*image_width), (0, 0, 255))
-                    file_name = "detected_objects/" + class_name + ".jpg"
+                    file_name = "detected_objects/" + \
+                        datetime.now().strftime("%Y-%m-%dT%H:%M:%S_") + \
+                        class_name + ".jpg"
                     cv2.imwrite(file_name, image)
                     print(datetime.now(), 'Saved detected picture to',
                           file_name)
