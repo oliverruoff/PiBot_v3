@@ -6,11 +6,18 @@ import os
 import pygame
 import sys
 import subprocess
+from datetime import datetime
 
 
 class camera:
 
     def __init__(self):
+        # 0 -> index of camera
+        self.cam = cv2.VideoCapture(0)
+        # Loading model
+        self.model = cv2.dnn.readNetFromTensorflow(
+            'models/frozen_inference_graph.pb',
+            'models/ssd_mobilenet_v2_coco_2018_03_29.pbtxt')
         self.classNames
 
     def detect_objects(self):
@@ -58,23 +65,13 @@ class camera:
                 return value
 
     def detect_objects_v2(self, save_image=True):
-        print('Taking picture')
-        cam = cv2.VideoCapture(0)   # 0 -> index of camera
-        s, image = cam.read()
-        print('Took picture')
-
-        # tmp_img_name = 'tmp_img.jpg'
-        # subprocess.Popen("sudo fswebcam "+tmp_img_name,
-        #                 shell=True).communicate()
-        # Loading model
-        model = cv2.dnn.readNetFromTensorflow(
-            'models/frozen_inference_graph.pb',
-            'models/ssd_mobilenet_v2_coco_2018_03_29.pbtxt')
-        # image = cv2.imread(tmp_img_name)
+        print(datetime.now(), 'Taking picture')
+        s, image = self.cam.read()
+        print(datetime.now(), 'Took picture')
 
         image_height, image_width, _ = image.shape
 
-        model.setInput(cv2.dnn.blobFromImage(
+        self.model.setInput(cv2.dnn.blobFromImage(
             image, size=(300, 300), swapRB=True))
         output = model.forward()
 
@@ -83,8 +80,8 @@ class camera:
             if confidence > .5:
                 class_id = detection[1]
                 class_name = self.id_class_name(class_id, self.classNames)
-                print(str(str(class_id) + " " +
-                          str(detection[2]) + " " + class_name))
+                print(datetime.now(), 'Detected:',
+                      class_name, '| Conf.:', detection[2])
                 if save_image:
                     box_x = detection[3] * image_width
                     box_y = detection[4] * image_height
@@ -100,4 +97,5 @@ class camera:
                         (.001*image_width), (0, 0, 255))
                     file_name = "detected_objects/" + class_name + ".jpg"
                     cv2.imwrite(file_name, image)
-                    print('Saved detected picture to', file_name)
+                    print(datetime.now(), 'Saved detected picture to',
+                          file_name)
