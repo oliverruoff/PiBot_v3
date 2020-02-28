@@ -66,7 +66,7 @@ class camera:
         cam = cv2.VideoCapture(0)
         s, image = cam.read()
         image_height, image_width, _ = image.shape
-         self.model.setInput(cv2.dnn.blobFromImage(
+        self.model.setInput(cv2.dnn.blobFromImage(
             image, size=(300, 300), swapRB=True))
         output = self.model.forward()
         for detection in output[0, 0, :, :]:
