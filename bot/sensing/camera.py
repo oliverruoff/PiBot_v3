@@ -62,6 +62,30 @@ class camera:
             if class_id == key:
                 return value
 
+    def look_for_object(self, obj_name):
+        cam = cv2.VideoCapture(0)
+        s, image = cam.read()
+        image_height, image_width, _ = image.shape
+         self.model.setInput(cv2.dnn.blobFromImage(
+            image, size=(300, 300), swapRB=True))
+        output = self.model.forward()
+        for detection in output[0, 0, :, :]:
+            confidence = detection[2]
+            if confidence > .3:
+                class_id = detection[1]
+                class_name = self.id_class_name(class_id, self.classNames)
+                print('Detected:', class_name)
+                if obj_name == class_name:
+                    print('Found', obj_name, '!')
+                    box_x = detection[3] * image_width
+                    box_y = detection[4] * image_height
+                    box_width = detection[5] * image_width
+                    box_height = detection[6] * image_height
+                    print(box_x, box_y, box_width, box_height)
+                else:
+                    continue
+        return 0
+
     def detect_objects_v2(self, save_image=True):
         print(datetime.now(), 'Taking picture')
         # 0 -> index of camera
