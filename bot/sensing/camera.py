@@ -76,10 +76,10 @@ class camera:
                 class_name = self.id_class_name(class_id, self.classNames)
                 print('Detected:', class_name)
 
-                    box_x = detection[3] * image_width
-                    box_y = detection[4] * image_height
-                    box_width = detection[5] * image_width
-                    box_height = detection[6] * image_height
+                box_x = detection[3] * image_width
+                box_y = detection[4] * image_height
+                box_width = detection[5] * image_width
+                box_height = detection[6] * image_height
 
                 if obj_name == class_name:
                     print('Found', obj_name, '!')
