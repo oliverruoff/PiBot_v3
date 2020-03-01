@@ -3,6 +3,7 @@ from multiprocessing.pool import ThreadPool
 import RPi.GPIO as GPIO
 from threading import Thread
 import os
+from datetime import datetime
 
 from movement import powertrain
 from sensing import mpu6050, hcsr04, microphone, speaker, camera
@@ -258,7 +259,7 @@ class Robot():
                 x_diff, box_img_ratio = self.turn_look_for_object('person')
 
     def test(self):
-        self.camera.take_picture('test.jpg')
+        self.camera.take_picture(datetime.now() + '.jpg')
 
 
 # ultrasonic
