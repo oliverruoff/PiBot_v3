@@ -239,7 +239,7 @@ class Robot():
             self.gyro_turn(60, motor_speed=50)
         return 0, 0
 
-    def test(self):
+    def _test(self):
         x_diff, box_img_ratio = self.turn_look_for_object('person')
         while True:
             if (abs(x_diff)) > 20:
@@ -257,10 +257,8 @@ class Robot():
                 time.sleep(0.5)
                 x_diff, box_img_ratio = self.turn_look_for_object('person')
 
-    def _test(self):
-        self.gyro_move_start(forward=True)
-        time.sleep(4)
-        self.gyro_move_stop()
+    def test(self):
+        self.camera.take_picture('test.jpg')
 
 
 # ultrasonic
