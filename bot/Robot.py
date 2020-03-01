@@ -242,7 +242,7 @@ class Robot():
     def test(self):
         x_diff, box_img_ratio = self.turn_look_for_object('person')
         while abs(x_diff) > 5:
-            right = True if x_diff > 0 else False
+            right = True if x_diff < 0 else False
             self.gyro_turn(abs(x_diff), right, motor_speed=50)
             x_diff, box_img_ratio = self.turn_look_for_object('person')
             if x_diff == 0:
