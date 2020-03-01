@@ -259,7 +259,7 @@ class Robot():
                 x_diff, box_img_ratio = self.turn_look_for_object('person')
 
     def test(self):
-        self.camera.take_picture(datetime.now() + '.jpg')
+        self.camera.take_picture(str(datetime.now()) + '.jpg')
 
 
 # ultrasonic
