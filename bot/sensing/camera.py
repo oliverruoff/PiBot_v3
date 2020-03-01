@@ -83,13 +83,13 @@ class camera:
                     box_height = detection[6] * image_height
                     print(box_x, box_y, box_width, box_height)
 
-                    box_center_x = box_x + (box_width/2)
+                    box_center_x = box_x + (box_width - box_x / 2)
                     image_center_x = image_width / 2
                     x_diff = image_center_x - box_center_x
                     x_diff_scaled = x_diff / 5
 
                     image_size = image_width * image_height
-                    box_size = box_width * box_height
+                    box_size = (box_width - box_x) * (box_height - box_y)
                     box_image_ratio = box_size / image_size
 
                     print('Image size:', image_size)
