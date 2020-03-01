@@ -233,7 +233,7 @@ class Robot():
 
     def test(self):
         for _ in range(6):
-            self.camera.look_for_object('potted plant')
+            self.camera.look_for_object('person')
             self.gyro_turn(60, motor_speed=50)
 
     def _test(self):
