@@ -99,6 +99,7 @@ class camera:
                     print('box_center_x:', box_center_x)
                     print('image_center_x:', image_center_x)
                     print('x_diff:', x_diff)
+                    print('x_diff_scaled:', x_diff_scaled)
 
                     # debugging save image
                     cv2.rectangle(image, (int(box_x), int(box_y)), (int(
