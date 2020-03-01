@@ -82,25 +82,24 @@ class camera:
                     box_width = detection[5] * image_width
                     box_height = detection[6] * image_height
                     print(box_x, box_y, box_width, box_height)
-                    # debugging save image
-                    cv2.rectangle(image, (int(box_x), int(box_y)), (int(
-                        box_width), int(box_height)), (23, 230, 210),
-                        thickness=1)
-                    cv2.putText(
-                        image, class_name + " | conf.: " + str(confidence*100),
-                        (int(box_x), int(
-                            box_y+.05*image_height)), cv2.FONT_HERSHEY_SIMPLEX,
-                        (.001*image_width), (0, 0, 255))
-                    file_name = "detected_objects/" + \
-                        datetime.now().strftime("%Y-%m-%dT%H:%M:%S_") + \
-                        class_name + ".jpg"
-                    cv2.imwrite(file_name, image)
-                    print(datetime.now(), 'Saved detected picture to',
-                          file_name)
-                    # debugging save image
-
                 else:
-                    continue
+                    pass  # TODO: Change to continue
+                # debugging save image
+                cv2.rectangle(image, (int(box_x), int(box_y)), (int(
+                    box_width), int(box_height)), (23, 230, 210),
+                    thickness=1)
+                cv2.putText(
+                    image, class_name + " | conf.: " + str(confidence*100),
+                    (int(box_x), int(
+                        box_y+.05*image_height)), cv2.FONT_HERSHEY_SIMPLEX,
+                    (.001*image_width), (0, 0, 255))
+                file_name = "detected_objects/" + \
+                    datetime.now().strftime("%Y-%m-%dT%H:%M:%S_") + \
+                    class_name + ".jpg"
+                cv2.imwrite(file_name, image)
+                print(datetime.now(), 'Saved detected picture to',
+                      file_name)
+                # debugging save image
         return 0
 
     def detect_objects_v2(self, save_image=True):
