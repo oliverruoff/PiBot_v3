@@ -231,10 +231,23 @@ class Robot():
             else:
                 print('No recognized command! ->', spoken_words)
 
-    def test(self):
+    def turn_look_for_object(self, object_name):
         for _ in range(6):
-            self.camera.look_for_object('person')
+            x_diff, box_img_ratio = self.camera.look_for_object('person')
+            if x_diff != 0:
+                return x_diff, box_img_ratio
             self.gyro_turn(60, motor_speed=50)
+        return 0, 0
+
+    def test(self):
+        x_diff, box_img_ratio = self.turn_look_for_object('person')
+        while abs(x_diff) > 5:
+            right = True if x_diff > 0 else False
+            self.gyro_turn(abs(x_diff), right)
+            x_diff, box_img_ratio = self.turn_look_for_object('person')
+            if x_diff == 0:
+                print('Lost object!')
+                break
 
     def _test(self):
         self.gyro_move_start(forward=True)

@@ -86,6 +86,15 @@ class camera:
                     box_center_x = box_x + (box_width/2)
                     image_center_x = image_width / 2
                     x_diff = image_center_x - box_center_x
+                    x_diff_scaled = x_diff / 5
+
+                    image_size = image_width * image_height
+                    box_size = box_width * box_height
+                    box_image_ratio = box_size / image_size
+
+                    print('Image size:', image_size)
+                    print('Box size:', box_size)
+                    print('Box Image Ratio:', box_image_ratio)
 
                     print('box_center_x:', box_center_x)
                     print('image_center_x:', image_center_x)
@@ -108,9 +117,11 @@ class camera:
                           file_name)
                     # debugging save image
 
+                    return x_diff_scaled, box_image_ratio
+
                 else:
                     continue
-        return 0
+        return 0, 0
 
     def detect_objects_v2(self, save_image=True):
         print(datetime.now(), 'Taking picture')
