@@ -6,9 +6,10 @@ import time
 
 class gyro_movement:
 
-    def __init__(self, gyro_accel, powertrain):
-        self.gyro_accel
-        self.powertrain
+    def __init__(self, gyro_accel, powertrain, gyro_z_sensor_drift):
+        self.gyro_accel = gyro_accel
+        self.powertrain = powertrain
+        self.gyro_z_sensor_drift = gyro_z_sensor_drift
         self.is_driving = False
 
     def gyro_turn(self, turn_degree, right=True, motor_speed=75):
@@ -88,15 +89,15 @@ class gyro_movement:
         """
         self.is_driving = False
 
-    def _gyro_supported_movement(self, forward):
+    def _gyro_supported_movement(self, forward, motor_speed=65):
         """Do not use this function! To move the robot, call the functions 'gyro_move_start()'
         and 'gyro_move_stop()'.
 
         Arguments:
             forward {bool} -- Moves forward if True, else backward.
         """
-        old_motor_speed_left = self.powertrain.motor_speed_left
-        old_motor_speed_right = self.powertrain.motor_speed_right
+        motor_speed_right = motor_speed
+        motor_speed_left = motor_speed
         sleep_time_s = 0.1
         while self.is_driving:
             gyro_z = self.gyro_accel.get_gyro_data(
