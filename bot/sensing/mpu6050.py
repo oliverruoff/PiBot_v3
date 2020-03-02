@@ -199,6 +199,19 @@ class mpu6050:
         return [accel, gyro, temp]
 
 
+    def get_gyro_z_sensor_drift(self, samples=10):
+        '''
+        Fills field variable "self.gyro_z_sensor_drift", which is used in
+        gyro sensor functions. (Call this function at startup of robot.)
+        '''
+        print('Getting current gyro z sensor drift...')
+        val_sum = 0
+        for _ in range(samples):
+            val_sum += self.get_gyro_data()['z']
+            time.sleep(0.1)
+        gyro_z_sensor_drift = val_sum/samples
+        print('Gyro z sensor drift:', gyro_z_sensor_drift)
+        return gyro_z_sensor_drift
 # mpu = mpu6050(0x68)
 
 #if __name__ == "__main__":
