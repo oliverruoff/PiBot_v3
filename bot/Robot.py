@@ -243,7 +243,7 @@ class Robot():
     def test(self):
         x_diff, box_img_ratio = self.turn_look_for_object('potted plant')
         while True:
-            if (abs(x_diff)) > 20:
+            if (abs(x_diff)) > 3:
                 right = True if x_diff < 0 else False
                 self.gyro_turn(abs(x_diff), right, motor_speed=50)
                 x_diff, box_img_ratio = self.turn_look_for_object('potted plant')
