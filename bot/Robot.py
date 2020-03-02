@@ -251,20 +251,20 @@ class Robot():
     def test(self):
 
         search_object = 'person'
-        self.motor_speed_left = 70
-        self.motor_speed_right = 70
+        self.motor_speed_left = 50
+        self.motor_speed_right = 50
 
         x_diff, box_img_ratio = self.turn_look_for_object(search_object)
         while True:
-            if (abs(x_diff)) > 5:
+            if (abs(x_diff)) > 10:
                 right = True if x_diff < 0 else False
-                self.gyro_turn(abs(x_diff), right, motor_speed=100)
+                self.gyro_turn(abs(x_diff), right)
                 x_diff, box_img_ratio = self.turn_look_for_object(search_object)
                 if x_diff == 0 and box_img_ratio == 0:
                     print('Lost object!')
                     break
             else:
-                if box_img_ratio < 0.4:
+                if box_img_ratio < 0.5:
                     self.gyro_move_start(True)
                     time.sleep(1)
                     self.gyro_move_stop()
