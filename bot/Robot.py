@@ -256,7 +256,7 @@ class Robot():
                     time.sleep(1)
                     self.gyro_move_stop()
                 time.sleep(0.5)
-                x_diff, box_img_ratio = self.turn_look_for_object('person')
+                x_diff, box_img_ratio = self.turn_look_for_object('potted plant')
 
     def _test(self):
         self.camera.take_picture(str(datetime.now()) + '.jpg')
