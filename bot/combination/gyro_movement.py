@@ -66,7 +66,7 @@ class gyro_movement:
         self.powertrain.change_speed_left(old_speed_left)
         self.powertrain.change_speed_right(old_speed_right)
 
-    def gyro_move_start(self, forward):
+    def gyro_move_start(self, forward, motor_speed=65):
         '''
         Moves robot forward or backward, stabilized with gyro sensor.
         Always use this function to move robot! 
@@ -79,7 +79,7 @@ class gyro_movement:
             self.powertrain.move_back()
         self.is_driving = True
         movement_thread = Thread(
-            target=self._gyro_supported_movement, args=(forward, ))
+            target=self._gyro_supported_movement, args=(forward, motor_speed))
         movement_thread.start()
 
     def gyro_move_stop(self):

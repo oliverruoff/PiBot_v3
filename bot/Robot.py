@@ -88,7 +88,7 @@ class Robot():
                     break
             else:
                 if box_img_ratio < 0.5:
-                    gm.gyro_move_start(True)
+                    gm.gyro_move_start(True, 90)
                     time.sleep(1)
                     gm.gyro_move_stop()
                 time.sleep(0.5)
