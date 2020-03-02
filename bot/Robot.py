@@ -62,7 +62,7 @@ class Robot():
             right {bool} -- Turns right if true, else left. (default: {True})
             motor_speed {int} -- Defines how fast robot turns around (0-100) (default: {75})
         """
-        SLEEP_TIME = 0.1
+        SLEEP_TIME = 0.05
         GYRO_MULTIPLIER = 1.21869252  # needs to be applicated
         _motor_speed = motor_speed
         self.powertrain.change_speed_left(_motor_speed)
@@ -251,8 +251,8 @@ class Robot():
     def test(self):
 
         search_object = 'person'
-        self.motor_speed_left = 100
-        self.motor_speed_right = 100
+        self.motor_speed_left = 70
+        self.motor_speed_right = 70
 
         x_diff, box_img_ratio = self.turn_look_for_object(search_object)
         while True:
