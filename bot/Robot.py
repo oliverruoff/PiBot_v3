@@ -240,14 +240,14 @@ class Robot():
             self.gyro_turn(60, motor_speed=50)
         return 0, 0
 
-    def _test(self):
-        x_diff, box_img_ratio = self.turn_look_for_object('person')
+    def test(self):
+        x_diff, box_img_ratio = self.turn_look_for_object('potted plant')
         while True:
             if (abs(x_diff)) > 20:
                 right = True if x_diff < 0 else False
                 self.gyro_turn(abs(x_diff), right, motor_speed=50)
-                x_diff, box_img_ratio = self.turn_look_for_object('person')
-                if x_diff == 0:
+                x_diff, box_img_ratio = self.turn_look_for_object('potted plant')
+                if x_diff == 0 and box_img_ratio == 0:
                     print('Lost object!')
                     break
             else:
@@ -258,7 +258,7 @@ class Robot():
                 time.sleep(0.5)
                 x_diff, box_img_ratio = self.turn_look_for_object('person')
 
-    def test(self):
+    def _test(self):
         self.camera.take_picture(str(datetime.now()) + '.jpg')
 
 

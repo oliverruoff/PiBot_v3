@@ -10,7 +10,11 @@ from datetime import datetime
 
 class camera:
 
+    # What is the angle, the camera is seeing
+    CAMERA_ANGLE_DEGREE = 66
+
     def __init__(self):
+        self.CAMERA_ANGLE_DEGREE
         # Loading model
         self.model = cv2.dnn.readNetFromTensorflow(
             'models/frozen_inference_graph.pb',
@@ -46,16 +50,19 @@ class camera:
             if class_id == key:
                 return value
 
-    def look_for_object(self, obj_name):
+    def look_for_object(self, obj_name, confidence_threshold=0.5):
         cam = cv2.VideoCapture(0)
         s, image = cam.read()
         image_height, image_width, _ = image.shape
+
+        degree_per_pixel = self.CAMERA_ANGLE_DEGREE / image_width
+
         self.model.setInput(cv2.dnn.blobFromImage(
             image, size=(300, 300), swapRB=True))
         output = self.model.forward()
         for detection in output[0, 0, :, :]:
             confidence = detection[2]
-            if confidence > .3:
+            if confidence > confidence_threshold:
                 class_id = detection[1]
                 class_name = self.id_class_name(class_id, self.classNames)
                 print('Detected:', class_name)
@@ -70,7 +77,7 @@ class camera:
                     box_center_x = box_x + ((box_width - box_x) / 2)
                     image_center_x = image_width / 2
                     x_diff = image_center_x - box_center_x
-                    x_diff_scaled = x_diff / 5
+                    x_diff_scaled = x_diff * degree_per_pixel
 
                     image_size = image_width * image_height
                     box_size = (box_width - box_x) * (box_height - box_y)
