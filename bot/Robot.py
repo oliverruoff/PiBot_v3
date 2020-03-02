@@ -241,12 +241,15 @@ class Robot():
         return 0, 0
 
     def test(self):
-        x_diff, box_img_ratio = self.turn_look_for_object('potted plant')
+
+        search_object = 'person'
+
+        x_diff, box_img_ratio = self.turn_look_for_object(search_object)
         while True:
             if (abs(x_diff)) > 3:
                 right = True if x_diff < 0 else False
                 self.gyro_turn(abs(x_diff), right, motor_speed=50)
-                x_diff, box_img_ratio = self.turn_look_for_object('potted plant')
+                x_diff, box_img_ratio = self.turn_look_for_object(search_object)
                 if x_diff == 0 and box_img_ratio == 0:
                     print('Lost object!')
                     break
@@ -256,7 +259,7 @@ class Robot():
                     time.sleep(1)
                     self.gyro_move_stop()
                 time.sleep(0.5)
-                x_diff, box_img_ratio = self.turn_look_for_object('potted plant')
+                x_diff, box_img_ratio = self.turn_look_for_object(search_object)
 
     def _test(self):
         self.camera.take_picture(str(datetime.now()) + '.jpg')
