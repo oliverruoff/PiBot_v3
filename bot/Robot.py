@@ -62,7 +62,7 @@ class Robot():
             right {bool} -- Turns right if true, else left. (default: {True})
             motor_speed {int} -- Defines how fast robot turns around (0-100) (default: {75})
         """
-        SLEEP_TIME = 0.05
+        SLEEP_TIME = 0.1
         GYRO_MULTIPLIER = 1.21869252  # needs to be applicated
         _motor_speed = motor_speed
         self.powertrain.change_speed_left(_motor_speed)
