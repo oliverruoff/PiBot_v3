@@ -234,7 +234,7 @@ class Robot():
 
     def turn_look_for_object(self, object_name):
         for _ in range(6):
-            x_diff, box_img_ratio = self.camera.look_for_object('person')
+            x_diff, box_img_ratio = self.camera.look_for_object(object_name)
             if x_diff != 0:
                 return x_diff, box_img_ratio
             self.gyro_turn(60, motor_speed=50)
