@@ -265,9 +265,13 @@ class Robot():
                     break
             else:
                 if box_img_ratio < 0.5:
+                    self.motor_speed_left = 100
+                    self.motor_speed_right = 100
                     self.gyro_move_start(True)
                     time.sleep(1)
                     self.gyro_move_stop()
+                    self.motor_speed_left = 50
+                    self.motor_speed_right = 50
                 time.sleep(0.5)
                 x_diff, box_img_ratio = self.turn_look_for_object(search_object)
 
