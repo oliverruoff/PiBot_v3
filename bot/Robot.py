@@ -154,6 +154,14 @@ class Robot():
                 else:
                     self.motor_speed_right += int(abs(gyro_z)/2)
                     self.motor_speed_left -= int(abs(gyro_z)/2)
+
+            self.motor_speed_left = 100 if self.motor_speed_left > 100 else self.motor_speed_left
+            self.motor_speed_left = 0 if self.motor_speed_left < 0 else self.motor_speed_left
+
+            self.motor_speed_right = 100 if self.motor_speed_right > 100 else self.motor_speed_right
+            self.motor_speed_right = 0 if self.motor_speed_right < 0 else self.motor_speed_right
+
+
             # print('_________________________')
             # print('GyroZ:', gyro_z)
             # print('Adjusting Left motor speed:', self.motor_speed_left)
