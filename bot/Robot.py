@@ -13,9 +13,6 @@ GPIO.setmode(GPIO.BCM)
 
 
 class Robot():
-
-    motor_speed_left = 75
-    motor_speed_right = 75
     gyro_z_sensor_drift = -1.8
     is_driving = False
 
@@ -79,8 +76,6 @@ class Robot():
         gm = gyro_movement.gyro_movement(self.gyro_accel, self.powertrain, self.gyro_z_sensor_drift)
 
         search_object = 'person'
-        self.motor_speed_left = 60
-        self.motor_speed_right = 60
 
         x_diff, box_img_ratio = self.turn_look_for_object(gm, search_object)
         while True:
@@ -93,13 +88,9 @@ class Robot():
                     break
             else:
                 if box_img_ratio < 0.5:
-                    self.motor_speed_left = 90
-                    self.motor_speed_right = 90
                     gm.gyro_move_start(True)
                     time.sleep(1)
                     gm.gyro_move_stop()
-                    self.motor_speed_left = 60
-                    self.motor_speed_right = 60
                 time.sleep(0.5)
                 x_diff, box_img_ratio = self.turn_look_for_object(gm, search_object)
 
