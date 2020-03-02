@@ -76,7 +76,7 @@ class Robot():
 
     def test(self):
 
-        gm = gyro_movement.gyro_movement(self.powertrain, self.gyro_accel, self.gyro_z_sensor_drift)
+        gm = gyro_movement.gyro_movement(self.gyro_accel, self.powertrain, self.gyro_z_sensor_drift)
 
         search_object = 'person'
         self.motor_speed_left = 60
