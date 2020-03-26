@@ -26,7 +26,8 @@ class gyro_movement:
             motor_speed {int} -- Defines how fast robot turns around (0-100) (default: {75})
         """
         SLEEP_TIME = 0.1
-        GYRO_MULTIPLIER = 1.21869252  # needs to be applicated
+        # needs to be applicated (eg.: real:332/should:360)
+        GYRO_MULTIPLIER = 1.086667497
         _motor_speed = motor_speed
         self.powertrain.change_speed_left(_motor_speed)
         self.powertrain.change_speed_right(_motor_speed)
