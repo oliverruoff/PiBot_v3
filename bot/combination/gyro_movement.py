@@ -4,6 +4,7 @@ from sensing import mpu6050
 from threading import Thread
 import time
 
+
 class gyro_movement:
 
     def __init__(self, gyro_accel, powertrain, gyro_z_sensor_drift):
@@ -38,7 +39,7 @@ class gyro_movement:
         old_time = 0
         while degree_turned < turn_degree:
             if degree_turned > (turn_degree - (turn_degree / 5)):
-                _motor_speed = 20
+                _motor_speed = int(motor_speed - (motor_speed / 5))
                 self.powertrain.change_speed_left(_motor_speed)
                 self.powertrain.change_speed_right(_motor_speed)
             if right:
@@ -122,7 +123,6 @@ class gyro_movement:
 
             motor_speed_right = 100 if motor_speed_right > 100 else motor_speed_right
             motor_speed_right = 0 if motor_speed_right < 0 else motor_speed_right
-
 
             # print('_________________________')
             # print('GyroZ:', gyro_z)

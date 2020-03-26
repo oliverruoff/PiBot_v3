@@ -101,7 +101,7 @@ class Robot():
         self.speaker.say_hi()
         gm = gyro_movement.gyro_movement(
             self.gyro_accel, self.powertrain, self.gyro_z_sensor_drift)
-        gm.gyro_turn(360)
+        gm.gyro_turn(360, True, 100)
 
 
 # ultrasonic
