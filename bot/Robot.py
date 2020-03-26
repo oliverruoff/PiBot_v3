@@ -98,7 +98,10 @@ class Robot():
                     gm, search_object)
 
     def _test(self):
-        self.camera.take_picture(str(datetime.now()) + '.jpg')
+        self.speaker.say_hi()
+        gm = gyro_movement.gyro_movement(
+            self.gyro_accel, self.powertrain, self.gyro_z_sensor_drift)
+        gm.gyro_turn(360)
 
 
 # ultrasonic
@@ -134,4 +137,4 @@ speaker = speaker.speaker()
 camera = camera.camera()
 
 robot = Robot(us, pt, mpu, mic, speaker, camera)
-robot.test()
+robot._test()
