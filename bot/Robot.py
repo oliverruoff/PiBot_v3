@@ -60,6 +60,9 @@ class Robot():
             elif any(ext in spoken_words for ext in ['around']):
                 print('Turning around.')
                 self.gyro_turn(180, True)
+            elif any(ext in spoken_words for ext in ['search']):
+                print('Searching you.')
+                self.gyro_turn(180, True)
             else:
                 print('No recognized command! ->', spoken_words)
 
@@ -67,12 +70,13 @@ class Robot():
         for _ in range(6):
             x_diff, box_img_ratio = self.camera.look_for_object(object_name)
             if x_diff != 0:
+                self.speaker.say_whoa()
                 return x_diff, box_img_ratio
             gyro_movement.gyro_turn(60, motor_speed=100)
         return 0, 0
 
     def test(self):
-        self.speaker.say_hi()
+        self.speaker.say_eva()
         gm = gyro_movement.gyro_movement(
             self.gyro_accel, self.powertrain, self.gyro_z_sensor_drift)
 
@@ -137,4 +141,4 @@ speaker = speaker.speaker()
 camera = camera.camera()
 
 robot = Robot(us, pt, mpu, mic, speaker, camera)
-robot._test()
+robot.start()
