@@ -33,6 +33,9 @@ class Robot():
 
         self.gyro_z_sensor_drift = self.gyro_accel.get_gyro_z_sensor_drift()
 
+        self.gm = gyro_movement.gyro_movement(
+            self.gyro_accel, self.powertrain, self.gyro_z_sensor_drift)
+
     def start(self):
         self.speaker.say_hi()
         while True:
@@ -40,10 +43,10 @@ class Robot():
             print('I understood:', spoken_words)
             if any(ext in spoken_words for ext in ['left']):
                 print('Turning left.')
-                self.gyro_turn(90, False)
+                self.gm.gyro_turn(90, False)
             elif any(ext in spoken_words for ext in ['right']):
                 print('Turning right.')
-                self.gyro_turn(90, True)
+                self.gm.gyro_turn(90, True)
             elif any(ext in spoken_words for ext in ['forward', 'front', 'go', 'drive']):
                 print('Moving forward.')
                 self.powertrain.move_front()
@@ -59,10 +62,10 @@ class Robot():
                 self.drive_around()
             elif any(ext in spoken_words for ext in ['around']):
                 print('Turning around.')
-                self.gyro_turn(180, True)
+                self.gm.gyro_turn(180, True)
             elif any(ext in spoken_words for ext in ['search']):
                 print('Searching you.')
-                self.gyro_turn(180, True)
+                self.search_person()
             else:
                 print('No recognized command! ->', spoken_words)
 
@@ -75,37 +78,34 @@ class Robot():
             gyro_movement.gyro_turn(60, motor_speed=100)
         return 0, 0
 
-    def test(self):
+    def search_person(self):
         self.speaker.say_eva()
-        gm = gyro_movement.gyro_movement(
-            self.gyro_accel, self.powertrain, self.gyro_z_sensor_drift)
 
         search_object = 'person'
 
-        x_diff, box_img_ratio = self.turn_look_for_object(gm, search_object)
+        x_diff, box_img_ratio = self.turn_look_for_object(
+            self.gm, search_object)
         while True:
             if (abs(x_diff)) > 10:
                 right = True if x_diff < 0 else False
-                gm.gyro_turn(abs(x_diff), right)
+                self.gm.gyro_turn(abs(x_diff), right)
                 x_diff, box_img_ratio = self.turn_look_for_object(
-                    gm, search_object)
+                    self.gm, search_object)
                 if x_diff == 0 and box_img_ratio == 0:
                     print('Lost object!')
                     break
             else:
                 if box_img_ratio < 0.5:
-                    gm.gyro_move_start(True, 90)
+                    self.gm.gyro_move_start(True, 90)
                     time.sleep(1)
-                    gm.gyro_move_stop()
+                    self.gm.gyro_move_stop()
                 time.sleep(0.5)
                 x_diff, box_img_ratio = self.turn_look_for_object(
-                    gm, search_object)
+                    self.gm, search_object)
 
     def _test(self):
         self.speaker.say_hi()
-        gm = gyro_movement.gyro_movement(
-            self.gyro_accel, self.powertrain, self.gyro_z_sensor_drift)
-        gm.gyro_turn(360, True, 100)
+        self.gm.gyro_turn(360, True, 100)
 
 
 # ultrasonic
