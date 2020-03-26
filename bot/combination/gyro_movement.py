@@ -27,7 +27,7 @@ class gyro_movement:
         """
         SLEEP_TIME = 0.1
         # needs to be applicated (eg.: real:332/should:360)
-        GYRO_MULTIPLIER = 1.086667497
+        GYRO_MULTIPLIER = 1.11685270525
         _motor_speed = motor_speed
         self.powertrain.change_speed_left(_motor_speed)
         self.powertrain.change_speed_right(_motor_speed)
