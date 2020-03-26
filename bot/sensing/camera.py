@@ -24,7 +24,7 @@ class camera:
     def take_picture(self, file_name):
         cam = cv2.VideoCapture(0)
         s, image = cam.read()
-        image = cv2.flip(image, flipCode=1)
+        image = cv2.flip(image, flipCode=0)
         cv2.imwrite(file_name, image)
 
     classNames = {
@@ -56,7 +56,7 @@ class camera:
     def look_for_object(self, obj_name, confidence_threshold=0.5):
         cam = cv2.VideoCapture(0)
         s, image = cam.read()
-        image = cv2.flip(image, flipCode=1)
+        image = cv2.flip(image, flipCode=0)
         image_height, image_width, _ = image.shape
 
         degree_per_pixel = self.CAMERA_ANGLE_DEGREE / image_width
@@ -124,7 +124,7 @@ class camera:
         # 0 -> index of camera
         cam = cv2.VideoCapture(0)
         s, image = cam.read()
-        image = cv2.flip(image, flipCode=1)
+        image = cv2.flip(image, flipCode=0)
         print(datetime.now(), 'Took picture')
 
         image_height, image_width, _ = image.shape
