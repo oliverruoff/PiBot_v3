@@ -47,11 +47,11 @@ class powertrain:
         GPIO.output(in4, GPIO.LOW)
 
         # left motor
-        self.p_a = GPIO.PWM(ena, 1000)
-        self.p_a.start(0)
-        # right motor
-        self.p_b = GPIO.PWM(enb, 1000)
+        self.p_b = GPIO.PWM(ena, 1000)
         self.p_b.start(0)
+        # right motor
+        self.p_a = GPIO.PWM(enb, 1000)
+        self.p_a.start(0)
 
         self.p_a.ChangeDutyCycle(75)
         self.p_b.ChangeDutyCycle(75)
