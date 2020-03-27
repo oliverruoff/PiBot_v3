@@ -55,69 +55,68 @@ class camera:
 
     def look_for_object(self, obj_name, confidence_threshold=0.5):
         cam = cv2.VideoCapture(0)
-        while True:
-            s, image = cam.read()
-            image = cv2.flip(image, flipCode=-1)
-            image_height, image_width, _ = image.shape
+        s, image = cam.read()
+        image = cv2.flip(image, flipCode=-1)
+        image_height, image_width, _ = image.shape
 
-            degree_per_pixel = self.CAMERA_ANGLE_DEGREE / image_width
+        degree_per_pixel = self.CAMERA_ANGLE_DEGREE / image_width
 
-            self.model.setInput(cv2.dnn.blobFromImage(
-                image, size=(300, 300), swapRB=True))
-            output = self.model.forward()
-            for detection in output[0, 0, :, :]:
-                confidence = detection[2]
-                if confidence > confidence_threshold:
-                    class_id = detection[1]
-                    class_name = self.id_class_name(class_id, self.classNames)
-                    print('Detected:', class_name)
-                    if obj_name == class_name:
-                        print('Found', obj_name, '!')
-                        box_x = detection[3] * image_width
-                        box_y = detection[4] * image_height
-                        box_width = detection[5] * image_width
-                        box_height = detection[6] * image_height
-                        print(box_x, box_y, box_width, box_height)
+        self.model.setInput(cv2.dnn.blobFromImage(
+            image, size=(300, 300), swapRB=True))
+        output = self.model.forward()
+        for detection in output[0, 0, :, :]:
+            confidence = detection[2]
+            if confidence > confidence_threshold:
+                class_id = detection[1]
+                class_name = self.id_class_name(class_id, self.classNames)
+                print('Detected:', class_name)
+                if obj_name == class_name:
+                    print('Found', obj_name, '!')
+                    box_x = detection[3] * image_width
+                    box_y = detection[4] * image_height
+                    box_width = detection[5] * image_width
+                    box_height = detection[6] * image_height
+                    print(box_x, box_y, box_width, box_height)
 
-                        box_center_x = box_x + ((box_width - box_x) / 2)
-                        image_center_x = image_width / 2
-                        x_diff = image_center_x - box_center_x
-                        x_diff_scaled = x_diff * degree_per_pixel
+                    box_center_x = box_x + ((box_width - box_x) / 2)
+                    image_center_x = image_width / 2
+                    x_diff = image_center_x - box_center_x
+                    x_diff_scaled = x_diff * degree_per_pixel
 
-                        image_size = image_width * image_height
-                        box_size = (box_width - box_x) * (box_height - box_y)
-                        box_image_ratio = box_size / image_size
+                    image_size = image_width * image_height
+                    box_size = (box_width - box_x) * (box_height - box_y)
+                    box_image_ratio = box_size / image_size
 
-                        print('Image size:', image_size)
-                        print('Box size:', box_size)
-                        print('Box Image Ratio:', box_image_ratio)
+                    print('Image size:', image_size)
+                    print('Box size:', box_size)
+                    print('Box Image Ratio:', box_image_ratio)
 
-                        print('box_center_x:', box_center_x)
-                        print('image_center_x:', image_center_x)
-                        print('x_diff:', x_diff)
-                        print('x_diff_scaled:', x_diff_scaled)
+                    print('box_center_x:', box_center_x)
+                    print('image_center_x:', image_center_x)
+                    print('x_diff:', x_diff)
+                    print('x_diff_scaled:', x_diff_scaled)
 
-                        # debugging save image
-                        cv2.rectangle(image, (int(box_x), int(box_y)), (int(
-                            box_width), int(box_height)), (23, 230, 210),
-                            thickness=1)
-                        cv2.putText(
-                            image, class_name + " | conf.: " + str(confidence*100),
-                            (int(box_x), int(
-                                box_y+.05*image_height)), cv2.FONT_HERSHEY_SIMPLEX,
-                            (.001*image_width), (0, 0, 255))
-                        file_name = "detected_objects/" + \
-                            datetime.now().strftime("%Y-%m-%dT%H:%M:%S_") + \
-                            class_name + ".jpg"
-                        cv2.imwrite(file_name, image)
-                        print(datetime.now(), 'Saved detected picture to',
-                            file_name)
-                        # debugging save image
+                    # debugging save image
+                    cv2.rectangle(image, (int(box_x), int(box_y)), (int(
+                        box_width), int(box_height)), (23, 230, 210),
+                        thickness=1)
+                    cv2.putText(
+                        image, class_name + " | conf.: " + str(confidence*100),
+                        (int(box_x), int(
+                            box_y+.05*image_height)), cv2.FONT_HERSHEY_SIMPLEX,
+                        (.001*image_width), (0, 0, 255))
+                    file_name = "detected_objects/" + \
+                        datetime.now().strftime("%Y-%m-%dT%H:%M:%S_") + \
+                        class_name + ".jpg"
+                    cv2.imwrite(file_name, image)
+                    print(datetime.now(), 'Saved detected picture to',
+                          file_name)
+                    # debugging save image
 
-                        return x_diff_scaled, box_image_ratio
+                    return x_diff_scaled, box_image_ratio
 
-                    else:
-                        continue
+                else:
+                    continue
         return 0, 0
 
     def detect_objects_v2(self, save_image=True):
