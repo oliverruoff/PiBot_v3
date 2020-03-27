@@ -79,26 +79,25 @@ class Robot():
 
         search_object = 'person'
 
-        x_diff, box_img_ratio = self.turn_look_for_object(
-            self.gm, search_object)
-        self.speaker.say_whoa()
         while True:
+            x_diff, box_img_ratio = self.turn_look_for_object(
+                self.gm, search_object)
+            if x_diff == 0 and box_img_ratio == 0:
+                print('Lost object!')
+                return
+            self.speaker.say_whoa()
             if (abs(x_diff)) > 5:
                 right = True if x_diff < 0 else False
                 self.gm.gyro_turn(abs(x_diff), right)
-                x_diff, box_img_ratio = self.turn_look_for_object(
-                    self.gm, search_object)
-                if x_diff == 0 and box_img_ratio == 0:
-                    print('Lost object!')
-                    break
             else:
                 if box_img_ratio < 0.8:
                     self.gm.gyro_move_start(True, 90)
                     time.sleep(1)
                     self.gm.gyro_move_stop()
-                time.sleep(0.5)
-                x_diff, box_img_ratio = self.turn_look_for_object(
-                    self.gm, search_object)
+                else:
+                    print('Found you!')
+                    return
+                
 
     def _test(self):
         self.speaker.say_hi()
