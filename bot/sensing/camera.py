@@ -11,7 +11,7 @@ from datetime import datetime
 class camera:
 
     # What is the angle, the camera is seeing
-    CAMERA_ANGLE_DEGREE = 66
+    CAMERA_ANGLE_DEGREE = 50
 
     def __init__(self):
         self.CAMERA_ANGLE_DEGREE
