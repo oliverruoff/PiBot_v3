@@ -54,16 +54,22 @@ class camera:
                 return value
 
     def look_for_object(self, obj_name, confidence_threshold=0.5):
+        print(datetime.now(), '1 opening cam')
         cam = cv2.VideoCapture(0)
+        print(datetime.now(), '2 read cam')
         s, image = cam.read()
+        print(datetime.now(), '3 flip img')
         image = cv2.flip(image, flipCode=-1)
+        print(datetime.now(), '4 flip done')
         image_height, image_width, _ = image.shape
 
         degree_per_pixel = self.CAMERA_ANGLE_DEGREE / image_width
 
         self.model.setInput(cv2.dnn.blobFromImage(
             image, size=(300, 300), swapRB=True))
+        print(datetime.now(), '5 ...')
         output = self.model.forward()
+        print(datetime.now(), '6 ...')
         for detection in output[0, 0, :, :]:
             confidence = detection[2]
             if confidence > confidence_threshold:
