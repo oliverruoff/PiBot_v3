@@ -57,13 +57,10 @@ class Robot():
                 self.powertrain.move_back()
                 time.sleep(3)
                 self.powertrain.stop_motors()
-            elif any(ext in spoken_words for ext in ['auto', 'automatischer', 'automatisch', 'selbstständig']):
-                print('Started autonomous driving mode.')
-                self.drive_around()
             elif any(ext in spoken_words for ext in ['herum']):
                 print('Turning around.')
                 self.gm.gyro_turn(180, True)
-            elif any(ext in spoken_words for ext in ['suche']):
+            elif any(ext in spoken_words for ext in ['suche', 'finde']):
                 print('Searching you.')
                 self.search_person()
             else:
@@ -73,7 +70,6 @@ class Robot():
         for _ in range(6):
             x_diff, box_img_ratio = self.camera.look_for_object(object_name)
             if x_diff != 0:
-                self.speaker.say_whoa()
                 return x_diff, box_img_ratio
             gyro_movement.gyro_turn(60, motor_speed=100)
         return 0, 0
@@ -85,8 +81,9 @@ class Robot():
 
         x_diff, box_img_ratio = self.turn_look_for_object(
             self.gm, search_object)
+        self.speaker.say_whoa()
         while True:
-            if (abs(x_diff)) > 10:
+            if (abs(x_diff)) > 5:
                 right = True if x_diff < 0 else False
                 self.gm.gyro_turn(abs(x_diff), right)
                 x_diff, box_img_ratio = self.turn_look_for_object(
@@ -95,7 +92,7 @@ class Robot():
                     print('Lost object!')
                     break
             else:
-                if box_img_ratio < 0.5:
+                if box_img_ratio < 0.8:
                     self.gm.gyro_move_start(True, 90)
                     time.sleep(1)
                     self.gm.gyro_move_stop()
