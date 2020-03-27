@@ -41,29 +41,29 @@ class Robot():
         while True:
             spoken_words = self.microphone.recognize_speech().lower()
             print('I understood:', spoken_words)
-            if any(ext in spoken_words for ext in ['left']):
+            if any(ext in spoken_words for ext in ['links']):
                 print('Turning left.')
                 self.gm.gyro_turn(90, False)
-            elif any(ext in spoken_words for ext in ['right']):
+            elif any(ext in spoken_words for ext in ['rechts']):
                 print('Turning right.')
                 self.gm.gyro_turn(90, True)
-            elif any(ext in spoken_words for ext in ['forward', 'front', 'go', 'drive']):
+            elif any(ext in spoken_words for ext in ['vorwärts', 'vor', 'los', 'fahr']):
                 print('Moving forward.')
                 self.powertrain.move_front()
                 time.sleep(3)
                 self.powertrain.stop_motors()
-            elif any(ext in spoken_words for ext in ['backward', 'back']):
+            elif any(ext in spoken_words for ext in ['rückwärts', 'zurück', 'hinter']):
                 print('Moving backward.')
                 self.powertrain.move_back()
                 time.sleep(3)
                 self.powertrain.stop_motors()
-            elif any(ext in spoken_words for ext in ['auto', 'autonomous']):
+            elif any(ext in spoken_words for ext in ['auto', 'automatischer', 'automatisch', 'selbstständig']):
                 print('Started autonomous driving mode.')
                 self.drive_around()
-            elif any(ext in spoken_words for ext in ['around']):
+            elif any(ext in spoken_words for ext in ['herum']):
                 print('Turning around.')
                 self.gm.gyro_turn(180, True)
-            elif any(ext in spoken_words for ext in ['search']):
+            elif any(ext in spoken_words for ext in ['suche']):
                 print('Searching you.')
                 self.search_person()
             else:
