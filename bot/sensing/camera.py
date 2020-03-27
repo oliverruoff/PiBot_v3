@@ -66,7 +66,7 @@ class camera:
         degree_per_pixel = self.CAMERA_ANGLE_DEGREE / image_width
 
         self.model.setInput(cv2.dnn.blobFromImage(
-            image, size=(200, 200), swapRB=True))
+            image, size=(500, 500), swapRB=True))
         print(datetime.now(), '5 ...')
         output = self.model.forward()
         print(datetime.now(), '6 ...')
