@@ -105,7 +105,8 @@ class Robot():
 
     def _test(self):
         self.speaker.say_hi()
-        self.gm.gyro_turn(360, True, 100)
+        self.powertrain.act_no()
+        self.powertrain.act_no()
 
 
 # ultrasonic
@@ -141,4 +142,4 @@ speaker = speaker.speaker()
 camera = camera.camera()
 
 robot = Robot(us, pt, mpu, mic, speaker, camera)
-robot.start()
+robot._test()
