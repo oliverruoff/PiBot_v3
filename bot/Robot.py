@@ -61,8 +61,8 @@ class Robot():
                 print('Turning around.')
                 self.gm.gyro_turn(180, True)
             elif any(ext in spoken_words for ext in ['suche', 'finde']):
-                print('Searching you.')
-                self.search_object('person')
+                print('Searching object.')
+                self.search_object('potted plant')
             else:
                 print('No recognized command! ->', spoken_words)
 
@@ -151,4 +151,4 @@ speaker = speaker.speaker()
 camera = camera.camera()
 
 robot = Robot(us, pt, mpu, mic, speaker, camera)
-robot._test()
+robot.start()
