@@ -105,7 +105,7 @@ class gyro_movement:
             gyro_z = self.gyro_accel.get_gyro_data(
             )['z'] - self.gyro_z_sensor_drift
             if forward:
-                if gyro_z > 0:
+                if gyro_z < 0:
                     motor_speed_right += int(abs(gyro_z)/2)
                     motor_speed_left -= int(abs(gyro_z)/2)
                 else:
