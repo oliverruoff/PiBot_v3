@@ -62,7 +62,7 @@ class Robot():
                 self.gm.gyro_turn(180, True)
             elif any(ext in spoken_words for ext in ['suche', 'finde']):
                 print('Searching you.')
-                self.search_person()
+                self.search_object('person')
             else:
                 print('No recognized command! ->', spoken_words)
 
@@ -74,10 +74,16 @@ class Robot():
             gyro_movement.gyro_turn(40, motor_speed=100)
         return 0, 0
 
-    def search_person(self):
+    def search_object(self, search_object):
         self.speaker.say_eva()
 
-        search_object = 'person'
+        # Precision of how precise the robot will focus the object.
+        # Don't make this too small, or the robot will continuouosly try
+        # to focus the object, since it can't make precise enough movements.
+        DEGREE_PRECISION = 8
+        # Robot will stop approaching object, when rectangle around obj is 
+        # at this ratio. Increase to make robot approach closer.
+        OBJECT_RATIO_FOR_APPROACHING = 0.8
 
         while True:
             x_diff, box_img_ratio = self.turn_look_for_object(
@@ -86,11 +92,11 @@ class Robot():
                 print('Lost object!')
                 return
             self.speaker.say_whoa()
-            if (abs(x_diff)) > 5:
+            if (abs(x_diff)) > DEGREE_PRECISION:
                 right = True if x_diff < 0 else False
                 self.gm.gyro_turn(abs(x_diff), right)
             else:
-                if box_img_ratio < 0.8:
+                if box_img_ratio < OBJECT_RATIO_FOR_APPROACHING:
                     self.gm.gyro_move_start(True, 90)
                     time.sleep(1)
                     self.gm.gyro_move_stop()
@@ -103,7 +109,14 @@ class Robot():
         self.speaker.say_hi()
         self.powertrain.act_no()
         self.powertrain.act_no()
-
+        while True:
+            self.gm.gyro_move_start(True, 90)
+            while (True):
+                if self.ultrasonic.get_distance() < 20:
+                    self.gm.gyro_move_stop()
+                    break
+            self.gm.gyro_turn(90, True, 90)
+            
 
 # ultrasonic
 US_TRIGGER_PIN = 17
@@ -138,4 +151,4 @@ speaker = speaker.speaker()
 camera = camera.camera()
 
 robot = Robot(us, pt, mpu, mic, speaker, camera)
-robot.start()
+robot._test()
