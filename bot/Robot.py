@@ -6,7 +6,7 @@ import os
 from datetime import datetime
 
 from movement import powertrain
-from sensing import mpu6050, hcsr04, microphone, speaker, camera
+from sensing import mpu6050, hcsr04, microphone_hotword as microphone, speaker, camera
 from combination import gyro_movement
 
 GPIO.setmode(GPIO.BCM)
@@ -29,7 +29,7 @@ class Robot():
         self.speaker = speaker
         self.camera = camera
 
-        self.is_driving = False
+        self.is_driving = False 
 
         self.gyro_z_sensor_drift = self.gyro_accel.get_gyro_z_sensor_drift()
 
@@ -106,16 +106,7 @@ class Robot():
                 
 
     def _test(self):
-        self.speaker.say_hi()
-        self.powertrain.act_no()
-        self.powertrain.act_no()
-        while True:
-            self.gm.gyro_move_start(True, 90)
-            while (True):
-                if self.ultrasonic.get_distance() < 20:
-                    self.gm.gyro_move_stop()
-                    break
-            self.gm.gyro_turn(90, True, 90)
+        self.microphone.start_listening()
             
 
 # ultrasonic
@@ -146,7 +137,7 @@ pt = powertrain.powertrain(
     MOTORSPEED_RIGHT)
 
 mpu = mpu6050.mpu6050(0x68)
-mic = microphone.microphone()
+mic = microphone.microphone('models/Wall-e.pmdl')
 speaker = speaker.speaker()
 camera = camera.camera()
 
