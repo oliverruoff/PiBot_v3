@@ -39,6 +39,7 @@ class Robot():
     def start(self):
         self.speaker.say_hi()
         while True:
+            self.speaker.play_file('Wall-E_short_oh.mp3')
             spoken_words = self.microphone.recognize_speech().lower()
             print('I understood:', spoken_words)
             if any(ext in spoken_words for ext in ['links']):
@@ -80,17 +81,18 @@ class Robot():
 
     def dance(self):
         self.speaker.play_file('Wall-E_Whistle.mp3')
-        self.powertrain.change_speed_left(90)
-        self.powertrain.change_speed_right(90)
-        self.powertrain.turn_left()
-        time.sleep(0.4)
-        self.powertrain.turn_right()
-        time.sleep(0.4)
-        self.powertrain.move_front()
-        time.sleep(0.4)
-        self.powertrain.move_back()
-        time.sleep(0.4)
-        self.powertrain.break_motors()
+        for _ in range(2):
+            self.powertrain.change_speed_left(90)
+            self.powertrain.change_speed_right(90)
+            self.powertrain.turn_left()
+            time.sleep(0.4)
+            self.powertrain.turn_right()
+            time.sleep(0.4)
+            self.powertrain.move_front()
+            time.sleep(0.4)
+            self.powertrain.move_back()
+            time.sleep(0.4)
+            self.powertrain.break_motors()
         self.speaker.play_file('Wall-E_Whistle02.mp3')
 
     def turn_look_for_object(self, gyro_movement, object_name):
