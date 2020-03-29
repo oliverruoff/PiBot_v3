@@ -47,7 +47,7 @@ class Robot():
             elif any(ext in spoken_words for ext in ['rechts']):
                 print('Turning right.')
                 self.gm.gyro_turn(90, True)
-            elif any(ext in spoken_words for ext in ['vorwärts', 'vor', 'los', 'fahr']):
+            elif any(ext in spoken_words for ext in ['geradeaus', 'vorwärts', 'vor', 'los']):
                 print('Moving forward.')
                 self.powertrain.move_front()
                 time.sleep(3)
@@ -57,14 +57,34 @@ class Robot():
                 self.powertrain.move_back()
                 time.sleep(3)
                 self.powertrain.stop_motors()
-            elif any(ext in spoken_words for ext in ['herum']):
+            elif any(ext in spoken_words for ext in ['herum', 'umdrehen']):
                 print('Turning around.')
                 self.gm.gyro_turn(180, True)
             elif any(ext in spoken_words for ext in ['suche', 'finde']):
                 print('Searching object.')
                 self.search_object('person')
+            elif any(ext in spoken_words for ext in ['tanzen', 'tanz', 'tanze']):
+                print('Dancing for you.')
+                self.dance()
             else:
                 print('No recognized command! ->', spoken_words)
+
+        def dance(self):
+            _speed_l = 100
+            _speed_r = 0
+            angle_turned = 0
+            for i in range(2):
+                for in range(50):
+                    if i == 0:
+                        _speed_l -= 2
+                        _speed_r += 2
+                    else:
+                        _speed_l += 2
+                        _speed_r -= 2
+                    self.powertrain.change_speed_left(_speed_l)
+                    self.powertrain.change_speed_right(_speed_r)
+                    self.powertrain.move_front()
+                    time.sleep(0.1)
 
     def turn_look_for_object(self, gyro_movement, object_name):
         for _ in range(9):
