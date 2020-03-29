@@ -62,7 +62,7 @@ class Robot():
                 self.gm.gyro_turn(180, True)
             elif any(ext in spoken_words for ext in ['suche', 'finde']):
                 print('Searching object.')
-                self.search_object('potted plant')
+                self.search_object('person')
             else:
                 print('No recognized command! ->', spoken_words)
 
@@ -75,13 +75,13 @@ class Robot():
         return 0, 0
 
     def search_object(self, search_object):
-        self.speaker.say_eva()
+        self.speaker.say_file('Wall-E_uh_huh.mp3')
 
         # Precision of how precise the robot will focus the object.
         # Don't make this too small, or the robot will continuouosly try
         # to focus the object, since it can't make precise enough movements.
         DEGREE_PRECISION = 8
-        # Robot will stop approaching object, when rectangle around obj is 
+        # Robot will stop approaching object, when rectangle around obj is
         # at this ratio. Increase to make robot approach closer.
         OBJECT_RATIO_FOR_APPROACHING = 0.8
 
@@ -89,6 +89,7 @@ class Robot():
             x_diff, box_img_ratio = self.turn_look_for_object(
                 self.gm, search_object)
             if x_diff == 0 and box_img_ratio == 0:
+                self.speaker.say_file('Wall-E_sad.mp3')
                 print('Lost object!')
                 return
             self.speaker.say_whoa()
@@ -101,9 +102,9 @@ class Robot():
                     time.sleep(1)
                     self.gm.gyro_move_stop()
                 else:
+                    self.speaker.say_file('Wall-E_ohhh.mp3')
                     print('Found you!')
                     return
-                
 
     def _test(self):
         self.speaker.say_hi()
@@ -116,7 +117,7 @@ class Robot():
                     self.gm.gyro_move_stop()
                     break
             self.gm.gyro_turn(90, True, 90)
-            
+
 
 # ultrasonic
 US_TRIGGER_PIN = 17
