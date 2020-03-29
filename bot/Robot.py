@@ -43,23 +43,28 @@ class Robot():
                             'molly', 'mori', 'bonnie', 'bonn', 'bornit']
         while True:
             heard = self.microphone.recognize_speech().lower()
+            print('Trying to find activation word in:', heard)
             if any([heard.count(activation_word) > 0
                     for activation_word in activation_words]):
                 self.speaker.play_file('Wall-E_uh_huh.mp3')
+                time.sleep(0.4)
                 spoken_words = self.microphone.recognize_speech().lower()
-                print('I understood:', spoken_words)
+                print('I understood:', spoken_words,
+                      '. Trying to match command.')
                 if any(ext in spoken_words for ext in ['links']):
                     print('Turning left.')
                     self.gm.gyro_turn(90, False)
                 elif any(ext in spoken_words for ext in ['rechts']):
                     print('Turning right.')
                     self.gm.gyro_turn(90, True)
-                elif any(ext in spoken_words for ext in ['geradeaus', 'vorwärts', 'vor', 'los']):
+                elif any(ext in spoken_words
+                         for ext in ['geradeaus', 'vorwärts', 'vor', 'los']):
                     print('Moving forward.')
                     self.powertrain.move_front()
                     time.sleep(3)
                     self.powertrain.stop_motors()
-                elif any(ext in spoken_words for ext in ['rückwärts', 'zurück', 'hinter']):
+                elif any(ext in spoken_words
+                         for ext in ['rückwärts', 'zurück', 'hinter']):
                     print('Moving backward.')
                     self.powertrain.move_back()
                     time.sleep(3)
@@ -70,10 +75,12 @@ class Robot():
                 elif any(ext in spoken_words for ext in ['suche', 'finde']):
                     print('Searching object.')
                     self.search_object('person')
-                elif any(ext in spoken_words for ext in ['tanzen', 'tanz', 'tanze']):
+                elif any(ext in spoken_words
+                         for ext in ['tanzen', 'tanz', 'tanze']):
                     print('Dancing for you.')
                     self.dance()
-                elif any(ext in spoken_words for ext in ['foto', 'bild', 'fotografieren', 'selfie', 'selfy']):
+                elif any(ext in spoken_words for ext in
+                         ['foto', 'bild', 'fotografieren', 'selfie', 'selfy']):
                     print('Taking picture.')
                     self.take_picture()
                 else:
