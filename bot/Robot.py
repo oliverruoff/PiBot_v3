@@ -37,7 +37,7 @@ class Robot():
             self.gyro_accel, self.powertrain, self.gyro_z_sensor_drift)
 
     def start(self):
-        self.speaker.play_file('Walle1', False)
+        self.speaker.play_file('Walle1.mp3', False)
         activation_words = ['wall-e', 'bornit', 'vani',
                             'molly', 'mori', 'bonnie', 'bonn', 'bornit']
         while True:
@@ -156,7 +156,7 @@ class Robot():
                     return
 
     def _test(self):
-        self.speaker.play_file('Walle1')
+        self.speaker.play_file('Walle1.mp3')
         self.powertrain.act_no()
         self.powertrain.act_no()
         while True:
