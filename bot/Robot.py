@@ -81,7 +81,7 @@ class Robot():
                 elif any(ext in spoken_words
                          for ext in ['fokussieren', 'fokus', 'zielen']):
                     print('Dancing for you.')
-                    self.dance()
+                    self.search_object('person', focus_only=True)
                 elif any(ext in spoken_words for ext in
                          ['foto', 'bild', 'fotografieren', 'selfie', 'selfy']):
                     print('Taking picture.')
