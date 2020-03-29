@@ -31,3 +31,8 @@ class speaker:
         relative_path = "assets/Eva1.mp3"
         Thread(target=self.play_sound, args=(
             os.path.abspath(relative_path), )).start()
+
+    def say_file(self, file):
+        relative_path = 'assets/' + file
+        Thread(target=self.play_sound, args=(
+            os.path.abspath(relative_path), )).start()
