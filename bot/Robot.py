@@ -74,7 +74,7 @@ class Robot():
 
     def take_picture(self):
         self.speaker.play_file('Wall-E_uh_huh.mp3')
-        pic_name = 'taken_pictures/pic_at_' + str(datetime.now())
+        pic_name = 'taken_pictures/pic_at_' + str(datetime.now()) + '.jpg'
         self.camera.take_picture(pic_name)
         self.speaker.play_file('camera_shutter_sound.mp3')
 
