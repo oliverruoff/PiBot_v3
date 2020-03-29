@@ -69,22 +69,22 @@ class Robot():
             else:
                 print('No recognized command! ->', spoken_words)
 
-        def dance(self):
-            _speed_l = 100
-            _speed_r = 0
-            angle_turned = 0
-            for i in range(2):
-                for _ in range(50):
-                    if i == 0:
-                        _speed_l -= 2
-                        _speed_r += 2
-                    else:
-                        _speed_l += 2
-                        _speed_r -= 2
-                    self.powertrain.change_speed_left(_speed_l)
-                    self.powertrain.change_speed_right(_speed_r)
-                    self.powertrain.move_front()
-                    time.sleep(0.1)
+    def dance(self):
+        _speed_l = 100
+        _speed_r = 0
+        angle_turned = 0
+        for i in range(2):
+            for _ in range(50):
+                if i == 0:
+                    _speed_l -= 2
+                    _speed_r += 2
+                else:
+                    _speed_l += 2
+                    _speed_r -= 2
+                self.powertrain.change_speed_left(_speed_l)
+                self.powertrain.change_speed_right(_speed_r)
+                self.powertrain.move_front()
+                time.sleep(0.1)
 
     def turn_look_for_object(self, gyro_movement, object_name):
         for _ in range(9):
