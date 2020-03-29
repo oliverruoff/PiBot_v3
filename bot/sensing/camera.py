@@ -87,30 +87,30 @@ class camera:
                     box_size = (box_width - box_x) * (box_height - box_y)
                     box_image_ratio = box_size / image_size
 
-                    print('Image size:', image_size)
-                    print('Box size:', box_size)
-                    print('Box Image Ratio:', box_image_ratio)
+                    # print('Image size:', image_size)
+                    # print('Box size:', box_size)
+                    # print('Box Image Ratio:', box_image_ratio)
 
-                    print('box_center_x:', box_center_x)
-                    print('image_center_x:', image_center_x)
-                    print('x_diff:', x_diff)
-                    print('x_diff_scaled:', x_diff_scaled)
+                    # print('box_center_x:', box_center_x)
+                    # print('image_center_x:', image_center_x)
+                    # print('x_diff:', x_diff)
+                    # print('x_diff_scaled:', x_diff_scaled)
 
                     # debugging save image
-                    cv2.rectangle(image, (int(box_x), int(box_y)), (int(
-                        box_width), int(box_height)), (23, 230, 210),
-                        thickness=1)
-                    cv2.putText(
-                        image, class_name + " | conf.: " + str(confidence*100),
-                        (int(box_x), int(
-                            box_y+.05*image_height)), cv2.FONT_HERSHEY_SIMPLEX,
-                        (.001*image_width), (0, 0, 255))
-                    file_name = "detected_objects/" + \
-                        datetime.now().strftime("%Y-%m-%dT%H:%M:%S_") + \
-                        class_name + ".jpg"
-                    cv2.imwrite(file_name, image)
-                    print(datetime.now(), 'Saved detected picture to',
-                          file_name)
+                    # cv2.rectangle(image, (int(box_x), int(box_y)), (int(
+                    #    box_width), int(box_height)), (23, 230, 210),
+                    #    thickness=1)
+                    # cv2.putText(
+                    #    image, class_name + " | conf.: " + str(confidence*100),
+                    #    (int(box_x), int(
+                    #        box_y+.05*image_height)), cv2.FONT_HERSHEY_SIMPLEX,
+                    #    (.001*image_width), (0, 0, 255))
+                    # file_name = "detected_objects/" + \
+                    #    datetime.now().strftime("%Y-%m-%dT%H:%M:%S_") + \
+                    #    class_name + ".jpg"
+                    # cv2.imwrite(file_name, image)
+                    # print(datetime.now(), 'Saved detected picture to',
+                    #      file_name)
                     # debugging save image
 
                     return x_diff_scaled, box_image_ratio

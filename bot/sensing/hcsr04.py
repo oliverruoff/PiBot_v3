@@ -4,6 +4,7 @@ Holds functionality for the ultra sonic sensor.
 import RPi.GPIO as GPIO
 import time
 
+
 class hcsr04:
 
     trigger_pin = None
@@ -17,12 +18,11 @@ class hcsr04:
         GPIO.setup(trigger_pin, GPIO.OUT)
         GPIO.setup(echo_pin, GPIO.IN)
 
-
     def get_distance(self):
         """Triggers the ultra sonic sensor and measures the distance.
 
         Returns:
-            float -- Distance measured.
+            float -- Distance measured in cm.
         """
         GPIO.output(self.trigger_pin, True)
 

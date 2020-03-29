@@ -90,8 +90,8 @@ class Robot():
         time.sleep(0.4)
         self.powertrain.move_back()
         time.sleep(0.4)
+        self.powertrain.break_motors()
         self.speaker.play_file('Wall-E_Whistle02.mp3')
-        time.sleep(2)
 
     def turn_look_for_object(self, gyro_movement, object_name):
         for _ in range(9):
@@ -113,16 +113,23 @@ class Robot():
         OBJECT_RATIO_FOR_APPROACHING = 0.8
 
         while True:
+            if self.ultrasonic.get_distance() < 20:
+                self.gm.gyro_move_stop()
+                self.speaker.play_file('Wall-E_short_oh.mp3')
             x_diff, box_img_ratio = self.turn_look_for_object(
                 self.gm, search_object)
             if x_diff == 0 and box_img_ratio == 0:
                 self.speaker.play_file('Wall-E_sad.mp3')
+                self.gm.gyro_move_stop()
                 print('Lost object!')
                 return
             self.speaker.say_whoa()
             if (abs(x_diff)) > DEGREE_PRECISION:
+                self.gm.gyro_move_stop()
                 right = True if x_diff < 0 else False
                 self.gm.gyro_turn(abs(x_diff), right)
+                if (box_img_ratio < OBJECT_RATIO_FOR_APPROACHING):
+                    self.gm.gyro_move_start(True, 90)
             else:
                 if box_img_ratio < OBJECT_RATIO_FOR_APPROACHING:
                     self.gm.gyro_move_start(True, 90)
@@ -130,6 +137,7 @@ class Robot():
                     self.gm.gyro_move_stop()
                 else:
                     print('saying oooh!')
+                    self.gm.gyro_move_stop()
                     self.speaker.play_file('Wall-E_ohhh.mp3')
                     print('Found you!')
                     return
