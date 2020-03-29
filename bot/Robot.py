@@ -103,6 +103,7 @@ class Robot():
                     self.gm.gyro_move_stop()
                 else:
                     self.speaker.say_file('Wall-E_ohhh.mp3')
+                    time.sleep(2)
                     print('Found you!')
                     return
 
