@@ -66,11 +66,20 @@ class Robot():
             elif any(ext in spoken_words for ext in ['tanzen', 'tanz', 'tanze']):
                 print('Dancing for you.')
                 self.dance()
+            elif any(ext in spoken_words for ext in ['foto', 'bild', 'fotografieren', 'selfie', 'selfy']):
+                print('Taking picture.')
+                self.take_picture()
             else:
                 print('No recognized command! ->', spoken_words)
 
+    def take_picture(self):
+        self.speaker.play_file('Wall-E_uh_huh.mp3')
+        pic_name = 'taken_pictures/pic_at_' + datetime.now()
+        self.camera.take_picture(pic_name)
+        self.speaker.play_file('camera_shutter_sound.mp3')
+
     def dance(self):
-        self.speaker.say_file('Wall-E_Whistle.mp3')
+        self.speaker.play_file('Wall-E_Whistle.mp3')
         self.powertrain.change_speed_left(90)
         self.powertrain.change_speed_right(90)
         self.powertrain.turn_left()
@@ -81,7 +90,7 @@ class Robot():
         time.sleep(0.4)
         self.powertrain.move_back()
         time.sleep(0.4)
-        self.speaker.say_file('Wall-E_Whistle02.mp3')
+        self.speaker.play_file('Wall-E_Whistle02.mp3')
         time.sleep(2)
 
     def turn_look_for_object(self, gyro_movement, object_name):
@@ -93,7 +102,7 @@ class Robot():
         return 0, 0
 
     def search_object(self, search_object):
-        self.speaker.say_file('Wall-E_uh_huh.mp3')
+        self.speaker.play_file('Wall-E_uh_huh.mp3')
 
         # Precision of how precise the robot will focus the object.
         # Don't make this too small, or the robot will continuouosly try
@@ -107,7 +116,7 @@ class Robot():
             x_diff, box_img_ratio = self.turn_look_for_object(
                 self.gm, search_object)
             if x_diff == 0 and box_img_ratio == 0:
-                self.speaker.say_file('Wall-E_sad.mp3')
+                self.speaker.play_file('Wall-E_sad.mp3')
                 print('Lost object!')
                 return
             self.speaker.say_whoa()
@@ -121,7 +130,7 @@ class Robot():
                     self.gm.gyro_move_stop()
                 else:
                     print('saying oooh!')
-                    self.speaker.say_file('Wall-E_ohhh.mp3')
+                    self.speaker.play_file('Wall-E_ohhh.mp3')
                     print('Found you!')
                     return
 

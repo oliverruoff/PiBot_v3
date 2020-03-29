@@ -32,7 +32,7 @@ class speaker:
         Thread(target=self.play_sound, args=(
             os.path.abspath(relative_path), )).start()
 
-    def say_file(self, file):
+    def play_file(self, file):
         relative_path = 'assets/' + file
         Thread(target=self.play_sound, args=(
             os.path.abspath(relative_path), )).start()
