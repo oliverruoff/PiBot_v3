@@ -39,7 +39,8 @@ class Robot():
     def start(self):
         self.speaker.play_file('Walle1.mp3', False)
         activation_words = ['wall-e', 'bornit', 'vani',
-                            'molly', 'mori', 'bonnie', 'bonn', 'bornit']
+                            'molly', 'mori', 'bonnie',
+                            'bonn', 'bornit', 'morgen']
         while True:
             heard = self.microphone.recognize_speech().lower()
             print('Trying to find activation word in:', heard)
@@ -77,11 +78,16 @@ class Robot():
                          for ext in ['tanzen', 'tanz', 'tanze']):
                     print('Dancing for you.')
                     self.dance()
+                elif any(ext in spoken_words
+                         for ext in ['fokussieren', 'fokus', 'zielen']):
+                    print('Dancing for you.')
+                    self.dance()
                 elif any(ext in spoken_words for ext in
                          ['foto', 'bild', 'fotografieren', 'selfie', 'selfy']):
                     print('Taking picture.')
                     self.take_picture()
                 else:
+                    self.speaker.play_file('Wall-E_sad.mp3', False)
                     print('No recognized command! ->', spoken_words)
 
     def take_picture(self):
@@ -114,7 +120,7 @@ class Robot():
             gyro_movement.gyro_turn(40, motor_speed=100)
         return 0, 0
 
-    def search_object(self, search_object):
+    def search_object(self, search_object, focus_only=False):
         self.speaker.play_file('Wall-E_uh_huh.mp3')
 
         # Precision of how precise the robot will focus the object.
@@ -141,10 +147,12 @@ class Robot():
                 self.gm.gyro_move_stop()
                 right = True if x_diff < 0 else False
                 self.gm.gyro_turn(abs(x_diff), right)
-                if (box_img_ratio < OBJECT_RATIO_FOR_APPROACHING):
+                if (box_img_ratio < OBJECT_RATIO_FOR_APPROACHING
+                        and not focus_only):
                     self.gm.gyro_move_start(True, 90)
             else:
-                if box_img_ratio < OBJECT_RATIO_FOR_APPROACHING:
+                if (box_img_ratio < OBJECT_RATIO_FOR_APPROACHING
+                        and not focus_only):
                     self.gm.gyro_move_start(True, 90)
                     time.sleep(1)
                     self.gm.gyro_move_stop()
