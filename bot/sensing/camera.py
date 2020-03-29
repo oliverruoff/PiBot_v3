@@ -6,7 +6,6 @@ import pygame
 import sys
 import subprocess
 from datetime import datetime
-import time
 
 
 class camera:
@@ -24,7 +23,6 @@ class camera:
 
     def take_picture(self, file_name):
         cam = cv2.VideoCapture(0)
-        time.sleep(2)
         s, image = cam.read()
         image = cv2.flip(image, flipCode=-1)
         cv2.imwrite(file_name, image)

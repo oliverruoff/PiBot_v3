@@ -38,40 +38,46 @@ class Robot():
 
     def start(self):
         self.speaker.say_hi()
+        time.sleep(1)
+        activation_words = ['wall-e', 'bornit', 'vani',
+                            'molly', 'mori', 'bonnie', 'bonn', 'bornit']
         while True:
-            self.speaker.play_file('Wall-E_short_oh.mp3')
-            spoken_words = self.microphone.recognize_speech().lower()
-            print('I understood:', spoken_words)
-            if any(ext in spoken_words for ext in ['links']):
-                print('Turning left.')
-                self.gm.gyro_turn(90, False)
-            elif any(ext in spoken_words for ext in ['rechts']):
-                print('Turning right.')
-                self.gm.gyro_turn(90, True)
-            elif any(ext in spoken_words for ext in ['geradeaus', 'vorwärts', 'vor', 'los']):
-                print('Moving forward.')
-                self.powertrain.move_front()
-                time.sleep(3)
-                self.powertrain.stop_motors()
-            elif any(ext in spoken_words for ext in ['rückwärts', 'zurück', 'hinter']):
-                print('Moving backward.')
-                self.powertrain.move_back()
-                time.sleep(3)
-                self.powertrain.stop_motors()
-            elif any(ext in spoken_words for ext in ['herum', 'umdrehen']):
-                print('Turning around.')
-                self.gm.gyro_turn(180, True)
-            elif any(ext in spoken_words for ext in ['suche', 'finde']):
-                print('Searching object.')
-                self.search_object('person')
-            elif any(ext in spoken_words for ext in ['tanzen', 'tanz', 'tanze']):
-                print('Dancing for you.')
-                self.dance()
-            elif any(ext in spoken_words for ext in ['foto', 'bild', 'fotografieren', 'selfie', 'selfy']):
-                print('Taking picture.')
-                self.take_picture()
-            else:
-                print('No recognized command! ->', spoken_words)
+            heard = self.microphone.recognize_speech().lower()
+            if any([heard.count(activation_word) > 0
+                    for activation_word in activation_words]):
+                self.speaker.play_file('Wall-E_uh_huh.mp3')
+                spoken_words = self.microphone.recognize_speech().lower()
+                print('I understood:', spoken_words)
+                if any(ext in spoken_words for ext in ['links']):
+                    print('Turning left.')
+                    self.gm.gyro_turn(90, False)
+                elif any(ext in spoken_words for ext in ['rechts']):
+                    print('Turning right.')
+                    self.gm.gyro_turn(90, True)
+                elif any(ext in spoken_words for ext in ['geradeaus', 'vorwärts', 'vor', 'los']):
+                    print('Moving forward.')
+                    self.powertrain.move_front()
+                    time.sleep(3)
+                    self.powertrain.stop_motors()
+                elif any(ext in spoken_words for ext in ['rückwärts', 'zurück', 'hinter']):
+                    print('Moving backward.')
+                    self.powertrain.move_back()
+                    time.sleep(3)
+                    self.powertrain.stop_motors()
+                elif any(ext in spoken_words for ext in ['herum', 'umdrehen']):
+                    print('Turning around.')
+                    self.gm.gyro_turn(180, True)
+                elif any(ext in spoken_words for ext in ['suche', 'finde']):
+                    print('Searching object.')
+                    self.search_object('person')
+                elif any(ext in spoken_words for ext in ['tanzen', 'tanz', 'tanze']):
+                    print('Dancing for you.')
+                    self.dance()
+                elif any(ext in spoken_words for ext in ['foto', 'bild', 'fotografieren', 'selfie', 'selfy']):
+                    print('Taking picture.')
+                    self.take_picture()
+                else:
+                    print('No recognized command! ->', spoken_words)
 
     def take_picture(self):
         self.speaker.play_file('Wall-E_uh_huh.mp3')
