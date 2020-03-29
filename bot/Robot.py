@@ -40,7 +40,9 @@ class Robot():
         self.speaker.play_file('Walle1.mp3', False)
         activation_words = ['wall-e', 'bornit', 'vani',
                             'molly', 'mori', 'bonnie',
-                            'bonn', 'bornit', 'morgen']
+                            'bonn', 'bornit', 'morgen',
+                            'morning', 'roboter', 'günther',
+                            'ozelot']
         while True:
             heard = self.microphone.recognize_speech().lower()
             print('Trying to find activation word in:', heard)
