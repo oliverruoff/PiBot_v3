@@ -37,8 +37,7 @@ class Robot():
             self.gyro_accel, self.powertrain, self.gyro_z_sensor_drift)
 
     def start(self):
-        self.speaker.say_hi()
-        time.sleep(1)
+        self.speaker.play_file('Walle1', False)
         activation_words = ['wall-e', 'bornit', 'vani',
                             'molly', 'mori', 'bonnie', 'bonn', 'bornit']
         while True:
@@ -46,8 +45,7 @@ class Robot():
             print('Trying to find activation word in:', heard)
             if any([heard.count(activation_word) > 0
                     for activation_word in activation_words]):
-                self.speaker.play_file('Wall-E_uh_huh.mp3')
-                time.sleep(0.4)
+                self.speaker.play_file('Wall-E_uh_huh.mp3', False)
                 spoken_words = self.microphone.recognize_speech().lower()
                 print('I understood:', spoken_words,
                       '. Trying to match command.')
@@ -138,7 +136,7 @@ class Robot():
                 self.gm.gyro_move_stop()
                 print('Lost object!')
                 return
-            self.speaker.say_whoa()
+            self.speaker.play_file('Whoa.mp3')
             if (abs(x_diff)) > DEGREE_PRECISION:
                 self.gm.gyro_move_stop()
                 right = True if x_diff < 0 else False
@@ -153,12 +151,12 @@ class Robot():
                 else:
                     print('saying oooh!')
                     self.gm.gyro_move_stop()
-                    self.speaker.play_file('Wall-E_ohhh.mp3')
+                    self.speaker.play_file('Wall-E_ohhh.mp3', False)
                     print('Found you!')
                     return
 
     def _test(self):
-        self.speaker.say_hi()
+        self.speaker.play_file('Walle1')
         self.powertrain.act_no()
         self.powertrain.act_no()
         while True:
