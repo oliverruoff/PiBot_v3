@@ -74,17 +74,20 @@ class Robot():
         _speed_r = 0
         angle_turned = 0
         for i in range(2):
-            for _ in range(50):
+            for _ in range(20):
                 if i == 0:
-                    _speed_l -= 2
-                    _speed_r += 2
+                    _speed_l -= 5
+                    _speed_r += 5
                 else:
-                    _speed_l += 2
-                    _speed_r -= 2
+                    _speed_l += 5
+                    _speed_r -= 5
                 self.powertrain.change_speed_left(_speed_l)
                 self.powertrain.change_speed_right(_speed_r)
                 self.powertrain.move_front()
-                time.sleep(0.1)
+                time.sleep(0.2)
+        self.powertrain.change_speed_left(90)
+        self.powertrain.change_speed_right(90)
+        self.powertrain.break_motors()
 
     def turn_look_for_object(self, gyro_movement, object_name):
         for _ in range(9):
