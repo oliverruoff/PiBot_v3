@@ -74,7 +74,7 @@ class Robot():
             _speed_r = 0
             angle_turned = 0
             for i in range(2):
-                for in range(50):
+                for _ in range(50):
                     if i == 0:
                         _speed_l -= 2
                         _speed_r += 2
