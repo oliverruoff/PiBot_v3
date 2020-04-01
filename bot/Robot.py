@@ -49,7 +49,10 @@ class Robot():
             if any([heard.count(activation_word) > 0
                     for activation_word in activation_words]):
                 self.speaker.play_file('Wall-E_uh_huh.mp3', False)
-                spoken_words = self.microphone.recognize_speech().lower()
+                if len(heard.split(' ')) > 1:
+                    spoken_words = heard
+                else:
+                    spoken_words = self.microphone.recognize_speech().lower()
                 print('I understood:', spoken_words,
                       '. Trying to match command.')
                 if any(ext in spoken_words for ext in ['links']):
