@@ -42,7 +42,9 @@ class Robot():
                             'molly', 'mori', 'bonnie',
                             'bonn', 'bornit', 'morgen',
                             'morning', 'roboter', 'günther',
-                            'ozelot', 'morley', 'marie', 'vari']
+                            'ozelot', 'morley', 'marie', 'vari',
+                            'warning', 'valley', 'warnie',
+                            'volley', 'wornie']
         while True:
             heard = self.microphone.recognize_speech().lower()
             print('Trying to find activation word in:', heard)
