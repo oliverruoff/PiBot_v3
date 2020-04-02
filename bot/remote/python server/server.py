@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import request
+import time
 
 from movement import powertrain
 from sensing import mpu6050
@@ -15,15 +16,35 @@ def hello():
 
 @app.route("/turn")
 def turn():
-    global pt
-    global mpu
     direction = request.args.get('direction')
+    degree = request.args.get('degree', default=90)
     if direction == 'left':
-        sgm.gyro_turn(90, right=False, motor_speed=90)
+        sgm.gyro_turn(degree, right=False, motor_speed=90)
+        return 'Turned %i degree to the %s.' % (degree, direction)
     elif direction == 'right':
-        sgm.gyro_turn(90, right=True, motor_speed=90)
+        sgm.gyro_turn(degree, right=True, motor_speed=90)
+        return 'Turned %i degree to the %s.' % (degree, direction)
     else:
         return 'Direction not supported!'
+
+
+@app.route("move")
+def move():
+    direction = request.args.get('direction')
+    duration = request.args.get('duration', default=1)
+    motorspeed = request.args.get('motorspeed', default=90)
+    _dir = True
+    if direction == 'forward':
+        _dir = True
+    elif direction == 'backward':
+        _dir = False
+    else:
+        return 'Direction not supported!'
+    sgm.gyro_move_start(_dir, motor_speed=motorspeed)
+    time.sleep(duration)
+    sgm.gyro_move_stop()
+    return 'Moved %i seconds with motorspeed: %i to direction: %s' \
+        % (duration, motorspeed, direction)
 
 
 if __name__ == "__main__":
