@@ -1,9 +1,9 @@
 from flask import Flask
 from flask import request
 
-from PiBot.bot.movement import powertrain
-from PiBot_v3.bot.sensing import mpu6050
-from PiBot_v3.bot.combination import gyro_movement
+from movement import powertrain
+from sensing import mpu6050
+from combination import gyro_movement
 
 app = Flask(__name__)
 
