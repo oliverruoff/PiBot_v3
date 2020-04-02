@@ -193,8 +193,6 @@ MOTORSPEED_LEFT = 75
 MOTORSPEED_RIGHT = 75
 
 
-us = hcsr04.hcsr04(US_TRIGGER_PIN, US_ECHO_PIN)
-
 pt = powertrain.powertrain(
     POWERTRAIN_IN1_PIN,
     POWERTRAIN_IN2_PIN,
@@ -204,7 +202,7 @@ pt = powertrain.powertrain(
     POWERTRAIN_ENB_PIN,
     MOTORSPEED_LEFT,
     MOTORSPEED_RIGHT)
-
+us = hcsr04.hcsr04(US_TRIGGER_PIN, US_ECHO_PIN)
 mpu = mpu6050.mpu6050(0x68)
 mic = microphone.microphone()
 speaker = speaker.speaker()
