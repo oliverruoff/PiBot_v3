@@ -17,7 +17,7 @@ def hello():
 @app.route("/turn")
 def turn():
     direction = request.args.get('direction')
-    degree = request.args.get('degree', default=90)
+    degree = int(request.args.get('degree', default=90))
     if direction == 'left':
         sgm.gyro_turn(degree, right=False, motor_speed=90)
         return 'Turned %i degree to the %s.' % (degree, direction)
@@ -31,8 +31,8 @@ def turn():
 @app.route("/move")
 def move():
     direction = request.args.get('direction')
-    duration = request.args.get('duration', default=1)
-    motorspeed = request.args.get('motorspeed', default=90)
+    duration = int(request.args.get('duration', default=1))
+    motorspeed = int(request.args.get('motorspeed', default=90))
     _dir = True
     if direction == 'forward':
         _dir = True
