@@ -28,7 +28,7 @@ def turn():
         return 'Direction not supported!'
 
 
-@app.route("move")
+@app.route("/move")
 def move():
     direction = request.args.get('direction')
     duration = request.args.get('duration', default=1)
