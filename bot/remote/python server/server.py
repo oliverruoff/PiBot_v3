@@ -31,7 +31,7 @@ def turn():
 @app.route("/move")
 def move():
     direction = request.args.get('direction')
-    duration = int(request.args.get('duration', default=1))
+    duration = float(request.args.get('duration', default=1))
     motorspeed = int(request.args.get('motorspeed', default=90))
     _dir = True
     if direction == 'forward':
@@ -43,7 +43,7 @@ def move():
     sgm.gyro_move_start(_dir, motor_speed=motorspeed)
     time.sleep(duration)
     sgm.gyro_move_stop()
-    return 'Moved %i seconds with motorspeed: %i to direction: %s' \
+    return 'Moved %f seconds with motorspeed: %i to direction: %s' \
         % (duration, motorspeed, direction)
 
 
