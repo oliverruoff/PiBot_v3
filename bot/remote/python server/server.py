@@ -59,9 +59,13 @@ def joystick():
         pass
         # pt.stop_motors()
     if x > 0:
+        print('Setting Left:', (y+x))
+        print('Setting Right:', (y))
         pt.change_speed_left(y+x)
         pt.change_speed_right(y)
     elif x < 0:
+        print('Setting Left:', (y))
+        print('Setting Right:', (y+abs(x)))
         pt.change_speed_right(y+abs(x))
         pt.change_speed_left(y)
     else:
