@@ -51,6 +51,7 @@ def move():
 def joystick():
     x = int(request.args.get('x'))
     y = int(request.args.get('y'))
+    abs_y = abs(y)
     if y > 0:
         pt.move_front()
     elif y < 0:
@@ -59,15 +60,15 @@ def joystick():
         pass
         # pt.stop_motors()
     if x > 0:
-        print('Setting Left:', (y+x))
-        print('Setting Right:', (y))
-        pt.change_speed_left(y+x)
-        pt.change_speed_right(y)
+        left = abs_y
+        right = abs_y - (x*(abs_y/100))
+        pt.change_speed_left(left)
+        pt.change_speed_right(right)
     elif x < 0:
-        print('Setting Left:', (y))
-        print('Setting Right:', (y+abs(x)))
-        pt.change_speed_right(y+abs(x))
-        pt.change_speed_left(y)
+        right = abs_y
+        left = abs_y - (x*(abs_y/100))
+        pt.change_speed_right(right)
+        pt.change_speed_left(left)
     else:
         print('x is 0 -> Doing nothing')
         pass
