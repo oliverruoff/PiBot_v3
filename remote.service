@@ -5,7 +5,7 @@ After=multi-user.target
 [Service]
 Type=simple
 User=pi
-ExecStart=sh /home/pi/develop/PiBot_v3/raspi_startup_remote.sh
+ExecStart=/usr/bin/python3 /home/pi/develop/PiBot_v3/bot/remote/python server/server.py
 Restart=on-abort
 
 [Install]

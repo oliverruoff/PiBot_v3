@@ -4,7 +4,7 @@ import time
 import socket
 
 import sys
-sys.path.append('../../')
+sys.path.append('../../') # in bot folder
 
 from movement import powertrain
 from sensing import mpu6050
