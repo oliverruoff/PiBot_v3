@@ -3,6 +3,9 @@ from flask import request
 import time
 import socket
 
+import sys
+sys.path.append('../../')
+
 from movement import powertrain
 from sensing import mpu6050
 from combination import gyro_movement
