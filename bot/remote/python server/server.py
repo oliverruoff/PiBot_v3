@@ -51,6 +51,8 @@ def move():
 def joystick():
     x = int(request.args.get('x'))
     y = int(request.args.get('y'))
+    print('x:', x)
+    print('y:', y)
     abs_y = abs(y)
     abs_x = abs(x)
     if x == 0 and y == 0:
