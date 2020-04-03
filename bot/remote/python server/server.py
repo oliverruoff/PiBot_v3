@@ -3,12 +3,9 @@ from flask import request
 import time
 import socket
 
-import sys
-sys.path.append('../../') # in bot folder
-
-from movement import powertrain
-from sensing import mpu6050
-from combination import gyro_movement
+from ...movement import powertrain
+from ...sensing import mpu6050
+from ...combination import gyro_movement
 
 app = Flask(__name__)
 
