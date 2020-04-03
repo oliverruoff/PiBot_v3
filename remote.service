@@ -1,11 +1,11 @@
 [Unit]
-Description=LED Matrix to display news.
+Description=Starts a server to remote control the PiBot.
 After=multi-user.target
 
 [Service]
 Type=simple
 User=pi
-ExecStart=/usr/bin/python3 /home/pi/develop/PiBot_v3/bot/remote/python\ server/server.py
+ExecStart=/usr/bin/python3 "/home/pi/develop/PiBot_v3/bot/remote/python server/server.py"
 Restart=on-abort
 
 [Install]
