@@ -1,0 +1,12 @@
+[Unit]
+Description=LED Matrix to display news.
+After=multi-user.target
+
+[Service]
+Type=simple
+User=pi
+ExecStart=sh /home/pi/develop/PiBot_v3/raspi_startup_remote.sh
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
