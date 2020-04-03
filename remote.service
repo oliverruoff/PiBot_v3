@@ -5,7 +5,7 @@ After=multi-user.target
 [Service]
 Type=simple
 User=pi
-ExecStart=(cd /home/pi/develop/PiBot_v3/bot/remote/python server/ ; /usr/bin/python3 server.py)
+ExecStart=(cd "/home/pi/develop/PiBot_v3/bot/remote/python server/" ; /usr/bin/python3 server.py)
 Restart=on-abort
 
 [Install]
