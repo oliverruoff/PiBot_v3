@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import request
 import time
+import socket
 
 from movement import powertrain
 from sensing import mpu6050
@@ -96,6 +97,24 @@ def joystick():
         pass
     return 'Done'
 
+@app.route("/remote")
+def remote():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect(("8.8.8.8", 80))
+    ip = s.getsockname()[0]
+    s.close()
+    print('ip:', ip)
+
+    with open('remote.html', 'r') as file:
+        html_str = file.read()
+    with open('joystick.js', 'r') as file:
+        js_str = file.read()
+
+    html_str = html_str.replace('<<IP>>', ip)
+    html_str = html_str.replace('<script src="joystick.js"></script>',
+        '<script>' + js_str + '</script>')
+
+    return html_str
 
 if __name__ == "__main__":
     # powertrain

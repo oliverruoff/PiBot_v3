@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Joy</title>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+      #joystick {
+        border: 1px solid #9C9898;
+      }
+    </style>
+	<script src="joystick.js"></script>
+  </head>
+  <body>
+    <div id="joyDiv" style="width:200px;height:200px;margin-bottom:20px;margin:50px"></div>
+
+  X :<input id="X" type="text" /></br>
+  Y :<input id="Y" type="text" />
+    <script type="text/javascript">
+// Create JoyStick object into the DIV 'joyDiv'
+var joy = new JoyStick('joyDiv');
+
+var x = document.getElementById("X");
+var y = document.getElementById("Y");
+
+function httpGet(theUrl)
+{
+    console.log(x.value)
+    console.log(y.value)
+
+    console.log(theUrl)
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+      xmlHttp.send( null );
+      return xmlHttp.responseText;
+}
+
+setInterval(function(){ x.value=joy.GetX(); }, 50);
+setInterval(function(){ y.value=joy.GetY(); }, 50);
+// Sending parameters to robot server
+setInterval(function(){ httpGet(`http://<<IP>>:5000/joystick?x=${x.value}&y=${y.value}`); }, 100);
+    </script>
+  </body>
+</html>
