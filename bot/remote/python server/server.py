@@ -59,13 +59,11 @@ def joystick():
         pass
         # pt.stop_motors()
     if x > 0:
-        _speed = (x * y) / 50
-        pt.change_speed_left(_speed)
-        pt.change_speed_right(_speed/2)
+        pt.change_speed_left(y+x)
+        pt.change_speed_right(y)
     elif x < 0:
-        _speed = (abs(x) * y) / 50
-        pt.change_speed_right(_speed)
-        pt.change_speed_left(_speed)
+        pt.change_speed_right(y+abs(x))
+        pt.change_speed_left(y)
     else:
         print('x is 0 -> Doing nothing')
         pass
