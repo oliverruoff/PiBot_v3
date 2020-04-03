@@ -111,9 +111,9 @@ def prepare_remote():
     s.close()
     print('ip:', ip)
 
-    with open('remote/python server/remote.html', 'r') as file:
+    with open('./remote.html', 'r') as file:
         html_str = file.read()
-    with open('remote/python server/joystick.js', 'r') as file:
+    with open('./joystick.js', 'r') as file:
         js_str = file.read()
 
     html_str = html_str.replace('<<IP>>', ip)
