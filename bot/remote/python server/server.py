@@ -98,4 +98,9 @@ if __name__ == "__main__":
     gyro_z_sensor_drift = mpu.get_gyro_z_sensor_drift()
 
     sgm = gyro_movement.gyro_movement(mpu, pt, gyro_z_sensor_drift)
+
+    pt.move_front()
+    pt.change_speed_left(0)
+    pt.change_speed_right(100)
+
     app.run(host='0.0.0.0')
