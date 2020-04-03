@@ -71,12 +71,18 @@ var JoyStick = (function(container, parameters) {
 	canvas.height = height;
 	objContainer.appendChild(canvas);
 	var context=canvas.getContext('2d');
-	
+
+	console.log('Canvas width: '+ canvas.width)
+
 	var pressed = 0; // Bool - 1=Yes - 0=No
 	var circumference = 2 * Math.PI;
-	var internalRadius = (canvas.width-((50*2)+10))/2;
+	var internalRadius = (canvas.width-(((canvas.width/4)*2)+10))/2;
+
+	console.log('internal radius: '+ internalRadius)
+
 	var maxMoveStick = internalRadius + 5;
 	var externalRadius = internalRadius + 30;
+
 	var centerX = canvas.width / 2;
 	var centerY = canvas.height / 2;
 	var directionHorizontalLimitPos = canvas.width / 10;
