@@ -47,6 +47,27 @@ def move():
         % (duration, motorspeed, direction)
 
 
+@app.route("/joystick")
+def joystick():
+    x = int(request.args.get('x'))
+    y = int(request.args.get('y'))
+    if y > 0:
+        pt.move_front()
+    elif y < 0:
+        pt.move_back()
+    else:
+        pt.stop_motors()
+    if x > 0:
+        pt.change_speed_left(x)
+        pt.change_speed_right(100-x)
+    elif x < 0:
+        pt.change_speed_right(abs(x))
+        pt.change_speed_left(100-abs(x))
+    else:
+        print('x is 0 -> Doing nothing')
+        pass
+
+
 if __name__ == "__main__":
     # powertrain
     POWERTRAIN_IN1_PIN = 19
