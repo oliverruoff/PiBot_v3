@@ -99,21 +99,23 @@ def joystick():
 
 @app.route("/remote")
 def remote():
+    return remote_html
+
+def prepare_remote():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.connect(("8.8.8.8", 80))
     ip = s.getsockname()[0]
     s.close()
     print('ip:', ip)
 
-    with open('remote.html', 'r') as file:
+    with open('remote/python server/remote.html', 'r') as file:
         html_str = file.read()
-    with open('joystick.js', 'r') as file:
+    with open('remote/python server/joystick.js', 'r') as file:
         js_str = file.read()
 
     html_str = html_str.replace('<<IP>>', ip)
     html_str = html_str.replace('<script src="joystick.js"></script>',
         '<script>' + js_str + '</script>')
-
     return html_str
 
 if __name__ == "__main__":
@@ -142,5 +144,7 @@ if __name__ == "__main__":
     gyro_z_sensor_drift = mpu.get_gyro_z_sensor_drift()
 
     sgm = gyro_movement.gyro_movement(mpu, pt, gyro_z_sensor_drift)
+
+    remote_html = prepare_remote()
 
     app.run(host='0.0.0.0')
