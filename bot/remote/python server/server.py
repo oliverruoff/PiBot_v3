@@ -66,17 +66,17 @@ def joystick():
     if x > 0:
         left = abs_y
         right = abs_y - (abs_x*(abs_y/100))
-        pt.change_speed_left(left)
-        pt.change_speed_right(right)
         print('Left:', left)
         print('Right:', right)
+        pt.change_speed_left(left)
+        pt.change_speed_right(right)
     elif x < 0:
         right = abs_y
         left = abs_y - (abs_x*(abs_y/100))
-        pt.change_speed_right(right)
-        pt.change_speed_left(left)
         print('Left:', left)
         print('Right:', right)
+        pt.change_speed_right(right)
+        pt.change_speed_left(left)
     else:
         print('x is 0 -> Doing nothing')
         pass
