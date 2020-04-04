@@ -5,6 +5,7 @@ After=multi-user.target
 [Service]
 Type=simple
 User=pi
+ExecStartPre=/bin/sleep 30
 ExecStart=/usr/bin/python3 /home/pi/develop/PiBot_v3/bot/server.py
 Restart=on-abort
 
