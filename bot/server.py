@@ -109,7 +109,7 @@ def prepare_remote():
     s.close()
     print('ip:', ip)
 
-    with open(os.path.join('remote', 'python server','remote.html'), 'r') as file:
+    with open('remote/python server/remote.html', 'r') as file:
         html_str = file.read()
     with open(os.path.join('remote', 'python server','joystick.js'), 'r') as file:
         js_str = file.read()
