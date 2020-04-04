@@ -2,10 +2,11 @@ from flask import Flask
 from flask import request
 import time
 import socket
+import os
 
-from ...movement import powertrain
-from ...sensing import mpu6050
-from ...combination import gyro_movement
+from movement import powertrain
+from sensing import mpu6050
+from combination import gyro_movement
 
 app = Flask(__name__)
 
@@ -108,9 +109,9 @@ def prepare_remote():
     s.close()
     print('ip:', ip)
 
-    with open('./remote.html', 'r') as file:
+    with open(os.path.join('remote', 'python server','remote.html'), 'r') as file:
         html_str = file.read()
-    with open('./joystick.js', 'r') as file:
+    with open(os.path.join('remote', 'python server','joystick.js'), 'r') as file:
         js_str = file.read()
 
     html_str = html_str.replace('<<IP>>', ip)
