@@ -7,7 +7,7 @@ import io
 import cv2
 
 from movement import powertrain
-from sensing import mpu6050, camera
+from sensing import mpu6050
 from combination import gyro_movement
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -122,29 +122,11 @@ def joystick():
 def remote():
     return render_template('remote.html', js_str=js_str)
 
-def prepare_remote():
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.connect(("8.8.8.8", 80))
-    ip = s.getsockname()[0]
-    s.close()
-    print('ip:', ip)
-
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-
-    with open(os.path.join(dir_path, 'remote', 'python server','remote.html'), 'r') as file:
-        html_str = file.read()
-    with open(os.path.join(dir_path, 'remote', 'python server','joystick.js'), 'r') as file:
-        js_str = file.read()
-
-    html_str = html_str.replace('<<IP>>', ip)
-    html_str = html_str.replace('<script src="joystick.js"></script>',
-        '<script>' + js_str + '</script>')
-    return html_str
-
 def gen():
     """Video streaming generator function."""
     while True:
         rval, frame = vc.read()
+        frame = cv2.flip(frame, flipCode=-1)
         dir_path = os.path.dirname(os.path.realpath(__file__))
         tmp_img_path = os.path.join(dir_path, 'remote', 'python server', 'tmp_photo', 'tmp_img.jpg')
         cv2.imwrite(tmp_img_path, frame)
@@ -157,19 +139,6 @@ def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
     return Response(gen(),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
-
-
-@app.route("/photo")
-def photo():
-    #dir_path = os.path.dirname(os.path.realpath(__file__))
-    #camera.take_picture(
-    #    os.path.join(
-    #        dir_path, 'remote', 'python server','tmp_photo', 'live_tmp.jpg'))
-    image_binary = camera.get_picture()
-    return send_file(io.BytesIO(image_binary),
-                    attachment_filename='live.jpg',
-                    mimetype='image/jpeg')
-
 
 if __name__ == "__main__":
     # powertrain
