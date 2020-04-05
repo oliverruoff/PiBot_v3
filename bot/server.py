@@ -118,6 +118,10 @@ def joystick():
         pass
     return 'Done'
 
+@app.route("/joystickscript")
+def joystickscript():
+    return js_str
+
 @app.route("/remote")
 def remote():
     return render_template('remote.html', js_path=js_path)
@@ -169,7 +173,7 @@ if __name__ == "__main__":
 
     # remote_html = prepare_remote()
     js_path = os.path.join(dir_path, 'remote', 'python server','joystick.js')
-    # with open(js_path, 'r') as file:
-     #   js_str = file.read()
+    with open(js_path, 'r') as file:
+        js_str = file.read()
 
     app.run(host='0.0.0.0')
