@@ -2,3 +2,4 @@ flac
 PyAudio
 SpeechRecognition
 pyttsx3
+camera

@@ -76,7 +76,7 @@ var JoyStick = (function(container, parameters) {
 
 	var pressed = 0; // Bool - 1=Yes - 0=No
 	var circumference = 2 * Math.PI;
-	var internalRadius = (canvas.width-(((canvas.width/2)*2)+10))/2;
+	var internalRadius = (canvas.width-(((canvas.width/4)*2)+10))/2;
 
 	console.log('internal radius: '+ internalRadius)
 
