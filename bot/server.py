@@ -1,11 +1,16 @@
 from flask import Flask
 from flask import request
+from flask import send_file
+from flask import Response
 import time
 import socket
 import os
+import io
+
+from camera import Camera as cam
 
 from movement import powertrain
-from sensing import mpu6050
+from sensing import mpu6050, camera
 from combination import gyro_movement
 
 app = Flask(__name__)
@@ -135,6 +140,30 @@ def prepare_remote():
         '<script>' + js_str + '</script>')
     return html_str
 
+def gen(camera):
+    while True:
+        frame = camera.get_frame()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
+@app.route('/video_feed')
+def video_feed():
+    return Response(gen(cam()),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+
+@app.route("/photo")
+def photo():
+    #dir_path = os.path.dirname(os.path.realpath(__file__))
+    #camera.take_picture(
+    #    os.path.join(
+    #        dir_path, 'remote', 'python server','tmp_photo', 'live_tmp.jpg'))
+    image_binary = camera.get_picture()
+    return send_file(io.BytesIO(image_binary),
+                    attachment_filename='live.jpg',
+                    mimetype='image/jpeg')
+
+
 if __name__ == "__main__":
     # powertrain
     POWERTRAIN_IN1_PIN = 19
@@ -161,6 +190,8 @@ if __name__ == "__main__":
     gyro_z_sensor_drift = mpu.get_gyro_z_sensor_drift()
 
     sgm = gyro_movement.gyro_movement(mpu, pt, gyro_z_sensor_drift)
+
+    camera = camera.camera()
 
     remote_html = prepare_remote()
 

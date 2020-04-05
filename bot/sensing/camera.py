@@ -27,6 +27,12 @@ class camera:
         image = cv2.flip(image, flipCode=-1)
         cv2.imwrite(file_name, image)
 
+    def get_picture(self, file_name):
+        cam = cv2.VideoCapture(0)
+        s, image = cam.read()
+        image = cv2.flip(image, flipCode=-1)
+        return image
+
     classNames = {
         0: 'background',
         1: 'person', 2: 'bicycle', 3: 'car', 4: 'motorcycle', 5: 'airplane',
