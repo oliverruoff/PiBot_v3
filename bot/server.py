@@ -167,8 +167,6 @@ if __name__ == "__main__":
 
     sgm = gyro_movement.gyro_movement(mpu, pt, gyro_z_sensor_drift)
 
-    camera = camera.camera()
-
     # remote_html = prepare_remote()
 
     with open(os.path.join(dir_path, 'remote', 'python server','joystick.js'), 'r') as file:
