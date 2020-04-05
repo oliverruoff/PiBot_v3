@@ -27,7 +27,7 @@ class camera:
         image = cv2.flip(image, flipCode=-1)
         cv2.imwrite(file_name, image)
 
-    def get_picture(self, file_name):
+    def get_picture(self):
         cam = cv2.VideoCapture(0)
         s, image = cam.read()
         image = cv2.flip(image, flipCode=-1)
