@@ -120,7 +120,7 @@ def joystick():
 
 @app.route("/remote")
 def remote():
-    return render_template('remote.html', js_str=js_str)
+    return render_template('remote.html', js_path=js_path)
 
 def gen():
     """Video streaming generator function."""
@@ -168,8 +168,8 @@ if __name__ == "__main__":
     sgm = gyro_movement.gyro_movement(mpu, pt, gyro_z_sensor_drift)
 
     # remote_html = prepare_remote()
-
-    with open(os.path.join(dir_path, 'remote', 'python server','joystick.js'), 'r') as file:
-        js_str = file.read()
+    js_path = os.path.join(dir_path, 'remote', 'python server','joystick.js')
+    # with open(js_path, 'r') as file:
+     #   js_str = file.read()
 
     app.run(host='0.0.0.0')
