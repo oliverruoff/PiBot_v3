@@ -140,16 +140,17 @@ def prepare_remote():
         '<script>' + js_str + '</script>')
     return html_str
 
-def gen(camera):
+def gen(ca):
     while True:
-        frame = camera.get_frame()
+        frame = ca.get_frame()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
 @app.route('/video_feed')
 def video_feed():
-    return Response(gen(cam()),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response(
+        camera.get_picture(),
+        mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 @app.route("/photo")
