@@ -1,19 +1,17 @@
-from flask import Flask
-from flask import request
-from flask import send_file
-from flask import Response
+from flask import Flask, request, send_file, Response, render_template
 import time
 import socket
 import os
 import io
 
-from camera import Camera as cam
+import cv2
 
 from movement import powertrain
 from sensing import mpu6050, camera
 from combination import gyro_movement
 
 app = Flask(__name__)
+vc = cv2.VideoCapture(0)
 
 
 @app.route("/")
@@ -119,7 +117,9 @@ def joystick():
 
 @app.route("/remote")
 def remote():
-    return remote_html
+    html_file_path = os.path.join(dir_path, 'remote', 'python server','remote.html')
+
+    return render_template(html_file_path, js_str=js_str)
 
 def prepare_remote():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -140,17 +140,22 @@ def prepare_remote():
         '<script>' + js_str + '</script>')
     return html_str
 
-def gen(ca):
+def gen():
+    """Video streaming generator function."""
     while True:
-        frame = ca.get_frame()
+        rval, frame = vc.read()
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        tmp_img_path = os.path.join(dir_path, 'remote', 'python server', 'tmp_photo', 'tmp_img.jpg')
+        cv2.imwrite(tmp_img_path, frame)
         yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+               b'Content-Type: image/jpeg\r\n\r\n' + open(tmp_img_path, 'rb').read() + b'\r\n')
+
 
 @app.route('/video_feed')
 def video_feed():
-    return Response(
-        camera.get_picture(),
-        mimetype='multipart/x-mixed-replace; boundary=frame')
+    """Video streaming route. Put this in the src attribute of an img tag."""
+    return Response(gen(),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 @app.route("/photo")
@@ -194,6 +199,11 @@ if __name__ == "__main__":
 
     camera = camera.camera()
 
-    remote_html = prepare_remote()
+    # remote_html = prepare_remote()
+
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+
+    with open(os.path.join(dir_path, 'remote', 'python server','joystick.js'), 'r') as file:
+        js_str = file.read()
 
     app.run(host='0.0.0.0')

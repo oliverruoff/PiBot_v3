@@ -11,10 +11,10 @@
         border: 1px solid #9C9898;
       }
     </style>
-	<script src="joystick.js"></script>
+	<script>" {{ js_str }} "</script>
   </head>
   <body>
-    <img src='http://<<IP>>:5000/photo' id='live_img' name='live' style="width:500px;height:500px;margin-bottom:20px;margin:50px auto;">
+    <img src="{{ url_for('video_feed') }}">
     <div id="joyDiv" style="width:500px;height:500px;margin-bottom:20px;margin:50px auto;"></div>
 
   X :<input id="X" type="text" /></br>
@@ -41,7 +41,8 @@ function httpGet(theUrl)
 setInterval(function(){ x.value=joy.GetX(); }, 50);
 setInterval(function(){ y.value=joy.GetY(); }, 50);
 // Sending parameters to robot server
-setInterval(function(){ httpGet(`http://<<IP>>:5000/joystick?x=${x.value}&y=${y.value}`); }, 100);
+// setInterval(function(){ httpGet(`http://<<IP>>:5000/joystick?x=${x.value}&y=${y.value}`); }, 100);
+  setInterval(function(){ httpGet(`{{ url_for('joystick') }}?x=${x.value}&y=${y.value}`); }, 100);
     </script>
   </body>
 </html>
