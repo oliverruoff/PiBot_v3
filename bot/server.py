@@ -10,7 +10,10 @@ from movement import powertrain
 from sensing import mpu6050, camera
 from combination import gyro_movement
 
-app = Flask(__name__)
+dir_path = os.path.dirname(os.path.realpath(__file__))
+html_template_dir = os.path.join(dir_path, 'remote', 'python server')
+
+app = Flask(__name__, template_folder=html_template_dir)
 vc = cv2.VideoCapture(0)
 
 
@@ -117,9 +120,7 @@ def joystick():
 
 @app.route("/remote")
 def remote():
-    html_file_path = os.path.join(dir_path, 'remote', 'python server','remote.html')
-
-    return render_template(html_file_path, js_str=js_str)
+    return render_template('remote.html', js_str=js_str)
 
 def prepare_remote():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -200,8 +201,6 @@ if __name__ == "__main__":
     camera = camera.camera()
 
     # remote_html = prepare_remote()
-
-    dir_path = os.path.dirname(os.path.realpath(__file__))
 
     with open(os.path.join(dir_path, 'remote', 'python server','joystick.js'), 'r') as file:
         js_str = file.read()
