@@ -28,24 +28,15 @@ var y = document.getElementById("Y");
 
 // document.getElementById('img_id').src=`{{ url_for('video_feed') }}?${n}`;
 
-var requesting = false
-
 function httpGet(theUrl)
 {
-    if (!requesting) {
-      window.requesting = true
       console.log(x.value)
       console.log(y.value)
       console.log(theUrl)
       var xmlHttp = new XMLHttpRequest();
-      xmlHttp.open( "GET", theUrl, true ); // false for synchronous request
+      xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
       xmlHttp.send( null );
-      window.requesting = false
       return xmlHttp.responseText;
-    }
-    else {
-      console.log("Not requesting!")
-    }
 }
 
 setInterval(function(){ x.value=joy.GetX(); }, 50);
