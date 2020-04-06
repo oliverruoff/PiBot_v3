@@ -28,24 +28,28 @@ var y = document.getElementById("Y");
 
 // document.getElementById('img_id').src=`{{ url_for('video_feed') }}?${n}`;
 
+var requesting = false
 
 function httpGet(theUrl)
 {
-    console.log(x.value)
-    console.log(y.value)
-
-    console.log(theUrl)
+    if (!requesting) {
+      requesting = true
+      console.log(x.value)
+      console.log(y.value)
+      console.log(theUrl)
       var xmlHttp = new XMLHttpRequest();
-      xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+      xmlHttp.open( "GET", theUrl, true ); // false for synchronous request
       xmlHttp.send( null );
+      requesting = false
       return xmlHttp.responseText;
+    }
 }
 
 setInterval(function(){ x.value=joy.GetX(); }, 50);
 setInterval(function(){ y.value=joy.GetY(); }, 50);
 // Sending parameters to robot server
 // setInterval(function(){ httpGet(`http://<<IP>>:5000/joystick?x=${x.value}&y=${y.value}`); }, 100);
-setInterval(function(){ httpGet(`{{ url_for('joystick') }}?x=${x.value}&y=${y.value}`); }, 1000);
+setInterval(function(){ httpGet(`{{ url_for('joystick') }}?x=${x.value}&y=${y.value}`); }, 100);
     </script>
   </body>
 </html>
