@@ -14,7 +14,7 @@
 	<script src="{{ url_for('joystickscript') }}"></script>
   </head>
   <body>
-    <img id="img_id" data-lazysrc="{{ url_for('video_feed') }}">
+    <img id="img_id" src="{{ url_for('video_feed') }}">
     <div id="joyDiv" style="width:500px;height:500px;margin-bottom:20px;margin:50px auto;"></div>
 
   X :<input id="X" type="text" /></br>
@@ -28,19 +28,6 @@ var y = document.getElementById("Y");
 
 // document.getElementById('img_id').src=`{{ url_for('video_feed') }}?${n}`;
 
-function ReLoadImages(){
-    $('img[data-lazysrc]').each( function(){
-        //* set the img src from data-src
-        $( this ).attr( 'src', $( this ).attr( 'data-lazysrc' ) );
-        }
-    );
-}
-
-document.addEventListener('readystatechange', event => {
-    if (event.target.readyState === "interactive") {  //or at "complete" if you want it to execute in the most last state of window.
-        ReLoadImages();
-    }
-});
 
 function httpGet(theUrl)
 {
@@ -58,7 +45,7 @@ setInterval(function(){ x.value=joy.GetX(); }, 50);
 setInterval(function(){ y.value=joy.GetY(); }, 50);
 // Sending parameters to robot server
 // setInterval(function(){ httpGet(`http://<<IP>>:5000/joystick?x=${x.value}&y=${y.value}`); }, 100);
-setInterval(function(){ httpGet(`{{ url_for('joystick') }}?x=${x.value}&y=${y.value}`); }, 100);
+setInterval(function(){ httpGet(`{{ url_for('joystick') }}?x=${x.value}&y=${y.value}`); }, 1000);
     </script>
   </body>
 </html>
