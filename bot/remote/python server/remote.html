@@ -25,9 +25,15 @@ var joy = new JoyStick('joyDiv');
 
 var x = document.getElementById("X");
 var y = document.getElementById("Y");
-var d = new Date();
-var n = d.getTime();
-document.getElementById('img_id').src=`{{ url_for('video_feed') }}?${n}`;
+
+function updateImgSource()
+{
+  var d = new Date();
+  var n = d.getTime();
+  document.getElementById('img_id').src=`{{ url_for('video_feed') }}?${n}`;
+}
+
+
 
 function httpGet(theUrl)
 {
@@ -45,7 +51,8 @@ setInterval(function(){ x.value=joy.GetX(); }, 50);
 setInterval(function(){ y.value=joy.GetY(); }, 50);
 // Sending parameters to robot server
 // setInterval(function(){ httpGet(`http://<<IP>>:5000/joystick?x=${x.value}&y=${y.value}`); }, 100);
-  setInterval(function(){ httpGet(`{{ url_for('joystick') }}?x=${x.value}&y=${y.value}`); }, 100);
+setInterval(function(){ httpGet(`{{ url_for('joystick') }}?x=${x.value}&y=${y.value}`); }, 100);
+setInterval(function() {updateImgSource();}, 33)
     </script>
   </body>
 </html>
