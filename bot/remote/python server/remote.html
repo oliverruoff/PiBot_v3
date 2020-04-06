@@ -25,7 +25,9 @@ var joy = new JoyStick('joyDiv');
 
 var x = document.getElementById("X");
 var y = document.getElementById("Y");
-document.getElementById('img_id').src=`{{ url_for('video_feed') }}?reload=${new Date.getTime()}`;
+var d = new Date();
+var n = d.getTime();
+document.getElementById('img_id').src=`{{ url_for('video_feed') }}?reload=${n}`;
 
 function httpGet(theUrl)
 {
