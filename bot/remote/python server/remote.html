@@ -26,10 +26,16 @@ var joy = new JoyStick('joyDiv');
 var x = document.getElementById("X");
 var y = document.getElementById("Y");
 
+var oldX = 0
+var oldY = 0
+
 // document.getElementById('img_id').src=`{{ url_for('video_feed') }}?${n}`;
 
 function httpGet(theUrl)
 {
+  if (oldX != x.value || oldY != y.value) {
+      oldX = x.value
+      oldY = y.value
       console.log(x.value)
       console.log(y.value)
       console.log(theUrl)
@@ -37,6 +43,7 @@ function httpGet(theUrl)
       xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
       xmlHttp.send( null );
       return xmlHttp.responseText;
+  }
 }
 
 setInterval(function(){ x.value=joy.GetX(); }, 50);
