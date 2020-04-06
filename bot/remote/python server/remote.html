@@ -43,6 +43,9 @@ function httpGet(theUrl)
       requesting = false
       return xmlHttp.responseText;
     }
+    else {
+      console.log("Not requesting!")
+    }
 }
 
 setInterval(function(){ x.value=joy.GetX(); }, 50);
