@@ -14,7 +14,7 @@
 	<script src="{{ url_for('joystickscript') }}"></script>
   </head>
   <body>
-    <img id="img_id">
+    <img id="img_id" alt="">
     <div id="joyDiv" style="width:500px;height:500px;margin-bottom:20px;margin:50px auto;"></div>
 
   X :<input id="X" type="text" /></br>
@@ -27,7 +27,7 @@ var x = document.getElementById("X");
 var y = document.getElementById("Y");
 var d = new Date();
 var n = d.getTime();
-document.getElementById('img_id').src=`{{ url_for('video_feed') }}?reload=${n}`;
+document.getElementById('img_id').src=`{{ url_for('video_feed') }}?${n}`;
 
 function httpGet(theUrl)
 {
