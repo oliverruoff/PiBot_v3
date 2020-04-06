@@ -33,14 +33,14 @@ var requesting = false
 function httpGet(theUrl)
 {
     if (!requesting) {
-      requesting = true
+      window.requesting = true
       console.log(x.value)
       console.log(y.value)
       console.log(theUrl)
       var xmlHttp = new XMLHttpRequest();
       xmlHttp.open( "GET", theUrl, true ); // false for synchronous request
       xmlHttp.send( null );
-      requesting = false
+      window.requesting = false
       return xmlHttp.responseText;
     }
     else {
