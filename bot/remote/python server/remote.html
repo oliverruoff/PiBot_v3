@@ -14,7 +14,7 @@
 	<script src="{{ url_for('joystickscript') }}"></script>
   </head>
   <body>
-    <img src="{{ url_for('video_feed') }}">
+    <img src=`{{ url_for('video_feed') }}?reload=${new Date.getTime()}`>
     <div id="joyDiv" style="width:500px;height:500px;margin-bottom:20px;margin:50px auto;"></div>
 
   X :<input id="X" type="text" /></br>

@@ -16,6 +16,9 @@ html_template_dir = os.path.join(dir_path, 'remote', 'python server')
 app = Flask(__name__, template_folder=html_template_dir)
 vc = cv2.VideoCapture(0)
 
+dir_path = os.path.dirname(os.path.realpath(__file__))
+tmp_img_path = os.path.join(dir_path, 'remote', 'python server', 'tmp_photo', 'tmp_img.jpg')
+
 
 @app.route("/")
 def hello():
@@ -131,8 +134,6 @@ def gen():
     while True:
         rval, frame = vc.read()
         frame = cv2.flip(frame, flipCode=-1)
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        tmp_img_path = os.path.join(dir_path, 'remote', 'python server', 'tmp_photo', 'tmp_img.jpg')
         cv2.imwrite(tmp_img_path, frame)
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + open(tmp_img_path, 'rb').read() + b'\r\n')
