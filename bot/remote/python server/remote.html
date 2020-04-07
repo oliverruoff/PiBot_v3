@@ -14,7 +14,13 @@
 	<script src="{{ url_for('joystickscript') }}"></script>
   </head>
   <body>
-    <img id="img_id" src="{{ url_for('video_feed') }}" style="width:500px;height:500px;margin-bottom:20px;margin:50px auto;">
+    <div>
+      <table width="100%" height="100%" align="center" valign="center">
+      <tr><td>
+        <img id="img_id" src="{{ url_for('video_feed') }}">
+      </td></tr>
+      </table>
+   </div>
     <div id="joyDiv" style="width:500px;height:500px;margin-bottom:20px;margin:50px auto;"></div>
 
   X :<input id="X" type="text" /></br>
