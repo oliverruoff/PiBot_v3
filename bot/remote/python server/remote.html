@@ -31,24 +31,44 @@
   X :<input id="X" type="text" /></br>
   Y :<input id="Y" type="text" />
     <script type="text/javascript">
+
+document.addEventListener('keydown', function(event) {
+  if ((event.code == 'KeyW' || event.code == 'ArrowUp') && (event.ctrlKey || event.metaKey)) {
+    httpGet("{{ url_for('joystick') }}?x=100&y=100")
+  } else if ((event.code == 'KeyS' || event.code == 'ArrowDown') && (event.ctrlKey || event.metaKey)) {
+    httpGet("{{ url_for('joystick') }}?x=-100&y=-100")
+  } else if ((event.code == 'KeyA' || event.code == 'ArrowLeft') && (event.ctrlKey || event.metaKey)) {
+    httpGet("{{ url_for('joystick') }}?x=-100&y=0")
+  } else if ((event.code == 'KeyD' || event.code == 'ArrowRight') && (event.ctrlKey || event.metaKey)) {
+    httpGet("{{ url_for('joystick') }}?x=-100&y=-100")
+  }
+});
+
+document.addEventListener('keyup', function(event) {
+  if ((event.code == 'KeyW' || event.code == 'ArrowUp') && (event.ctrlKey || event.metaKey)) {
+    httpGet("{{ url_for('joystick') }}?x=0&y=0")
+  } else if ((event.code == 'KeyS' || event.code == 'ArrowDown') && (event.ctrlKey || event.metaKey)) {
+    httpGet("{{ url_for('joystick') }}?x=0&y=0")
+  } else if ((event.code == 'KeyA' || event.code == 'ArrowLeft') && (event.ctrlKey || event.metaKey)) {
+    httpGet("{{ url_for('joystick') }}?x=0&y=0")
+  } else if ((event.code == 'KeyD' || event.code == 'ArrowRight') && (event.ctrlKey || event.metaKey)) {
+    httpGet("{{ url_for('joystick') }}?x=0&y=0")
+  }
+});
 // Create JoyStick object into the DIV 'joyDiv'
 var joy = new JoyStick('joyDiv');
 
 var x = document.getElementById("X");
 var y = document.getElementById("Y");
 
-var oldX = 0
-var oldY = 0
+var oldUrl = ""
 
 // document.getElementById('img_id').src=`{{ url_for('video_feed') }}?${n}`;
 
 function httpGet(theUrl)
 {
-  if (oldX != x.value || oldY != y.value) {
-      oldX = x.value
-      oldY = y.value
-      console.log(x.value)
-      console.log(y.value)
+  if (oldUrl != theUrl) {
+      oldUrl = theUrl
       console.log(theUrl)
       var xmlHttp = new XMLHttpRequest();
       xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
