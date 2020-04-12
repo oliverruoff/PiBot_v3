@@ -36,34 +36,28 @@ keyControl = false
 
 document.addEventListener('keydown', function(event) {
 
-  if (event.ctrlKey) {
-    keyControl = true
-  }
-
-  if ((event.code == 'KeyW' || event.code == 'ArrowUp') && (event.ctrlKey || event.metaKey)) {
-    httpGet("{{ url_for('joystick') }}?x=100&y=100")
-  } else if ((event.code == 'KeyS' || event.code == 'ArrowDown') && (event.ctrlKey || event.metaKey)) {
-    httpGet("{{ url_for('joystick') }}?x=-100&y=-100")
-  } else if ((event.code == 'KeyA' || event.code == 'ArrowLeft') && (event.ctrlKey || event.metaKey)) {
+  keyControl = true
+  if ((event.code == 'KeyW' || event.code == 'ArrowUp')) {
+    httpGet("{{ url_for('joystick') }}?x=0&y=100")
+  } else if ((event.code == 'KeyS' || event.code == 'ArrowDown')) {
+    httpGet("{{ url_for('joystick') }}?x=0&y=-100")
+  } else if ((event.code == 'KeyA' || event.code == 'ArrowLeft')) {
     httpGet("{{ url_for('joystick') }}?x=-100&y=0")
-  } else if ((event.code == 'KeyD' || event.code == 'ArrowRight') && (event.ctrlKey || event.metaKey)) {
-    httpGet("{{ url_for('joystick') }}?x=-100&y=-100")
+  } else if ((event.code == 'KeyD' || event.code == 'ArrowRight')) {
+    httpGet("{{ url_for('joystick') }}?x=100&y=0")
   }
 });
 
 document.addEventListener('keyup', function(event) {
 
-  if (event.ctrlKey) {
-    keyControl = false
-  }
-
-  if ((event.code == 'KeyW' || event.code == 'ArrowUp') && (event.ctrlKey || event.metaKey)) {
+  keyControl = false
+  if ((event.code == 'KeyW' || event.code == 'ArrowUp')) {
     httpGet("{{ url_for('joystick') }}?x=0&y=0")
-  } else if ((event.code == 'KeyS' || event.code == 'ArrowDown') && (event.ctrlKey || event.metaKey)) {
+  } else if ((event.code == 'KeyS' || event.code == 'ArrowDown')) {
     httpGet("{{ url_for('joystick') }}?x=0&y=0")
-  } else if ((event.code == 'KeyA' || event.code == 'ArrowLeft') && (event.ctrlKey || event.metaKey)) {
+  } else if ((event.code == 'KeyA' || event.code == 'ArrowLeft')) {
     httpGet("{{ url_for('joystick') }}?x=0&y=0")
-  } else if ((event.code == 'KeyD' || event.code == 'ArrowRight') && (event.ctrlKey || event.metaKey)) {
+  } else if ((event.code == 'KeyD' || event.code == 'ArrowRight')) {
     httpGet("{{ url_for('joystick') }}?x=0&y=0")
   }
 });
