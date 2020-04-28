@@ -35,6 +35,8 @@ keyControl = false
 
 document.addEventListener('keydown', function(event) {
 
+  console.log('Key down:', event.code)
+
   keyControl = true
   if ((event.code == 'KeyW' || event.code == 'ArrowUp')) {
     httpGet("{{ url_for('joystick') }}?x=0&y=100")
@@ -48,6 +50,8 @@ document.addEventListener('keydown', function(event) {
 });
 
 document.addEventListener('keyup', function(event) {
+
+  console.log('Key up:', event.code)
 
   keyControl = false
   if ((event.code == 'KeyW' || event.code == 'ArrowUp')) {
