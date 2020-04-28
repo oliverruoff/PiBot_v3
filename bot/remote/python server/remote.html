@@ -23,11 +23,10 @@
 	<script src="{{ url_for('joystickscript') }}"></script>
   </head>
   <body>
-    <div id="imgDiv" style="width:700px;height:500px; auto;">
+    <div id="imgDiv" style="width:700px;height:500px;">
       <img id="img_id" src="{{ url_for('video_feed') }}" style="position:relative;">
-      <div id="joyDiv" style="width:500px;height:500px;margin-bottom:20px; auto;"></div>
     </div>
-    
+    <div id="joyDiv" style="width:500px;height:500px;margin-bottom:20px;"></div>
 
   X :<input id="X" type="text" /></br>
   Y :<input id="Y" type="text" />
