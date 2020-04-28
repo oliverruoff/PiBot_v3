@@ -25,7 +25,6 @@
   <body>
     <div id="imgDiv" style="width:640px;height:500px;margin:10px auto;">
       <img id="img_id" src="{{ url_for('video_feed') }}" style="position:relative;">
-      X :<input id="X" type="text" /> Y :<input id="Y" type="text" />
     </div>
     <div id="joyDiv" style="width:500px;height:500px;margin-bottom:5px;margin:10px auto;"></div>
 
@@ -64,9 +63,6 @@ document.addEventListener('keyup', function(event) {
 // Create JoyStick object into the DIV 'joyDiv'
 var joy = new JoyStick('joyDiv');
 
-var x = document.getElementById("X");
-var y = document.getElementById("Y");
-
 var oldUrl = ""
 
 // document.getElementById('img_id').src=`{{ url_for('video_feed') }}?${n}`;
@@ -92,8 +88,6 @@ function httpGet(theUrl)
   }
 }
 
-setInterval(function(){ x.value=joy.GetX(); }, 50);
-setInterval(function(){ y.value=joy.GetY(); }, 50);
 // Sending parameters to robot server
 // setInterval(function(){ httpGet(`http://<<IP>>:5000/joystick?x=${x.value}&y=${y.value}`); }, 100);
 setInterval(function(){ httpIntervalGet(`{{ url_for('joystick') }}?x=${x.value}&y=${y.value}`); }, 100);
