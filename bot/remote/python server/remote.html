@@ -94,7 +94,7 @@ function httpGet(theUrl)
 
 // Sending parameters to robot server
 // setInterval(function(){ httpGet(`http://<<IP>>:5000/joystick?x=${x.value}&y=${y.value}`); }, 100);
-setInterval(function(){ httpIntervalGet(`{{ url_for('joystick') }}?x=${x.value}&y=${y.value}`); }, 100);
+setInterval(function(){ httpIntervalGet(`{{ url_for('joystick') }}?x=${joy.GetX()}&y=${joy.GetY()}`); }, 100);
     </script>
   </body>
 </html>
