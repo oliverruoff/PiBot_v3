@@ -103,14 +103,14 @@ function httpIntervalGet(theUrl) {
 
 function httpGet(theUrl)
 {
-  //if (oldUrl != theUrl) {
+  if (oldUrl != theUrl) {
       oldUrl = theUrl
       console.log(theUrl)
       var xmlHttp = new XMLHttpRequest();
       xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
       xmlHttp.send( null );
       return xmlHttp.responseText;
- // }
+  }
 }
 
 // Sending parameters to robot server
