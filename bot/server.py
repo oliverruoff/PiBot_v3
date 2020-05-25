@@ -117,8 +117,8 @@ def joystick():
         pt.change_speed_right(right)
         pt.change_speed_left(left)
     else:
-        print('x is 0 -> Doing nothing')
-        pass
+        pt.change_speed_right(abs_y)
+        pt.change_speed_left(abs_y)
     return 'Done'
 
 @app.route("/joystickscript")
