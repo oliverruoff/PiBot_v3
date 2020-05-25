@@ -36,6 +36,7 @@ keysPressed = [];
 
 function reactToKeysPressed() {
   console.log('KeysPressed: ', keysPressed)
+  console.log('Length: ', keysPressed.length)
   if (keysPressed.length == 1) {
     if ((keysPressed.indexOf('KeyW') >= 0 || keysPressed.indexOf('ArrowUp') >= 0)) {
       httpGet("{{ url_for('joystick') }}?x=0&y=100")
@@ -64,12 +65,12 @@ function reactToKeysPressed() {
     httpGet("{{ url_for('joystick') }}?x=0&y=0")
   } else {
     console.log('Too many buttons pressed!');
+    httpGet("{{ url_for('joystick') }}?x=0&y=0")
   }
 }
 
 document.addEventListener('keydown', function(event) {
   console.log('Key down:', event.code)
-  console.log('indexOf:', keysPressed.indexOf(event.code))
   if (keysPressed.indexOf(event.code) < 0) {
     keysPressed.push(event.code)
   }
