@@ -35,14 +35,15 @@ keyControl = false;
 keysPressed = [];
 
 function reactToKeysPressed() {
+  console.log('KeysPressed: ', keysPressed)
   if (keysPressed.length == 1) {
-    if ((keysPressed.indexOf('KeyW') || keysPressed.indexOf('ArrowUp'))) {
+    if ((keysPressed.indexOf('KeyW') > 0 || keysPressed.indexOf('ArrowUp') > 0)) {
       httpGet("{{ url_for('joystick') }}?x=0&y=100")
-    } else if ((keysPressed.indexOf('KeyS') || keysPressed.indexOf('ArrowDown'))) {
+    } else if ((keysPressed.indexOf('KeyS') > 0 || keysPressed.indexOf('ArrowDown')) > 0) {
       httpGet("{{ url_for('joystick') }}?x=0&y=-100")
-    } else if ((keysPressed.indexOf('KeyA') || keysPressed.indexOf('ArrowLeft'))) {
+    } else if ((keysPressed.indexOf('KeyA') > 0 || keysPressed.indexOf('ArrowLeft')) > 0) {
       httpGet("{{ url_for('joystick') }}?x=-100&y=0")
-    } else if ((keysPressed.indexOf('KeyD') || keysPressed.indexOf('ArrowRight'))) {
+    } else if ((keysPressed.indexOf('KeyD') > 0 || keysPressed.indexOf('ArrowRight')) > 0) {
       httpGet("{{ url_for('joystick') }}?x=100&y=0")
     }
   } else if (keysPressed.length == 2) {
