@@ -49,23 +49,22 @@ function reactToKeysPressed() {
     }
   } else if (keysPressed.length == 2) {
     if ((keysPressed.indexOf('ArrowUp') >= 0 && keysPressed.indexOf('ArrowRight') >= 0) || 
-    keysPressed.indexOf('KeyW') >= 0 && keysPressed.indexOf('KeyD')) {
+    keysPressed.indexOf('KeyW') >= 0 && keysPressed.indexOf('KeyD') >= 0) {
       httpGet("{{ url_for('joystick') }}?x=60&y=100")
     } else if ((keysPressed.indexOf('ArrowUp') >= 0 && keysPressed.indexOf('ArrowLeft') >= 0) || 
-        keysPressed.indexOf('KeyW') >= 0 && keysPressed.indexOf('KeyD')) {
+        keysPressed.indexOf('KeyW') >= 0 && keysPressed.indexOf('KeyD') >= 0) {
           httpGet("{{ url_for('joystick') }}?x=-60&y=100")
     } else if ((keysPressed.indexOf('ArrowDown') >= 0 && keysPressed.indexOf('ArrowLeft') >= 0) || 
-        keysPressed.indexOf('KeyW') >= 0 && keysPressed.indexOf('KeyD')) {
+        keysPressed.indexOf('KeyW') >= 0 && keysPressed.indexOf('KeyD') >= 0) {
           httpGet("{{ url_for('joystick') }}?x=-60&y=-100")
     } else if ((keysPressed.indexOf('ArrowDown') >= 0 && keysPressed.indexOf('ArrowRight') >= 0) || 
-        keysPressed.indexOf('KeyW') >= 0 && keysPressed.indexOf('KeyD')) {
+        keysPressed.indexOf('KeyW') >= 0 && keysPressed.indexOf('KeyD') >= 0) {
           httpGet("{{ url_for('joystick') }}?x=60&y=-100")
     }
   } else if (keysPressed.length == 0) {
     httpGet("{{ url_for('joystick') }}?x=0&y=0")
   } else {
     console.log('Too many buttons pressed!');
-    httpGet("{{ url_for('joystick') }}?x=0&y=0")
   }
 }
 
