@@ -58,8 +58,13 @@ Within `camera.py` the `CAMERA_ANGLE_DEGREE` variable has to be set, according t
 ## Server
 
 - Allow non-sudo users to use port 80
-    - Run `sudo sysctl net.ipv4.ip_unprivileged_port_start=80`
-- Run the `server.py` from within the `bot` folder, so that its imports work!
+    - Install authbind: 
+        - `sudo apt-get install authbind`
+    - Create authbind files for port 80
+        - `sudo touch /etc/authbind/byport/80`
+        - `sudo chmod 777 /etc/authbind/byport/80`
+- Run the `server.py` from within the `bot` folder, so that its imports work (Using authbind)!
+    - `authbind --deep python3 server.py`
 
 E.g.:
 ```shell

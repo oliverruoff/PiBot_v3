@@ -6,7 +6,7 @@ After=multi-user.target
 Type=simple
 User=pi
 ExecStartPre=/bin/sleep 30
-ExecStart=/usr/bin/python3 /home/pi/develop/PiBot_v3/bot/server.py
+ExecStart=/usr/bin/authbind --deep /usr/bin/python3 /home/pi/develop/PiBot_v3/bot/server.py
 Restart=on-abort
 
 [Install]
