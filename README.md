@@ -57,12 +57,16 @@ Within `camera.py` the `CAMERA_ANGLE_DEGREE` variable has to be set, according t
 
 ## Server
 
-Run the `server.py` from within the `bot` folder, so that its imports work!
+- Allow non-sudo users to use port 80
+    - Run `sudo sysctl net.ipv4.ip_unprivileged_port_start=80`
+- Run the `server.py` from within the `bot` folder, so that its imports work!
 
 E.g.:
 ```shell
 PiBot_v3/bot $ python3 remote/python\ server/server.py
 ```
+
+Now you can simply access the robot via ip address within a browser.
 
 ## Setting raspberry autostart services up
 

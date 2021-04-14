@@ -17,12 +17,8 @@ app = Flask(__name__, template_folder=html_template_dir)
 vc = cv2.VideoCapture(0)
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-tmp_img_path = os.path.join(dir_path, 'remote', 'python server', 'tmp_photo', 'tmp_img.jpg')
-
-
-@app.route("/")
-def hello():
-    return "Online!"
+tmp_img_path = os.path.join(
+    dir_path, 'remote', 'python server', 'tmp_photo', 'tmp_img.jpg')
 
 
 @app.route("/turn")
@@ -101,7 +97,6 @@ def joystick():
         pt.change_speed_right(abs(x))
         return'Done.'
 
-
     if x > 0:
         left = abs_y
         right = int(abs_y - (abs_x*(abs_y/100)))
@@ -121,13 +116,16 @@ def joystick():
         pt.change_speed_left(abs_y)
     return 'Done'
 
+
 @app.route("/joystickscript")
 def joystickscript():
     return js_str
 
-@app.route("/remote")
+
+@app.route("/")
 def remote():
     return render_template('remote.html', js_path=js_path)
+
 
 def gen():
     """Video streaming generator function."""
@@ -144,6 +142,7 @@ def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
     return Response(gen(),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
+
 
 if __name__ == "__main__":
     # powertrain
@@ -173,8 +172,8 @@ if __name__ == "__main__":
     sgm = gyro_movement.gyro_movement(mpu, pt, gyro_z_sensor_drift)
 
     # remote_html = prepare_remote()
-    js_path = os.path.join(dir_path, 'remote', 'python server','joystick.js')
+    js_path = os.path.join(dir_path, 'remote', 'python server', 'joystick.js')
     with open(js_path, 'r') as file:
         js_str = file.read()
 
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', port=80)
